@@ -20,7 +20,7 @@
 	</script>
 </head> 
 <body>
-<h1>CHARM Project Home</h1>
+<h1>Library Home</h1>
 <div id = "tabs">
 	<ul>
 		<li> <a href="#tabs-1">Catalog Search</a></li>
