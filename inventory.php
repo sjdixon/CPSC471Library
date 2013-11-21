@@ -7,9 +7,23 @@
 		<script>
 			$( "button" ).button();
 		</script>
-		<div id="dialog" title="Add New Item">HTML to add new item will go here</div>
+		<?php
+		echo "<div id=\"dialog\" title=\"Add New Item\">";
+		echo "<!--Add new item information in the form below:-->";
+		echo "<label for=\"name\">Title</label><br>";
+		echo "<label for=\"year\">Release Year</label><br>";
+		echo "<label for=\"genre\">Genre</label><br>";
+		echo "<label for=\"audience\">Audience</label><br>";
+		echo "<label for=\"location\">Location</label><br><br>";
+		echo "<button type=\"button\">OK</button>";
+		
+		
+		
+		echo "</div>";
+		?>
 		<script>
 		$( "#dialog" ).dialog({ autoOpen: false, modal: true });
 		$( "#b1" ).click(function() {
 			$( "#dialog" ).dialog( "open" );
 		});
+		</script>
