@@ -355,7 +355,7 @@
 		buttons:{ "OK": function(){
 				$( this ).dialog( "close" );
 		}}});
-	$( "#add_inst" ).click(function() {
+	$( "#update2" ).click(function() {
 		$( "#dialog6" ).dialog( "open" );
 	});
 </script>
