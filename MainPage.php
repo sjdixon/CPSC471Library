@@ -191,21 +191,20 @@ $(function() {
 Catalogue
 <br />
 <select id="combobox">
-<option value="">Select one...</option>
-<option value="ActionScript">ActionScript</option>
-<option value="AppleScript">AppleScript</option>
-<option value="Asp">Asp</option>
-<option value="BASIC">BASIC</option>
-<option value="C">C</option>
+<option value="">Type</option>
+<option value="Book">Book</option>
+<option value="Audio">Audio</option>
+<option value="Video">Video</option>
+<option value="Newspaper">Newspaper</option>
+<option value="Magazine">Magazine</option>
 </select>
-<input id="Search" value=""/>
+<input id="Search" value1=""/>
 <select id="combobox">
 <option value1="">Select one...</option>
-<option value1="ActionScript">ActionScript</option>
-<option value1="AppleScript">AppleScript</option>
-<option value1="Asp">Asp</option>
-<option value1="BASIC">BASIC</option>
-<option value1="C">C</option>
+<option value1="Title">Title</option>
+<option value1="year">Year</option>
+<option value1="Asp">Genre</option>
+<option value1="libraryId">Book Code</option>
 </select>
 <input type="submit"  value="Search" />
 </p>

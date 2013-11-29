@@ -25,10 +25,11 @@
 <div id = "tabs">
 	<ul>
 		<li> <a href="#tabs-1">Catalog Search</a></li>
-		<li> <a href="#tabs-2">Patrons</a></li>
+		<li> <a href="#PatronTab">Patrons</a></li>
 		<!--this tab is linked to a php script- this script therefore prints its' content in div tabs-3>-->
 		<li> <a href="inventory.php">Inventory</a></li>
 		<li> <a href="#tabs-4">Add Loans/Holds</a></li>
+                <li> <a href="#tabs-5">Librarian</a></li>
 	</ul>
 	<div id="tabs-1">
 	</div>
@@ -37,6 +38,8 @@
 	<div id="tabs-3">
 	</div>
 	<div id ="tabs-4">
+	</div>
+        <div id ="tabs-5">
 	</div>
 </div>
 </body>
