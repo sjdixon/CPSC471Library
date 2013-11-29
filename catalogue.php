@@ -32,7 +32,7 @@
                 margin: 10px auto;
                 padding: 5px;
                 border: 1px solid #777;
-                background-color: #fbca93;
+                background-color: #ffffff;
                 text-align: center;
             }
             .positionable {
