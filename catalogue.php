@@ -3,10 +3,10 @@
     <head>
         <meta charset="utf-8" />
         <title>Book a Book Catalogue</title>
-        <link rel="stylesheet" href="http://code.jquery.com/ui/1.10.3/themes/smoothness/jquery-ui.css" />
         <script src="http://code.jquery.com/jquery-1.9.1.js"></script>
         <script src="http://code.jquery.com/ui/1.10.3/jquery-ui.js"></script>
-        <link rel="stylesheet" href="/resources/demos/style.css" />
+        <link href="jquery-ui-1.10.3.custom/css/ui-lightness/jquery-ui-1.10.3.custom.css" rel="stylesheet" type="text/css" />
+        
         <style>
 
             .custom-combobox {
@@ -33,7 +33,7 @@
                 margin: 10px auto;
                 padding: 5px;
                 border: 1px solid #777;
-                background-color: #fbca93;
+                background-color: #ffffff;
                 text-align: center;
             }
             .positionable {

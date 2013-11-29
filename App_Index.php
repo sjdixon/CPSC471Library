@@ -24,7 +24,7 @@
         <h1>Library Home</h1>
         <div id = "tabs">
             <ul>
-                <li> <a href="#">Catalog Search</a></li>
+                <li> <a href="catalogue.php">Catalog Search</a></li>
                 <li> <a href="PatronTab.php">Patrons</a></li>
                 <!--this tab is linked to a php script- this script therefore prints its' content in div tabs-3>-->
                 <li> <a href="inventory.php">Inventory</a></li>
