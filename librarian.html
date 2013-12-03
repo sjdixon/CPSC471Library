@@ -4,13 +4,48 @@ To change this license header, choose License Headers in Project Properties.
 To change this template file, choose Tools | Templates
 and open the template in the editor.
 -->
-<html>
+<!doctype html>
+<html lang="en">
     <head>
-        <title>TODO supply a title</title>
-        <meta charset="UTF-8">
-        <meta name="viewport" content="width=device-width">
+        <meta charset="utf-8">
+        <title>spinner demo</title>
+        <link rel="stylesheet" href="http://code.jquery.com/ui/1.9.2/themes/base/jquery-ui.css">
+        <script src="http://code.jquery.com/jquery-1.8.3.js"></script>
+        <script src="http://code.jquery.com/ui/1.9.2/jquery-ui.js"></script>
     </head>
     <body>
-        <div>TODO write content</div>
+        <script>
+            $(function() {
+                $("#AddUser").dialog({
+                    autoOpen: false,
+                    show: {
+                        effect: "blind",
+                        duration: 1000
+                    },
+                    hide: {
+                        effect: "explode",
+                        duration: 1000
+                    }
+                });
+                $("#buttonOpenAddUser").click(function() {
+                    $("#AddUser").dialog("open");
+                });
+            });
+        </script>
+        <div id="AddUser" title="Add New Librarian">
+            <form>
+            Username <input type="text" id="newUsername"/>
+            Password <input type="password" id="newPass1" />
+            Repeat Password:   <input type="password" id="newPass2" />
+            Privileges: 
+            <input type="radio" name="priv"/> May
+            <input type="radio" name="priv"/> Joe
+            Other Crap:
+            <input type="radio" name="else"/> Da
+            <input type="radio" name="else"/> Jo
+            </form>
+        </div>
+        <button id="buttonOpenAddUser">Open Dialog</button>
+
     </body>
 </html>
