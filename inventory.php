@@ -295,6 +295,30 @@
 			echo "<input type =\"text\" name=\"genre\" id=\"genre\" class=\"text ui-widget-content ui-corner-all\" /><br><br>";
 		echo "</form>";
 	echo "</div>";
+	
+	//modify item instance
+	echo "<div id=\"dialog7\" title=\"Modify Item Instance\">";
+		echo "<form>";
+			echo "<!--Add new item information in the form below:-->";
+			echo "<label for=\"name\">Stock Number: </label>";
+			echo "<input type =\"text\" name=\"name\" id=\"name\" class=\"text ui-widget-content ui-corner-all\" /><br><br>";
+			echo "<label for=\"year\">Library Code: </label>";
+			echo "<input type =\"text\" name=\"year\" id=\"year\" class=\"text ui-widget-content ui-corner-all\" /><br><br>";
+			echo "<label for=\"genre\">Status: </label>";
+			echo "<input type =\"text\" name=\"genre\" id=\"genre\" class=\"text ui-widget-content ui-corner-all\" /><br><br>";
+		echo "</form>";
+	echo "</div>";
+	
+	echo "<div id=\"dialog8\" title=\"Delete Item Instance\">";
+		echo "<form>";
+			echo "<!--Add new item information in the form below:-->";
+			echo "<label for=\"name\">Stock Number: </label>";
+			echo "<input type =\"text\" name=\"name\" id=\"name\" class=\"text ui-widget-content ui-corner-all\" /><br><br>";
+			echo "<label for=\"year\">Library Code: </label>";
+			echo "<input type =\"text\" name=\"year\" id=\"year\" class=\"text ui-widget-content ui-corner-all\" /><br><br>";
+		echo "</form>";
+	echo "</div>";
+	
 
 ?>
 <script>
@@ -355,7 +379,27 @@
 		buttons:{ "OK": function(){
 				$( this ).dialog( "close" );
 		}}});
-	$( "#update2" ).click(function() {
+	$( "#add_inst" ).click(function() {
 		$( "#dialog6" ).dialog( "open" );
+	});
+	$( "#dialog7" ).dialog({ 
+		autoOpen: false, 
+		modal: true,
+		width: 400,
+		buttons:{ "OK": function(){
+				$( this ).dialog( "close" );
+		}}});
+	$( "#update2" ).click(function() {
+		$( "#dialog7" ).dialog( "open" );
+	});
+	$( "#dialog8" ).dialog({ 
+		autoOpen: false, 
+		modal: true,
+		width: 400,
+		buttons:{ "OK": function(){
+				$( this ).dialog( "close" );
+		}}});
+	$( "#delete2" ).click(function() {
+		$( "#dialog8" ).dialog( "open" );
 	});
 </script>
