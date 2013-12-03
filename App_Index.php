@@ -12,6 +12,8 @@
             a {font-family: Verdana,Arial,sans-serif;}
             div > div > table {border-collapse:collapse;}
             td {padding:3px 30px 3px 3px;}
+            p {font-family: Verdana,Arial,sans-serif; color: #115B79}
+            select {font-family: Verdana,Arial,sans-serif; color: #115B79}
         </style>
 
         <script>
