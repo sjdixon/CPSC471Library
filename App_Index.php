@@ -3,7 +3,9 @@
     <head>
         <!--Main page of our web application. Contains the tab framework and script files needed for the rest of the app-->
         <!--Gaby Comeau, November 22, 2013-->
+        <title>Book-a-Book</title>
         <script type="text/javascript" src="//ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
+        <!--script type="text/javascript" src="jquery-1.10.2.min.js"></script-->
         <script type="text/javascript" src="jquery-ui-1.10.3.custom/js/jquery-ui-1.10.3.custom.js"></script>
         <link href="jquery-ui-1.10.3.custom/css/ui-lightness/jquery-ui-1.10.3.custom.css" rel="stylesheet" type="text/css" />
         <!--Other CSS elements to style headers and links not included in the JQuery CSS page-->
@@ -12,6 +14,8 @@
             a {font-family: Verdana,Arial,sans-serif;}
             div > div > table {border-collapse:collapse;}
             td {padding:3px 30px 3px 3px;}
+            p {font-family: Verdana,Arial,sans-serif; color: #115B79}
+            select {font-family: Verdana,Arial,sans-serif; color: #115B79}
         </style>
 
         <script>

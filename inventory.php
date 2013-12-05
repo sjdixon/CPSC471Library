@@ -3,6 +3,11 @@
 // Script to generate main page and dialog pages to add and modify items in the library
 // Gaby Comeau, Nov. 21, 2013
 // Quick note that this function inherits Javascript and CSS libraries from App_Index.php	
+	$host = "localhost";
+	$user = "ubuntu";
+	$pass = "stephen123";				
+	mysql_connect($host, $user, $pass) or die("Could not connect: " . mysql_error());
+	mysql_select_db("library");
 	
 	//add new item
 	echo "<p>Use this form to add a new item</p>";
@@ -47,18 +52,18 @@
 <?php
 	//new book form
 	echo "<div id=\"dialog\" title=\"Add New Book\">";
-		echo "<form>";
+		echo "<form action = \"addItem.php\" method = \"post\">";
 			echo "<!--Add new item information in the form below:-->";
 			echo "<label for=\"name\">Title: </label>";
 			echo "<input type =\"text\" name=\"name\" id=\"name\" class=\"text ui-widget-content ui-corner-all\" /><br><br>";
-			echo "<label for=\"name\">ISBN: </label>";
-			echo "<input type =\"text\" name=\"name\" id=\"name\" class=\"text ui-widget-content ui-corner-all\" /><br><br>";
-			echo "<label for=\"name\">Author: </label>";
-			echo "<input type =\"text\" name=\"name\" id=\"name\" class=\"text ui-widget-content ui-corner-all\" /><br><br>";
-			echo "<label for=\"name\">Publisher: </label>";
-			echo "<input type =\"text\" name=\"name\" id=\"name\" class=\"text ui-widget-content ui-corner-all\" /><br><br>";
-			echo "<label for=\"name\">Edition: </label>";
-			echo "<input type =\"text\" name=\"name\" id=\"name\" class=\"text ui-widget-content ui-corner-all\" /><br><br>";	
+			echo "<label for=\"ISBN\">ISBN: </label>";
+			echo "<input type =\"text\" name=\"ISBN\" id=\"ISBN\" class=\"text ui-widget-content ui-corner-all\" /><br><br>";
+			echo "<label for=\"authorName\">Author: </label>";
+			echo "<input type =\"text\" name=\"authorName\" id=\"authorName\" class=\"text ui-widget-content ui-corner-all\" /><br><br>";
+			echo "<label for=\"pubName\">Publisher: </label>";
+			echo "<input type =\"text\" name=\"pubName\" id=\"pubName\" class=\"text ui-widget-content ui-corner-all\" /><br><br>";
+			echo "<label for=\"edition\">Edition: </label>";
+			echo "<input type =\"text\" name=\"edition\" id=\"edition\" class=\"text ui-widget-content ui-corner-all\" /><br><br>";	
 			echo "<label for=\"spinner\">Release Year: </label>";
 			echo "<input id=\"spinner\" name=\"spinner\" value=\"2013\" /><br><br>";
 			echo "<label for=\"genre\">Genre: </label>";
@@ -67,7 +72,8 @@
 			echo "<input type=\"text\" id=\"amount\" style=\"border: 0; color: #f6931f; background-color: #eeeeee; font-weight: bold;\" />";
 			echo "<div id=\"slider-range\"></div><br><br>";
 			echo "<label for=\"location\">Location: </label>";
-			echo "<input type =\"text\" name=\"location\" id=\"location\" class=\"text ui-widget-content ui-corner-all\" /><br><br><br>";		
+			echo "<input type =\"text\" name=\"location\" id=\"location\" class=\"text ui-widget-content ui-corner-all\" /><br><br><br>";	
+			echo "<button type=\"submit\" name=\"submit\" value=\"Submit\">OK</button>";	
 		echo "</form>";
 		?>
 		<script>
@@ -96,25 +102,25 @@
 	echo "<div id=\"dialog2\" title=\"Add New Audio Item\">";
 		echo "<form>";
 			echo "<!--Add new item information in the form below:-->";
-			echo "<label for=\"name\">Title: </label>";
-			echo "<input type =\"text\" name=\"name\" id=\"name\" class=\"text ui-widget-content ui-corner-all\" /><br><br>";
-			echo "<label for=\"name\">Creator: </label>";
-			echo "<input type =\"text\" name=\"name\" id=\"name\" class=\"text ui-widget-content ui-corner-all\" /><br><br>";
+			echo "<label for=\"name1\">Title: </label>";
+			echo "<input type =\"text\" name=\"name1\" id=\"name1\" class=\"text ui-widget-content ui-corner-all\" /><br><br>";
+			echo "<label for=\"artistName\">Creator: </label>";
+			echo "<input type =\"text\" name=\"artistName\" id=\"artistName\" class=\"text ui-widget-content ui-corner-all\" /><br><br>";
 			echo "<label for=\"spinner2\">Release Year: </label>";
-			echo "<input id=\"spinner2\" name=\"spinner\" value=\"2013\" /><br><br>";
-			echo "<label for=\"name\">UPC: </label>";
-			echo "<input type =\"text\" name=\"name\" id=\"name\" class=\"text ui-widget-content ui-corner-all\" /><br><br>";
-			echo "<label for=\"name\">Media Type: </label>";
-			echo "<input type =\"text\" name=\"name\" id=\"name\" class=\"text ui-widget-content ui-corner-all\" /><br><br>";
-			echo "<label for=\"name\">Production Company: </label>";
-			echo "<input type =\"text\" name=\"name\" id=\"name\" class=\"text ui-widget-content ui-corner-all\" /><br><br>";
-			echo "<label for=\"genre\">Genre: </label>";
-			echo "<input type =\"text\" name=\"genre\" id=\"genre\" class=\"text ui-widget-content ui-corner-all\" /><br><br>";
-			echo "<label for=\"amount\">Audience: </label>";
+			echo "<input id=\"spinner2\" name=\"spinner1\" value=\"2013\" /><br><br>";
+			echo "<label for=\"UPC\">UPC: </label>";
+			echo "<input type =\"text\" name=\"UPC\" id=\"UPC\" class=\"text ui-widget-content ui-corner-all\" /><br><br>";
+			echo "<label for=\"media\">Media Type: </label>";
+			echo "<input type =\"text\" name=\"media\" id=\"media\" class=\"text ui-widget-content ui-corner-all\" /><br><br>";
+			echo "<label for=\"producerName\">Production Company: </label>";
+			echo "<input type =\"text\" name=\"producerName\" id=\"producerName\" class=\"text ui-widget-content ui-corner-all\" /><br><br>";
+			echo "<label for=\"genre1\">Genre: </label>";
+			echo "<input type =\"text\" name=\"genre1\" id=\"genre1\" class=\"text ui-widget-content ui-corner-all\" /><br><br>";
+			echo "<label for=\"amount1\">Audience: </label>";
 			echo "<input type=\"text\" id=\"amount1\" style=\"border: 0; color: #f6931f; background-color: #eeeeee; font-weight: bold;\" />";
 			echo "<div id=\"slider-range1\"></div><br><br>";
-			echo "<label for=\"location\">Location: </label>";
-			echo "<input type =\"text\" name=\"location\" id=\"location\" class=\"text ui-widget-content ui-corner-all\" /><br><br><br>";	
+			echo "<label for=\"location1\">Location: </label>";
+			echo "<input type =\"text\" name=\"location1\" id=\"location1\" class=\"text ui-widget-content ui-corner-all\" /><br><br><br>";	
 		echo "</form>";
 		?>
 		<script>
@@ -135,31 +141,31 @@
 			});
 			$( "#amount1" ).val($( "#slider-range1" ).slider( "values", 0 ) + " - " + $( "#slider-range" ).slider( "values", 1 ) );
 		});
-		</script>
-	<?php
+		</script>	
+	<?php	
 	echo "</div>";
 	
 	//new video item form
 	echo "<div id=\"dialog3\" title=\"Add New Video Item\">";
 		echo "<form>";
 			echo "<!--Add new item information in the form below:-->";
-			echo "<label for=\"name\">Title: </label>";
-			echo "<input type =\"text\" name=\"name\" id=\"name\" class=\"text ui-widget-content ui-corner-all\" /><br><br>";
-			echo "<label for=\"name\">UPC: </label>";
-			echo "<input type =\"text\" name=\"name\" id=\"name\" class=\"text ui-widget-content ui-corner-all\" /><br><br>";
-			echo "<label for=\"name\">Media Type: </label>";
-			echo "<input type =\"text\" name=\"name\" id=\"name\" class=\"text ui-widget-content ui-corner-all\" /><br><br>";
-			echo "<label for=\"name\">Production Company: </label>";
-			echo "<input type =\"text\" name=\"name\" id=\"name\" class=\"text ui-widget-content ui-corner-all\" /><br><br>";
+			echo "<label for=\"name2\">Title: </label>";
+			echo "<input type =\"text\" name=\"name2\" id=\"name2\" class=\"text ui-widget-content ui-corner-all\" /><br><br>";
+			echo "<label for=\"UPC2\">UPC: </label>";
+			echo "<input type =\"text\" name=\"UPC2\" id=\"UPC2\" class=\"text ui-widget-content ui-corner-all\" /><br><br>";
+			echo "<label for=\"media2\">Media Type: </label>";
+			echo "<input type =\"text\" name=\"media2\" id=\"media2\" class=\"text ui-widget-content ui-corner-all\" /><br><br>";
+			echo "<label for=\"producerName2\">Production Company: </label>";
+			echo "<input type =\"text\" name=\"producerName2\" id=\"prodName2\" class=\"text ui-widget-content ui-corner-all\" /><br><br>";
 			echo "<label for=\"spinner3\">Release Year: </label>";
-			echo "<input id=\"spinner3\" name=\"spinner\" value=\"2013\" /><br><br>";
-			echo "<label for=\"genre\">Genre: </label>";
-			echo "<input type =\"text\" name=\"genre\" id=\"genre\" class=\"text ui-widget-content ui-corner-all\" /><br><br>";
+			echo "<input id=\"spinner3\" name=\"spinner2\" value=\"2013\" /><br><br>";
+			echo "<label for=\"genre2\">Genre: </label>";
+			echo "<input type =\"text\" name=\"genre2\" id=\"genre2\" class=\"text ui-widget-content ui-corner-all\" /><br><br>";
 			echo "<label for=\"amount2\">Audience: </label>";
 			echo "<input type=\"text\" id=\"amount2\" style=\"border: 0; color: #f6931f; background-color: #eeeeee; font-weight: bold;\" />";
 			echo "<div id=\"slider-range2\"></div><br><br>";
-			echo "<label for=\"location\">Location: </label>";
-			echo "<input type =\"text\" name=\"location\" id=\"location\" class=\"text ui-widget-content ui-corner-all\" /><br><br><br>";
+			echo "<label for=\"location2\">Location: </label>";
+			echo "<input type =\"text\" name=\"location2\" id=\"location2\" class=\"text ui-widget-content ui-corner-all\" /><br><br><br>";
 		echo "</form>";
 		?>
 		<script>
@@ -188,24 +194,24 @@
 	echo "<div id=\"dialog4\" title=\"Add New Magazine\">";
 		echo "<form>";
 			echo "<!--Add new item information in the form below:-->";
-			echo "<label for=\"name\">Title: </label>";
-			echo "<input type =\"text\" name=\"name\" id=\"name\" class=\"text ui-widget-content ui-corner-all\" /><br><br>";
-			echo "<label for=\"name\">Subtitle: </label>";
-			echo "<input type =\"text\" name=\"name\" id=\"name\" class=\"text ui-widget-content ui-corner-all\" /><br><br>";
+			echo "<label for=\"name3\">Title: </label>";
+			echo "<input type =\"text\" name=\"name3\" id=\"name3\" class=\"text ui-widget-content ui-corner-all\" /><br><br>";
+			echo "<label for=\"subName\">Subtitle: </label>";
+			echo "<input type =\"text\" name=\"subName\" id=\"subName\" class=\"text ui-widget-content ui-corner-all\" /><br><br>";
 			echo "<label for=\"spinner4\">Release Year: </label>";
-			echo "<input id=\"spinner4\" name=\"spinner\" value=\"2013\" /><br><br>";
-			echo "<label for=\"name\">Issue: </label>";
-			echo "<input type =\"text\" name=\"name\" id=\"name\" class=\"text ui-widget-content ui-corner-all\" /><br><br>";
-			echo "<label for=\"name\">Publisher: </label>";
-			echo "<input type =\"text\" name=\"name\" id=\"name\" class=\"text ui-widget-content ui-corner-all\" /><br><br>";
-			echo "<label for=\"genre\">Genre: </label>";
-			echo "<input type =\"text\" name=\"genre\" id=\"genre\" class=\"text ui-widget-content ui-corner-all\" /><br><br>";
+			echo "<input id=\"spinner4\" name=\"spinner3\" value=\"2013\" /><br><br>";
+			echo "<label for=\"issue\">Issue: </label>";
+			echo "<input type =\"text\" name=\"issue\" id=\"issue\" class=\"text ui-widget-content ui-corner-all\" /><br><br>";
+			echo "<label for=\"pubName2\">Publisher: </label>";
+			echo "<input type =\"text\" name=\"pubName2\" id=\"pubName2\" class=\"text ui-widget-content ui-corner-all\" /><br><br>";
+			echo "<label for=\"genre3\">Genre: </label>";
+			echo "<input type =\"text\" name=\"genre3\" id=\"genre3\" class=\"text ui-widget-content ui-corner-all\" /><br><br>";
 			echo "<label for=\"amount3\">Audience:</label>";
 			echo "<input type=\"text\" id=\"amount3\" style=\"border: 0; color: #f6931f; background-color: #eeeeee; font-weight: bold;\" />";
 			echo "<div id=\"slider-range3\"></div>";
 			echo "<p>Date: <input type=\"text\" id=\"datepicker1\" /></p><br>";
-			echo "<label for=\"location\">Location</label><br>";
-			echo "<input type =\"text\" name=\"location\" id=\"location\" class=\"text ui-widget-content ui-corner-all\" /><br><br><br>";
+			echo "<label for=\"location3\">Location</label><br>";
+			echo "<input type =\"text\" name=\"location3\" id=\"location3\" class=\"text ui-widget-content ui-corner-all\" /><br><br><br>";
 			
 		echo "</form>";
 		?>
@@ -241,18 +247,18 @@
 	echo "<div id=\"dialog5\" title=\"Add New Newspaper\">";
 		echo "<form>";
 			echo "<!--Add new item information in the form below:-->";
-			echo "<label for=\"name\">Title: </label>";
-			echo "<input type =\"text\" name=\"name\" id=\"name\" class=\"text ui-widget-content ui-corner-all\" /><br><br>";
+			echo "<label for=\"name4\">Title: </label>";
+			echo "<input type =\"text\" name=\"name4\" id=\"name4\" class=\"text ui-widget-content ui-corner-all\" /><br><br>";
 			echo "<label for=\"spinner5\">Release Year: </label>";
 			echo "<input id=\"spinner5\" name=\"spinner\" value=\"2013\" /><br><br>";
-			echo "<label for=\"genre\">Genre: </label>";
-			echo "<input type =\"text\" name=\"genre\" id=\"genre\" class=\"text ui-widget-content ui-corner-all\" /><br><br>";
+			echo "<label for=\"genre4\">Genre: </label>";
+			echo "<input type =\"text\" name=\"genre4\" id=\"genre4\" class=\"text ui-widget-content ui-corner-all\" /><br><br>";
 			echo "<label for=\"amount4\">Audience: </label>";
 			echo "<input type=\"text\" id=\"amount4\" style=\"border: 0; color: #f6931f; background-color: #eeeeee; font-weight: bold;\" />";
 			echo "<div id=\"slider-range4\"></div>";
 			echo "<p>Date: <input type=\"text\" id=\"datepicker\" /></p><br>";
-			echo "<label for=\"location\">Location: </label>";
-			echo "<input type =\"text\" name=\"location\" id=\"location\" class=\"text ui-widget-content ui-corner-all\" /><br><br><br>";
+			echo "<label for=\"location4\">Location: </label>";
+			echo "<input type =\"text\" name=\"location4\" id=\"location4\" class=\"text ui-widget-content ui-corner-all\" /><br><br><br>";
 		echo "</form>";
 		?>
 		<script>
@@ -286,25 +292,65 @@
 	//new item instance
 	echo "<div id=\"dialog6\" title=\"Add Item Instance\">";
 		echo "<form>";
-			echo "<!--Add new item information in the form below:-->";
-			echo "<label for=\"name\">Stock Number: </label>";
-			echo "<input type =\"text\" name=\"name\" id=\"name\" class=\"text ui-widget-content ui-corner-all\" /><br><br>";
-			echo "<label for=\"year\">Library Code: </label>";
-			echo "<input type =\"text\" name=\"year\" id=\"year\" class=\"text ui-widget-content ui-corner-all\" /><br><br>";
-			echo "<label for=\"genre\">Status: </label>";
-			echo "<input type =\"text\" name=\"genre\" id=\"genre\" class=\"text ui-widget-content ui-corner-all\" /><br><br>";
+			echo "<!--Add new item instance information in the form below:-->";
+			echo "<label for=\"stockNum\">Stock Number: </label>";
+			echo "<input type =\"text\" name=\"stockNum\" id=\"stockNum\" class=\"text ui-widget-content ui-corner-all\" /><br><br>";
+			echo "<label for=\"lCode\">Library Code: </label>";
+			echo "<input type =\"text\" name=\"lCode\" id=\"lCode\" class=\"text ui-widget-content ui-corner-all\" /><br><br>";
+			echo "<label for=\"status\">Status: </label>";
+			echo "<input type =\"text\" name=\"status\" id=\"status\" class=\"text ui-widget-content ui-corner-all\" /><br><br>";
+		echo "</form>";
+	echo "</div>";
+	
+	//modify item instance
+	echo "<div id=\"dialog7\" title=\"Modify Item Instance\">";
+		echo "<form>";
+			echo "<!--Modify info in the form below:-->";
+			echo "<label for=\"stockNum1\">Stock Number: </label>";
+			echo "<input type =\"text\" name=\"stockNum1\" id=\"stockNum1\" class=\"text ui-widget-content ui-corner-all\" /><br><br>";
+			echo "<label for=\"lCode1\">Library Code: </label>";
+			echo "<input type =\"text\" name=\"lCode1\" id=\"lCode1\" class=\"text ui-widget-content ui-corner-all\" /><br><br>";
+			echo "<label for=\"status1\">Status: </label>";
+			echo "<input type =\"text\" name=\"status1\" id=\"status1\" class=\"text ui-widget-content ui-corner-all\" /><br><br>";
+		echo "</form>";
+	echo "</div>";
+	
+	//delete item instance
+	echo "<div id=\"dialog8\" title=\"Delete Item Instance\">";
+		echo "<form>";
+			echo "<!--Details on the instance to be deleted:-->";
+			echo "<label for=\"stockNum2\">Stock Number: </label>";
+			echo "<input type =\"text\" name=\"stockNum2\" id=\"stockNum2\" class=\"text ui-widget-content ui-corner-all\" /><br><br>";
+			echo "<label for=\"lCode2\">Library Code: </label>";
+			echo "<input type =\"text\" name=\"lCode2\" id=\"lCode2\" class=\"text ui-widget-content ui-corner-all\" /><br><br>";
+		echo "</form>";
+	echo "</div>";
+	
+	//delete item
+	echo "<div id=\"dialog9\" title=\"Delete Item\">";
+		echo "<form>";
+			echo "<!--Info on the item to be deleted:-->";
+			echo "<label for=\"lCode3\">Library Code: </label>";
+			echo "<input type =\"text\" name=\lCode3\" id=\"lCode3\" class=\"text ui-widget-content ui-corner-all\" /><br><br>";
+		echo "</form>";
+	echo "</div>";
+	
+	//modify item
+	echo "<div id=\"dialog10\" title=\"Modify\">";
+		echo "<form>";
+			echo "<!--Modify info in the form below:-->";
+			echo "<label for=\"lCode4\">Library Code: </label>";
+			echo "<input type =\"text\" name=\"lCode4\" id=\"lCode4\" class=\"text ui-widget-content ui-corner-all\" /><br><br>";
 		echo "</form>";
 	echo "</div>";
 
 ?>
-<script>
+<script type="text/javascript">
 	$( "#dialog" ).dialog({ 
 		autoOpen: false, 
 		modal: true,
-		width: 400,
-		buttons:{ "OK": function(){
-				$( this ).dialog( "close" );
-		}}});
+		width: 400
+	});	
 	$( "#add1" ).click(function() {
 		$( "#dialog" ).dialog( "open" );
 	});
@@ -332,7 +378,7 @@
 		autoOpen: false, 
 		modal: true,
 		width: 400,
-		buttons:{ "OK": function(){
+		buttons:{ "OK": function(){	
 				$( this ).dialog( "close" );
 		}}});
 	$( "#add4" ).click(function() {
@@ -353,9 +399,51 @@
 		modal: true,
 		width: 400,
 		buttons:{ "OK": function(){
+			$( this ).dialog( "close" );
+		}},
+		 close: function() {
+		}});
+	$( "#add_inst" ).click(function() {
+		$( "#dialog6" ).dialog( "open" );
+	});
+	$( "#dialog7" ).dialog({ 
+		autoOpen: false, 
+		modal: true,
+		width: 400,
+		buttons:{ "OK": function(){
 				$( this ).dialog( "close" );
 		}}});
 	$( "#update2" ).click(function() {
-		$( "#dialog6" ).dialog( "open" );
+		$( "#dialog7" ).dialog( "open" );
+	});
+	$( "#dialog8" ).dialog({ 
+		autoOpen: false, 
+		modal: true,
+		width: 400,
+		buttons:{ "OK": function(){
+				$( this ).dialog( "close" );
+		}}});
+	$( "#delete2" ).click(function() {
+		$( "#dialog8" ).dialog( "open" );
+	});
+	$( "#dialog9" ).dialog({ 
+		autoOpen: false, 
+		modal: true,
+		width: 400,
+		buttons:{ "OK": function(){
+				$( this ).dialog( "close" );
+		}}});
+	$( "#delete1" ).click(function() {
+		$( "#dialog9" ).dialog( "open" );
+	});
+	$( "#dialog10" ).dialog({ 
+		autoOpen: false, 
+		modal: true,
+		width: 400,
+		buttons:{ "OK": function(){
+				$( this ).dialog( "close" );
+		}}});
+	$( "#update1" ).click(function() {
+		$( "#dialog10" ).dialog( "open" );
 	});
 </script>
