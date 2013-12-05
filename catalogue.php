@@ -3,9 +3,9 @@
 
 
 <div id="parent">
-	<p>Catalogue</p>
+	<p>Fill in the fields below to search the library catalogue</p>
 	<select id="combobox">
-		<option value="">Type</option>
+		<option value="">Select Type</option>
 		<option value="Book">Book</option>
 		<option value="Audio">Audio</option>
 		<option value="Video">Video</option>
@@ -13,7 +13,7 @@
 		<option value="Magazine">Magazine</option>
 	</select>
     <input  id="Search" value1=""/>
-    <select id="combobox">
+    <select id="combobox1">
 		<option value1="">Select one...</option>
 		<option value1="Title">Title</option>
 		<option value1="year">Year</option>
@@ -29,3 +29,7 @@
 		$( ".radioset").buttonset();
 	});
 </script> 
+<script type = "text/javascript">
+	$("#combobox").menu();
+	$("#combobox1").menu();
+</script>	
