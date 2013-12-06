@@ -1,4 +1,5 @@
-<!Done by Rhianne>
+<!Done by Rhianne Hadfield> 
+<!Display a the login page, but contains an alert to tell the user that they put in an invalid input>
 <!DOCTYPE html>
 <html>
 <head>
@@ -11,9 +12,12 @@
 	
     
 	<script>
+            function errorAlert(){
+                alert("Invalid Username or Password");
+            }
 	</script>
 </head> 
-<body>
+<body onload="errorAlert()">
    <form action='verification.php'>
         <label for="username">Username: </label>
         <input type='text' name="username" id="username">

@@ -1,33 +1,25 @@
+<!Done by Rhianne Hadfield> 
 <?php
-
-// Create connection
-$host = "localhost";
-
-$username = $_POST['username'];
-$password = $_POST['password'];
-mysql_connect($host, $username, $password) or die("Could not connect: " . mysql_error());
-$db_selected = mysql_select_db('library');
-if (!$db_selected) {
-    die ('Can\'t use library : ' . mysql_error());
-}
-$q = sprintf("SELECT LibrarianId FROM Librarian WHERE username='%s'", mysql_real_escape_string($username));
-$ifCorrect = mysql_query($q);
-
-if (!$ifCorrect) {
-    $message = 'Invalid query: ' . mysql_error() . "\n";
-    $message .= 'Whole query: ' . $q;
-    die($message);
-}
-$count = 0;
-while ($ifCorrect = mysql_fetch_assoc($ifCorrect)) {
-    $count++;
-}
-
-if ($count == 1) {
-    echo "Login Successfull";
-    header("Location: App_Index.php"); // This is wherever you want to redirect the user to
-} else {
-    echo "Login not Successfull";
-    header("Location: Login.php"); // Wherever you want the user to go when they fail the login
-}
-?>
+        // Create connection
+        $host = "localhost";
+	$user = "root";
+	$pass = "root";				
+	mysql_connect($host, $user, $pass) or die("Could not connect: " . mysql_error());
+	mysql_select_db("library");
+          $username=$_POST['username'];
+          $lId=$_POST['id'];
+          
+          $q="SELECT count(*) FROM Librarian WHERE username='$username' and id='$lId'";
+         $ifCorrect=mysql_query($q);
+          
+         $count=$ifCorrect;
+	 
+	if ($count == 1) {
+            echo "Login Successfull";
+	     header("Location: App_Index.php"); // This is wherever you want to redirect the user to
+            }
+        else {
+             echo "Login not Successfull";
+	     header("Location: loginInvalidInput.php"); // Wherever you want the user to go when they fail the login
+            }
+        ?>
