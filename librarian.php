@@ -8,11 +8,14 @@ By: Stephen Dixon
     <head>
         <meta charset="utf-8">
         <title>Manage Librarians</title>
-        <link rel="stylesheet" href="http://code.jquery.com/ui/1.10.3/themes/smoothness/jquery-ui.css">
+<!--        
+<link rel="stylesheet" href="http://code.jquery.com/ui/1.10.3/themes/smoothness/jquery-ui.css">
         <script src="http://code.jquery.com/jquery-1.9.1.js"></script>
         <script src="http://code.jquery.com/ui/1.10.3/jquery-ui.js"></script>
+-->
+
+<!-- WARNING - THE STYLE THING HERE HAS THE POTENTIAL TO CAUSE A DEFECT -->
         <style>
-            body { font-size: 62.5%; }
             label, input { display:block; }
             input.text { margin-bottom:12px; width:95%; padding: .4em; }
             fieldset { padding:0; border:0; margin-top:25px; }

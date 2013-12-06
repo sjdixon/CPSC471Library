@@ -10,7 +10,7 @@ $db_selected = mysql_select_db('library');
 if (!$db_selected) {
     die ('Can\'t use library : ' . mysql_error());
 }
-$q = sprintf("SELECT LibrarianId FROM Librarian WHERE name='%s' AND pass='%s'", mysql_real_escape_string($username), mysql_real_escape_string($password));
+$q = sprintf("SELECT LibrarianId FROM Librarian WHERE username='%s'", mysql_real_escape_string($username));
 $ifCorrect = mysql_query($q);
 
 if (!$ifCorrect) {
