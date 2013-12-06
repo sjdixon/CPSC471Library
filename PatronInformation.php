@@ -3,10 +3,10 @@
 <head>
 <meta charset="utf-8">
 <title>Book a Book - Patron</title>
-<link rel="stylesheet" href="http://code.jquery.com/ui/1.10.3/themes/smoothness/jquery-ui.css">
-<script src="http://code.jquery.com/jquery-1.9.1.js"></script>
-<script src="http://code.jquery.com/ui/1.10.3/jquery-ui.js"></script>
-<link rel="stylesheet" href="/resources/demos/style.css">
+<!--link rel="stylesheet" href="http://code.jquery.com/ui/1.10.3/themes/smoothness/jquery-ui.css">
+<!--script src="http://code.jquery.com/jquery-1.9.1.js"></script>
+<!--script src="http://code.jquery.com/ui/1.10.3/jquery-ui.js"></script>
+<!--link rel="stylesheet" href="/resources/demos/style.css">
 //accordian
 <script>
 $(function() {
@@ -16,7 +16,7 @@ collapsible: true
 });
 </script>
 //table
- <style>
+<style>
 body { font-size: 62.5%; }
 label, input { display:block; }
 input.text { margin-bottom:12px; width:100%; padding: .4em; }
@@ -45,7 +45,7 @@ $( "#selectable" ).selectable();
 
 <script>
  //Loan Dialog Function
- $(function() {
+$(function() {
 $( "#dialog-form1" ).dialog({
 autoOpen: false,
 height: 300,

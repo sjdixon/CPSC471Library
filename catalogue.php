@@ -12,7 +12,7 @@
 		<option value="Newspaper">Newspaper</option>
 		<option value="Magazine">Magazine</option>
 	</select>
-    <input  id="Search" value1=""/>
+    <input  id="Search" value1="" size = "200"/>
     <select id="combobox1">
 		<option value1="">Select one...</option>
 		<option value1="Title">Title</option>
@@ -29,7 +29,3 @@
 		$( ".radioset").buttonset();
 	});
 </script> 
-<script type = "text/javascript">
-	$("#combobox").menu();
-	$("#combobox1").menu();
-</script>	

@@ -3,11 +3,6 @@
 // Script to generate main page and dialog pages to add and modify items in the library
 // Gaby Comeau, Nov. 21, 2013
 // Quick note that this function inherits Javascript and CSS libraries from App_Index.php	
-	$host = "localhost";
-	$user = "ubuntu";
-	$pass = "stephen123";				
-	mysql_connect($host, $user, $pass) or die("Could not connect: " . mysql_error());
-	mysql_select_db("library");
 	
 	//add new item
 	echo "<p>Use this form to add a new item</p>";
@@ -52,7 +47,7 @@
 <?php
 	//new book form
 	echo "<div id=\"dialog\" title=\"Add New Book\">";
-		echo "<form action = \"addItem.php\" method = \"post\">";
+		echo "<form action = \"addBook.php\" method = \"post\">";
 			echo "<!--Add new item information in the form below:-->";
 			echo "<label for=\"name\">Title: </label>";
 			echo "<input type =\"text\" name=\"name\" id=\"name\" class=\"text ui-widget-content ui-corner-all\" /><br><br>";

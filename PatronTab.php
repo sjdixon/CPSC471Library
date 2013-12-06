@@ -1,24 +1,70 @@
-<!doctype html>
-<html lang="en">
-<head>
-<meta charset="utf-8">
-<title>jQuery UI Dialog - Modal form</title>
-<link rel="stylesheet" href="http://code.jquery.com/ui/1.10.3/themes/smoothness/jquery-ui.css">
-<script src="http://code.jquery.com/jquery-1.9.1.js"></script>
-<script src="http://code.jquery.com/ui/1.10.3/jquery-ui.js"></script>
-<link rel="stylesheet" href="/resources/demos/style.css">
-<style>
-body { font-size: 62.5%; }
-label, input { display:block; }
-input.text { margin-bottom:12px; width:95%; padding: .4em; }
-fieldset { padding:0; border:0; margin-top:25px; }
-h1 { font-size: 1.2em; margin: .6em 0; }
-div#users-contain { width: 350px; margin: 20px 0; }
-div#users-contain table { margin: 1em 0; border-collapse: collapse; width: 100%; }
-div#users-contain table td, div#users-contain table th { border: 1px solid #eee; padding: .6em 10px; text-align: left; }
-.ui-dialog .ui-state-error { padding: .3em; }
-.validateTips { border: 1px solid transparent; padding: 0.3em; }
-</style>
+
+<!--style>
+//body { font-size: 62.5%; }
+//label, input { display:block; }
+//input.text { margin-bottom:12px; width:95%; padding: .4em; }
+//fieldset { padding:0; border:0; margin-top:25px; }
+//h1 { font-size: 1.2em; margin: .6em 0; }
+//div#users-contain { width: 350px; margin: 20px 0; }
+//div#users-contain table { margin: 1em 0; border-collapse: collapse; width: 100%; }
+//div#users-contain table td, div#users-contain table th { border: 1px solid #eee; padding: .6em 10px; text-align: left; }
+//.ui-dialog .ui-state-error { padding: .3em; }
+//.validateTips { border: 1px solid transparent; padding: 0.3em; }
+<!--/style>
+
+<button type=\"button\" id = \"add_patron\">Add Patron</button>
+    
+<div id="dialog-confirm" title="Delete Patrons">
+<p>These Patrons will be permanently deleted. Are you sure?</p>
+</div>
+
+<div id="dialog-form" title="Add a New Patron">
+	<form>
+		<fieldset>
+			<label for="id">Account Number</label>
+			<input type="number" name="id" id="id" class="text ui-widget-content ui-corner-all">
+			<label for="name">Name</label>
+			<input type="text" name="name" id="name" class="text ui-widget-content ui-corner-all">
+			<label for="email">Email</label>
+			<input type="text" name="email" id="email" value="" class="text ui-widget-content ui-corner-all">
+			<label for="address">Address</label>
+			<input type="text" name="address" id="address" value="" class="text ui-widget-content ui-corner-all">
+			<label for="phone">Phone</label>
+			<input type="text" name="phone" id="phone" class="text ui-widget-content ui-corner-all">
+		</fieldset>
+	</form>
+</div>
+
+<div>
+    <input type="text" name="inlineSearch" id="iSearch" value="" class="text ui-widget-content ui-corner-all">
+    <input type="submit" onclick="Search()">Search</button>
+    <button id="add">Add new Patron</button>
+    <button id="remove">Remove</button>
+</div>
+<div id="users-contain" class="ui-widget">
+<!--This is the table that stores the values provided by the php above>
+	<h1></h1>
+	<table id="users" class="ui-widget ui-widget-content">
+		<thead>
+			<tr class="ui-widget-header ">
+				<th></th>
+				<th>AccountNo</th>
+				<th>Name</th>
+				<th>Expires</th>
+				<th>User Profile</th>
+			</tr>
+		</thead>
+		<tbody>
+			<tr>
+				<td></td>
+				<td></td>
+				<td></td>
+				<td></td>
+				<td></td>
+			</tr>
+		</tbody>
+	</table>
+</div>
 <script> 
 //This Function fills the table with entrys when the tab is opened
 $(function(){
@@ -265,59 +311,3 @@ function Search() {
         $i++;
 }
 </script>
-</head>
-<body>
-    
-<div id="dialog-confirm" title="Delete Patrons">
-<p>These Patrons will be permanently deleted. Are you sure?</p>
-</div>
-
-<div id="dialog-form" title="Add a New Patron">
-<form>
-<fieldset>
-<label for="id">Account Number</label>
-<input type="number" name="id" id="id" class="text ui-widget-content ui-corner-all">
-<label for="name">Name</label>
-<input type="text" name="name" id="name" class="text ui-widget-content ui-corner-all">
-<label for="email">Email</label>
-<input type="text" name="email" id="email" value="" class="text ui-widget-content ui-corner-all">
-<label for="address">Address</label>
-<input type="text" name="address" id="address" value="" class="text ui-widget-content ui-corner-all">
-<label for="phone">Phone</label>
-<input type="text" name="phone" id="phone" class="text ui-widget-content ui-corner-all">
-</fieldset>
-</form>
-</div>
-
-<div>
-    <input type="text" name="inlineSearch" id="iSearch" value="" class="text ui-widget-content ui-corner-all">
-    <input type="submit" onclick="Search()">Search</button>
-    <button id="add">Add new Patron</button>
-    <button id="remove">Remove</button>
-</div>
-<div id="users-contain" class="ui-widget">
-<!This is the table that stores the values provided by the php above>
-<h1></h1>
-<table id="users" class="ui-widget ui-widget-content">
-<thead>
-<tr class="ui-widget-header ">
-<th></th>
-<th>AccountNo</th>
-<th>Name</th>
-<th>Expires</th>
-<th>User Profile</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td></td>
-<td></td>
-<td></td>
-<td></td>
-<td></td>
-</tr>
-</tbody>
-</table>
-</div>
-</body>
-</html>
