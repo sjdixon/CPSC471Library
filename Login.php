@@ -14,7 +14,7 @@
 	</script>
 </head> 
 <body>
-   <form action='verfivation.php'>
+   <form action='verification.php'>
         <label for="username">Username: </label>
         <input type='text' name="username" id="username">
     

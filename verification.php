@@ -1,13 +1,11 @@
  <?php
         // Create connection
-        $host = "MyPC";
-	$user = "root";
-	$pass = "root";				
+        $host = "localhost";
 	mysql_connect($host, $user, $pass) or die("Could not connect: " . mysql_error());
 	mysql_select_db("library");
             $username=$_POST['username'];
             $password=$_POST['password'];
-          $q=sprintf("SELECT LibrianId FROM Librarian WHERE username='%s' AND pass='%s'", mysql_real_escape_string($username), mysql_real_escape_string($password));
+          $q=sprintf("SELECT LibrarianId FROM Librarian WHERE name='%s' AND pass='%s'", mysql_real_escape_string($username), mysql_real_escape_string($password));
           $ifCorrect=mysql_query($q);
           
           if (! $ifCorrect) {
