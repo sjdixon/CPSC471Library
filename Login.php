@@ -11,46 +11,17 @@
 	
     
 	<script>
-	function submit() {
-        <?php
-        // Create connection
-        $con=mysqli_connect("ec2-54-201-32-111.us-west-2.compute.amazonaws.com","ubuntu","stephen123","my_db");
-
-        // Check connection
-        if (mysqli_connect_errno())
-          {
-          echo "Failed to connect to MySQL: " . mysqli_connect_error();
-          }
-          $ifCorrect=mysqli_query($con, "SELECT LibrianId FROM Librarian WHERE username='$_POST[username]' AND pass='$_POST[password]'");
-          $count=0;
-          while ($ifCorrect = mysql_fetch_assoc($ifCorrect)) {
-	     $count++;
-	}
-	 
-	if ($count == 1) {
-            echo "Login Successfull";
-	     header("Location: App_Index.php"); // This is wherever you want to redirect the user to
-            }
-        else {
-             echo "Login not Successfull";
-	     header("Location: Login.php"); // Wherever you want the user to go when they fail the login
-            }
-        ?>
-        }
 	</script>
 </head> 
 <body>
-    <div id="username">
+   <form action='verfivation.php'>
         <label for="username">Username: </label>
-        <input type='text' id="username">
-    </div>
+        <input type='text' name="username" id="username">
     
-    <div id="Password">
         <label for="password">Password: </label>
-        <input type='password' id="password">
-    </div>
-    <div>
-    <button type="submit" onclick="submit()" id="submit">Login</button></a>
-    </div>
+        <input type='password' name="username" id="password">
+
+    <button type="submit" id="submit">Login</button>
+    </form>
 </body>
 </html>
