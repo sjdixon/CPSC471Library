@@ -18,8 +18,8 @@
         <label for="username">Username: </label>
         <input type='text' name="username" id="username">
     
-        <label for="id">IdNo: </label>
-        <input type='id' name="id" id="id">
+        <label for="password">Password: </label>
+        <input type='password' name="password" id="id">
 
     <button type="submit" id="submit">Login</button>
     </form>

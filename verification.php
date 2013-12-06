@@ -7,9 +7,9 @@
 	mysql_connect($host, $user, $pass) or die("Could not connect: " . mysql_error());
 	mysql_select_db("library");
           $username=$_POST['username'];
-          $lId=$_POST['id'];
+          $password=$_POST['password'];
           
-          $q="SELECT count(*) FROM Librarian WHERE username='$username' and id='$lId'";
+          $q="SELECT count(*) FROM Librarian WHERE username='$username' and pass='$password'";
          $ifCorrect=mysql_query($q);
           
          $count=$ifCorrect;
