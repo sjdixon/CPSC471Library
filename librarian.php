@@ -72,8 +72,8 @@ By: Stephen Dixon
                                 $("#users tbody").append("<tr>" +
                                         "<td>" + name.val() + "</td>" +
                                         "<td>" + $.datepicker.formatDate('yy-mm-dd', new Date())
-                                         + "</td>" +
-                                        "<td></td>" + 
+                                        + "</td>" +
+                                        "<td></td>" +
                                         "<td>" + username.val() + "</td>" +
                                         "</tr>");
                                 $(this).dialog("close");
@@ -92,6 +92,20 @@ By: Stephen Dixon
                         .click(function() {
                             $("#dialog-form").dialog("open");
                         });
+                $("#remove-user-form").dialog({
+                    autoOpen: false,
+                    height: 300,
+                    width: 350,
+                    modal: true,
+                    buttons: {
+                        close: function() {
+                            $(this).dialog("close");
+                        }
+                    }
+                });
+                $("#remove-user").button().click(function() {
+                    $("#remove-user-form").dialog("open");
+                });
             });
         </script>
     </head>
@@ -108,6 +122,14 @@ By: Stephen Dixon
                 </fieldset>
             </form>
         </div>
+        <div id="remove-user-form" title="Remove User">
+                <p> Got something</p>
+            <form id="removeLibrarianForm" action="removeLibrarian.php" method="post">
+                    <label for="name">Name</label>
+                    <input type="text" name="name" id="name" class="text ui-widget-content ui-corner-all">
+            </form>
+        </div>
+
         <div id="users-contain" class="ui-widget">
             <h1>Existing Users:</h1>
 
@@ -140,5 +162,6 @@ By: Stephen Dixon
             </table>
         </div>
         <button  id="create-user">Create new user</button>
+        <button id="remove-user">Delete User </button>
     </body>
 </html>
