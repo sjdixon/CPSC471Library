@@ -8,13 +8,6 @@ By: Stephen Dixon
     <head>
         <meta charset="utf-8">
         <title>Manage Librarians</title>
-<!--        
-<link rel="stylesheet" href="http://code.jquery.com/ui/1.10.3/themes/smoothness/jquery-ui.css">
-        <script src="http://code.jquery.com/jquery-1.9.1.js"></script>
-        <script src="http://code.jquery.com/ui/1.10.3/jquery-ui.js"></script>
--->
-
-<!-- WARNING - THE STYLE THING HERE HAS THE POTENTIAL TO CAUSE A DEFECT -->
         <style>
             label, input { display:block; }
             input.text { margin-bottom:12px; width:95%; padding: .4em; }
@@ -30,8 +23,7 @@ By: Stephen Dixon
             $(function() {
                 var name = $("#name"),
                         username = $("#username"),
-                        id=$("#idBox"),
-                        allFields = $([]).add(name).add(username).add(id),
+                        allFields = $([]).add(name).add(username),
                         tips = $(".validateTips");
                 function updateTips(t) {
                     tips
@@ -73,21 +65,15 @@ By: Stephen Dixon
                             bValid = bValid && checkLength(username, "username", 3, 16);
                             bValid = bValid && checkRegexp(username, /^[a-z]([0-9a-z_])+$/i, "Username may consist of a-z, 0-9, underscores, begin with a letter.");
                             // From jquery.validate.js (by joern), contributed by Scott Gonzalez: http://projects.scottsplayground.com/email_address_validation/
-                            //bValid = bValid && checkRegexp(email, /^((([a-z]|\d|[!#\$%&'\*\+\-\/=\?\^_`{\|}~]|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])+(\.([a-z]|\d|[!#\$%&'\*\+\-\/=\?\^_`{\|}~]|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])+)*)|((\x22)((((\x20|\x09)*(\x0d\x0a))?(\x20|\x09)+)?(([\x01-\x08\x0b\x0c\x0e-\x1f\x7f]|\x21|[\x23-\x5b]|[\x5d-\x7e]|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])|(\\([\x01-\x09\x0b\x0c\x0d-\x7f]|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF]))))*(((\x20|\x09)*(\x0d\x0a))?(\x20|\x09)+)?(\x22)))@((([a-z]|\d|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])|(([a-z]|\d|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])([a-z]|\d|-|\.|_|~|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])*([a-z]|\d|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])))\.)+(([a-z]|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])|(([a-z]|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])([a-z]|\d|-|\.|_|~|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])*([a-z]|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])))\.?$/i, "eg. ui@jquery.com");
 
-                            $.ajax({
-                                type: "post",
-                                url: "addLibrarian.php",
-                                data: "name=" + name + 
-                                        "&username=" + username +
-                                        "&id=" + id + 
-                                        "&valid=" + bValid;
-                            });
 
                             if (bValid) {
+                                $("form#addLibrarianForm").submit();
                                 $("#users tbody").append("<tr>" +
-                                        "<td>" + id.val()+ "</td>" +
-                                        "<td>" + name.val() +"</td>"
+                                        "<td>" + name.val() + "</td>" +
+                                        "<td>" + $.datepicker.formatDate('yy-mm-dd', new Date())
+                                         + "</td>" +
+                                        "<td></td>" + 
                                         "<td>" + username.val() + "</td>" +
                                         "</tr>");
                                 $(this).dialog("close");
@@ -113,10 +99,8 @@ By: Stephen Dixon
     <body>
         <div id="dialog-form" title="Create new user">
             <p class="validateTips">All form fields are required.</p>
-            <form>
+            <form id="addLibrarianForm" action="addLibrarian.php" method="post">
                 <fieldset>
-                    <label for="idBox">id</label>
-                    <input type="text" name="idBox" id="idBox" class="text ui-widget-content ui-corner-all">
                     <label for="name">Name</label>
                     <input type="text" name="name" id="name" class="text ui-widget-content ui-corner-all">
                     <label for="username">Username</label>
@@ -128,39 +112,33 @@ By: Stephen Dixon
             <h1>Existing Users:</h1>
 
             <?php
-            $server = mysql_connect("localhost","ubuntu", "stephen123");
+            $server = mysql_connect("localhost", "ubuntu", "stephen123");
             $db = mysql_select_db("library", $server);
-            $query = mysql_query("select * from Librarian");
-
+            $query = mysql_query("select * from Librarian where endDate is NULL");
             ?>
 
 
             <table id="users" class="ui-widget ui-widget-content">
                 <thead>
                     <tr class="ui-widget-header ">
-                        <th>ID</th>
                         <th>Name</th>
                         <th>Start Date</th>
-                        <th>End Date</th>
                         <th>Username</th>
                     </tr>
                 </thead>
                 <tbody>
                     <?php
-
-                    while ($row=mysql_fetch_array($query)){
-                    echo "<tr>";
-                    echo "<td>".$row[id]."</td>";
-                    echo "<td>".$row[name]."</td>";
-                    echo "<td>".$row[startDate]."</td>";
-                    echo "<td>".$row[endDate]."</td>";
-                    echo "<td>".$row[username]."</td>";
-                    echo "</tr>";
+                    while ($row = mysql_fetch_array($query)) {
+                        echo "<tr>";
+                        echo "<td>" . $row[name] . "</td>";
+                        echo "<td>" . $row[startDate] . "</td>";
+                        echo "<td>" . $row[username] . "</td>";
+                        echo "</tr>";
                     }
                     ?>
                 </tbody>
             </table>
         </div>
-        <button id="create-user">Create new user</button>
+        <button  id="create-user">Create new user</button>
     </body>
 </html>
