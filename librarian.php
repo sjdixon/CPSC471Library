@@ -69,7 +69,7 @@ By: Stephen Dixon
 
                             if (bValid) {
                                 $("form#addLibrarianForm").submit();
-                                
+
                                 // This would be useful if page didn't redirect
                                 $("#users tbody").append("<tr>" +
                                         "<td>" + name.val() + "</td>" +
