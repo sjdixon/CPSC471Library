@@ -124,7 +124,7 @@ By: Stephen Dixon
 
         <div id="dialog-form" title="Create new user">
             <p class="validateTips">All form fields are required.</p>
-            <form id="addLibrarianForm" action="Helper/Librarian/addLibrarian.php" method="post">
+            <form id="addLibrarianForm" action="Processing/Librarian/addLibrarian.php" method="post">
                 <fieldset>
                     <label for="name">Name</label>
                     <input type="text" name="name" id="name" class="text ui-widget-content ui-corner-all">
@@ -134,7 +134,7 @@ By: Stephen Dixon
             </form>
         </div>
         <div id="terminate-user-form" title="Remove User">
-            <form id="termLibrarians" action="Helper/Librarian/terminateLibrarian.php" method="post">
+            <form id="termLibrarians" action="Processing/Librarian/terminateLibrarian.php" method="post">
                 <table id="termCands" class="ui-widget ui-widget-content">
                     <thead>
                         <tr class="ui-widget-header">
@@ -165,10 +165,7 @@ By: Stephen Dixon
         </div>
 
         <div id="users-contain" class="ui-widget">
-            <h1>Existing Users:</h1>
-
-
-
+            <h1>Existing Users</h1>
             <table id="users" class="ui-widget ui-widget-content">
                 <thead>
                     <tr class="ui-widget-header ">
@@ -191,7 +188,7 @@ By: Stephen Dixon
                 </tbody>
             </table>
         </div>
-        <button  id="create-user">Create new user</button>
-        <button id="terminate-user">Delete User </button>
+        <button  id="create-user">Create</button>
+        <button id="terminate-user">Remove</button>
     </body>
 </html>
