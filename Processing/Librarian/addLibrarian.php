@@ -12,14 +12,14 @@ $result = mysql_query($query);
 error_log(print_r($_REQUEST,true));
 
 if($result){
-    echo "Your comment has been sent";
+    die("6");
 }
 else{
-    echo "Error in sending your comment";
+    echo "Error in sending your user";
       	echo "could not insert into Item table <br />";
     	trigger_error(mysql_error(), E_USER_ERROR);
 }
 
-   header("Location: App_Index.php");
+   header("Location: ../../App_Index.php");
    exit();
 ?>

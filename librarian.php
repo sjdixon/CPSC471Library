@@ -69,11 +69,12 @@ By: Stephen Dixon
 
                             if (bValid) {
                                 $("form#addLibrarianForm").submit();
+                                
+                                // This would be useful if page didn't redirect
                                 $("#users tbody").append("<tr>" +
                                         "<td>" + name.val() + "</td>" +
                                         "<td>" + $.datepicker.formatDate('yy-mm-dd', new Date())
                                         + "</td>" +
-                                        "<td></td>" +
                                         "<td>" + username.val() + "</td>" +
                                         "</tr>");
                                 $(this).dialog("close");
@@ -92,28 +93,38 @@ By: Stephen Dixon
                         .click(function() {
                             $("#dialog-form").dialog("open");
                         });
-                $("#remove-user-form").dialog({
+                $("#terminate-user-form").dialog({
                     autoOpen: false,
-                    height: 300,
-                    width: 350,
+                    height: 600,
+                    width: 600,
                     modal: true,
                     buttons: {
-                        close: function() {
+                        "Mark Employment as Terminated": function() {
+                            $("form#termLibrarians").submit();
+                            $(this).dialog("close");
+                        },
+                        Close: function() {
                             $(this).dialog("close");
                         }
                     }
                 });
-                $("#remove-user").button().click(function() {
-                    $("#remove-user-form").dialog("open");
+                $("#terminate-user").button().click(function() {
+                    $("#terminate-user-form").dialog("open");
                 });
             });
         </script>
     </head>
 
     <body>
+
+        <?php
+        $server = mysql_connect("localhost", "ubuntu", "stephen123");
+        $db = mysql_select_db("library", $server);
+        ?>
+
         <div id="dialog-form" title="Create new user">
             <p class="validateTips">All form fields are required.</p>
-            <form id="addLibrarianForm" action="addLibrarian.php" method="post">
+            <form id="addLibrarianForm" action="Helper/Librarian/addLibrarian.php" method="post">
                 <fieldset>
                     <label for="name">Name</label>
                     <input type="text" name="name" id="name" class="text ui-widget-content ui-corner-all">
@@ -122,22 +133,40 @@ By: Stephen Dixon
                 </fieldset>
             </form>
         </div>
-        <div id="remove-user-form" title="Remove User">
-                <p> Got something</p>
-            <form id="removeLibrarianForm" action="removeLibrarian.php" method="post">
-                    <label for="name">Name</label>
-                    <input type="text" name="name" id="name" class="text ui-widget-content ui-corner-all">
+        <div id="terminate-user-form" title="Remove User">
+            <form id="termLibrarians" action="Helper/Librarian/terminateLibrarian.php" method="post">
+                <table id="termCands" class="ui-widget ui-widget-content">
+                    <thead>
+                        <tr class="ui-widget-header">
+                            <th>id</th>
+                            <th>Name</th>
+                            <th>Start Date</th>
+                            <th>Username</th>
+                            <th>Delete?</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <?php
+                        $query = mysql_query("select id, name, startDate, username from Librarian where endDate is NULL");
+                        while ($row = mysql_fetch_array($query)) {
+                            echo "<tr>";
+                            echo "<td>" . $row[id] . "</td>";
+                            echo "<td>" . $row[name] . "</td>";
+                            echo "<td>" . $row[startDate] . "</td>";
+                            echo "<td>" . $row[username] . "</td>";
+                            $checkboxId = "checkbox" . $row[id];
+                            echo "<td><input type=\"checkbox\" class=\"chcktbl\" name=\"" . $checkboxId . "\" /></td>";
+                            echo "</tr>";
+                        }
+                        ?>
+                    </tbody>
+                </table>
             </form>
         </div>
 
         <div id="users-contain" class="ui-widget">
             <h1>Existing Users:</h1>
 
-            <?php
-            $server = mysql_connect("localhost", "ubuntu", "stephen123");
-            $db = mysql_select_db("library", $server);
-            $query = mysql_query("select * from Librarian where endDate is NULL");
-            ?>
 
 
             <table id="users" class="ui-widget ui-widget-content">
@@ -150,6 +179,7 @@ By: Stephen Dixon
                 </thead>
                 <tbody>
                     <?php
+                    $query = mysql_query("select * from Librarian where endDate is NULL");
                     while ($row = mysql_fetch_array($query)) {
                         echo "<tr>";
                         echo "<td>" . $row[name] . "</td>";
@@ -162,6 +192,6 @@ By: Stephen Dixon
             </table>
         </div>
         <button  id="create-user">Create new user</button>
-        <button id="remove-user">Delete User </button>
+        <button id="terminate-user">Delete User </button>
     </body>
 </html>
