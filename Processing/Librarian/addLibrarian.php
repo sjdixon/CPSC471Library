@@ -12,7 +12,7 @@ $result = mysql_query($query);
 error_log(print_r($_REQUEST,true));
 
 if($result){
-    die("6");
+    echo "Success";
 }
 else{
     echo "Error in sending your user";
