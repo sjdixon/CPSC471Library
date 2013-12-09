@@ -33,7 +33,7 @@ By: Stephen Dixon
                         });
 
                 $("#radio").buttonset();
-                $("#datepicker").datepicker();
+                $("#dueDate").datepicker();
 
                 $(".radioSelect").each(function() {
                     showSpecificFields(this);
@@ -87,13 +87,17 @@ By: Stephen Dixon
                         <option value="libraryItem">Title and/or Author</option>
                     </select>
                     <label for="itemCode"> : </label><input id="itemCode"> 
-                </div> <br/>
+                    <label for="stocknum" class="fieldSpecific" name="loan"> Stock# </label>
+                    <input id="stockNum" name="loan" class="fieldSpecific" type="text">
+                </div> 
+                
+                <br/>
 
                 <div id="date" class="ui-widget fieldSpecific" name="loan">
-                    <label for="datepicker">Due Date: </label>
-                    <input type="text" id="datepicker">
+                    <label for="dueDate">Due Date: </label>
+                    <input type="text" id="dueDate">
                 </div>
-                
+
                 <div id="timeToPickup" class="ui-widget fieldSpecific" name="hold">
                     <label for="timeToPickup">Time to Pickup: </label>
                     <select id="timeToPickup">
@@ -108,10 +112,21 @@ By: Stephen Dixon
         </div>
 
 
-        <div id="dialog-confirm" title="Create Loan?">
-            <p><span class="ui-icon ui-icon-alert" style="float:left; margin:0 7px 20px 0;"></span>These items will be permanently deleted and cannot be recovered. Are you sure?</p>
+        <div id="dialog-confirm" title="Are you sure?">
+            <p class="fieldSpecific" name="loan">
+                <span class="ui-icon ui-icon-alert" style="float:left; margin:0 7px 20px 0;"></span>
+                Are you sure you want to make a <strong>loan</strong> with that info?
+            </p>
+
+            <p class="fieldSpecific" name="hold">
+                <span class="ui-icon ui-icon-alert" style="float:left; margin:0 7px 20px 0;"></span>
+                Are you sure you want to make a <strong>hold</strong> with that info?  
+            </p>
         </div>
 
-        <button  id="submitBtn">Create Hold/Loan</button>
+        <button  id="submitBtn">
+            <p class="fieldSpecific" name="loan">Create Loan</p>
+            <p class="fieldSpecific" name="hold">Create Hold</p>
+        </button>
     </body>
 </html>
