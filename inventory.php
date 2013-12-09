@@ -73,7 +73,8 @@
 				echo "<option value=\"Adults\">Adults</option>";
 			echo "</select><br><br>";	
 			echo "<label for=\"location\">Location: </label>";
-			echo "<input type =\"text\" name=\"location\" id=\"location\" class=\"text ui-widget-content ui-corner-all\" /><br><br><br>";	
+			echo "<input type =\"text\" name=\"location\" id=\"location\" class=\"text ui-widget-content ui-corner-all\" /><br><br><br>";
+			echo "<input type=\"checkbox\" id=\"check\" name=\"isReference\"><label for=\"check\">Check for Reference Item</label><br><br>";	
 			echo "<button type=\"submit\" name=\"submit\" value=\"Submit\">OK</button>";	
 		echo "</form>";
 		?>
@@ -83,7 +84,9 @@
 			max: 2100,
 			step: 1
 		});
-	
+		$(function() {
+			$( "#check" ).button();
+		});
 		</script>
 	<?php	
 	echo "</div>";
@@ -115,6 +118,7 @@
 			echo "</select><br><br>";
 			echo "<label for=\"location1\">Location: </label>";
 			echo "<input type =\"text\" name=\"location1\" id=\"location1\" class=\"text ui-widget-content ui-corner-all\" /><br><br><br>";	
+			echo "<input type=\"checkbox\" id=\"check1\" name=\"isReference1\"><label for=\"check\">Check for Reference Item</label><br><br>";
 			echo "<button type=\"submit\" name=\"submit\" value=\"Submit\">OK</button>";
 		echo "</form>";
 		?>
@@ -123,6 +127,9 @@
 			min: 1900,
 			max: 2100,
 			step: 1
+		});
+		$(function() {
+			$( "#check1" ).button();
 		});
 		</script>	
 	<?php	
@@ -152,9 +159,10 @@
 				echo "<option value=\"Video\">Pre-Teens</option>";
 				echo "<option value=\"Newspaper\">Teens/Young Adults</option>";
 				echo "<option value=\"Adults\">Adults</option>";
-			echo "</select><br><br>";
+			echo "</select><br><br>";			
 			echo "<label for=\"location2\">Location: </label>";
 			echo "<input type =\"text\" name=\"location2\" id=\"location2\" class=\"text ui-widget-content ui-corner-all\" /><br><br><br>";
+			echo "<input type=\"checkbox\" id=\"check2\" name=\"isReference2\"><label for=\"check2\">Check for Reference Item</label><br><br>";
 			echo "<button type=\"submit\" name=\"submit\" value=\"Submit\">OK</button>";
 		echo "</form>";
 		?>
@@ -163,6 +171,9 @@
 			min: 1900,
 			max: 2100,
 			step: 1
+		});
+		$(function() {
+			$( "#check2" ).button();
 		});
 		</script>
 	<?php
@@ -194,6 +205,7 @@
 			echo "</select><br><br>";
 			echo "<label for=\"location3\">Location:</label>";
 			echo "<input type =\"text\" name=\"location3\" id=\"location3\" class=\"text ui-widget-content ui-corner-all\" /><br><br><br>";
+			echo "<input type=\"checkbox\" id=\"check3\" name=\"isReference3\"><label for=\"check3\">Check for Reference Item</label><br><br>";
 			echo "<button type=\"submit\" name=\"submit\" value=\"Submit\">OK</button>";
 		echo "</form>";
 		?>
@@ -208,7 +220,10 @@
 				changeMonth: true,
 				changeYear: true
 			});
-		})
+		});
+		$(function() {
+			$( "#check3" ).button();
+		});
 		</script>
 	<?php
 	echo "</div>";
@@ -237,6 +252,7 @@
 			echo "</select><br><br>";
 			echo "<label for=\"location4\">Location: </label>";
 			echo "<input type =\"text\" name=\"location4\" id=\"location4\" class=\"text ui-widget-content ui-corner-all\" /><br><br><br>";
+			echo "<input type=\"checkbox\" id=\"check4\" name=\"isReference4\"><label for=\"check4\">Check for Reference Item</label><br><br>";
 			echo "<button type=\"submit\" name=\"submit\" value=\"Submit\">OK</button>";
 		echo "</form>";
 		?>
@@ -251,7 +267,10 @@
 				changeMonth: true,
 				changeYear: true
 			});
-		})
+		});
+		$(function() {
+			$( "#check4" ).button();
+		});
 		</script>
 	<?php
 	echo "</div>";

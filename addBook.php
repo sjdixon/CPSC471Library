@@ -24,8 +24,14 @@
 	$audience = $_POST['audience'];
 	$ISBN = $_POST['ISBN'];
 	$author = $_POST['authorName'];
+	$ref = $_POST['isReference3'];
+	echo "Is Reference: $ref";
+	if ($ref == "on"){
+		$ref = 1;
+	}
+	else $ref = 0;
 					
-	$results = mysql_query("INSERT INTO Item VALUES ('$id','$type','$location','$title','$year','0','$genre','$audience')");
+	$results = mysql_query("INSERT INTO Item VALUES ('$id','$type','$location','$title','$year','$ref','$genre','$audience')");
 	if(!$results){
       	echo "could not insert into Item table <br />";
     	trigger_error(mysql_error(), E_USER_ERROR);

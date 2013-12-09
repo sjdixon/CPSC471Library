@@ -25,8 +25,14 @@
 	$datestr = explode("/", $date);
 	$issue = "$datestr[2]-$datestr[0]-$datestr[1]";
 	$pub = $_POST['pubName3'];
+	$ref = $_POST['isReference3'];
+	echo "Is Reference: $ref";
+	if ($ref == "on"){
+		$ref = 1;
+	}
+	else $ref = 0;
 					
-	$results = mysql_query("INSERT INTO Item VALUES ('$id','$type','$location','$title','$year','0','$genre','$audience')");
+	$results = mysql_query("INSERT INTO Item VALUES ('$id','$type','$location','$title','$year','$ref','$genre','$audience')");
 	if(!$results){
       	echo "could not insert into Item table <br />";
     	trigger_error(mysql_error(), E_USER_ERROR);

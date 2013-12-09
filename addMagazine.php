@@ -13,7 +13,7 @@
 	$dbd = mysql_query("SELECT MAX(i.libraryCode) AS lCode FROM ITEM i");
 	$current_id = mysql_fetch_row($dbd);
 	$id = $current_id[0]+ 1;
-	echo "Current max item: $current_id[0]<br>";
+	//echo "Current max item: $current_id[0]<br>";
 	
 	$title = $_POST['name3'];
 	$year = $_POST['spinner3'];
@@ -22,15 +22,22 @@
 	$genre = $_POST['genre3'];
 	$audience = $_POST['audience3'];
 	$date = $_POST['datepicker1'];
-	echo "Date: $date<br>";
+	$ref = $_POST['isReference3'];
+	echo "Is Reference: $ref";
+	if ($ref == "on"){
+		$ref = 1;
+	}
+	else $ref = 0;
+
+	//echo "Date: $date<br>";
 	$datestr = explode("/", $date);
-	echo "Date strings: $datestr[0]-$datestr[1]-$datestr[2]<br>";
+	//echo "Date strings: $datestr[0]-$datestr[1]-$datestr[2]<br>";
 	$issue = "$datestr[2]-$datestr[0]-$datestr[1]";
-	echo $issue;
+	//echo $issue;
 	$sub = $_POST['subName'];
 	$pub = $_POST['pubName2'];
 					
-	$results = mysql_query("INSERT INTO Item VALUES ('$id','$type','$location','$title','$year','0','$genre','$audience')");
+	$results = mysql_query("INSERT INTO Item VALUES ('$id','$type','$location','$title','$year','$ref','$genre','$audience')");
 	if(!$results){
       	echo "could not insert into Item table <br />";
     	trigger_error(mysql_error(), E_USER_ERROR);
