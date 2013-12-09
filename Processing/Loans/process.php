@@ -33,18 +33,15 @@ if (operationType == "loan") {
     $query = "INSERT INTO Hold (pAccount, libraryCode, dateHeld) values($patronId, $itemCode, curdate())";
 }
 
-echo "$query<br/>";
 
 $result = mysql_query($query);
-error_log(print_r($_REQUEST, true));
 
 
-if ($result) {
-    echo "Success";
-} else {
+if (!$result) {
     echo $dueDate;
     echo "Error in sending your user";
     echo "could not insert into Item table <br />";
+    error_log(print_r($_REQUEST, true));
     trigger_error(mysql_error(), E_USER_ERROR);
 }
 
