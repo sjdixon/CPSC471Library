@@ -7,21 +7,10 @@ By: Stephen Dixon
 <html lang="en">
     <head>
         <meta charset="utf-8">
-        <title>Manage Librarians</title>
-        <style>
-            label, input { display:block; }
-            input.text { margin-bottom:12px; width:95%; padding: .4em; }
-            fieldset { padding:0; border:0; margin-top:25px; }
-            h1 { font-size: 1.2em; margin: .6em 0; }
-            div#users-contain { width: 350px; margin: 20px 0; }
-            div#users-contain table { margin: 1em 0; border-collapse: collapse; width: 100%; }
-            div#users-contain table td, div#users-contain table th { border: 1px solid #eee; padding: .6em 10px; text-align: left; }
-            .ui-dialog .ui-state-error { padding: .3em; }
-            .validateTips { border: 1px solid transparent; padding: 0.3em; }
-        </style>
+        <title>Add Loans and Holds</title>
         <script>
             $(function() {
-                $("#hold-dialog").dialog({
+                $("#dialog-confirm").dialog({
                     autoOpen: false,
                     height: 300,
                     width: 350,
@@ -32,46 +21,51 @@ By: Stephen Dixon
                         }
                     }
                 });
-                $("#loan-dialog").dialog({
-                    autoOpen: false,
-                    height: 300,
-                    width: 350,
-                    modal: true,
-                    buttons: {
-                        Close: function() {
-                            $(this).dialog("close");
-                        }
-                    }
-                });
-                $("#placeHold")
+                $("#submitBtn")
                         .button()
                         .click(function() {
-                            $("#hold-dialog").dialog("open");
+                            $("#dialog-confirm").dialog("open");
                         });
-                $("#placeLoan")
-                        .button()
-                        .click(function() {
-                            $("#loan-dialog").dialog("open");
-                        });
+                $("#radio").buttonset();
             });
         </script>
     </head>
 
     <body>
-        <div id="hold-dialog" name="AddHold">
-            <p> Place a hold </p>
-            <form id="holdForm" method="post" action="Processing/Loans/processHold.php">
-                
+
+<br/>
+<br/>
+
+
+        <div id="operation" name="Dialog" class="ui-widget">
+            <form id="form" method="post" action="Processing/Loans/process.php">
+                <div class="ui-widget">
+                    <select id="patronIdType">
+                        <option value="Account">Library Account Number</option>
+                        <option value="Name">Patron Name</option>
+                        <option value="Phone Number">Phone Number</option>
+                    </select>
+                    <label for="patronId" > : </label><input type="text" id="patronId">
+                </div> <br/>
+                <div class="ui-widget">
+                    <select id="itemCodeType">
+                        <option value="libraryCode">Library Code</option>
+                        <option value="titleAndAuthor">Title and/or Author</option>
+                    </select>
+                    <label for="itemCode"> : </label><input id="itemCode"> 
+                </div> <br/>
+                <div id="radio">
+                    <input type="radio" id="loan" name="radio" checked="checked"><label for="loan">Loan </label>
+                    <input type="radio" id="hold" name="radio"><label for="hold">Hold</label>
+                </div>
             </form>
         </div>
-        <div id="loan-dialog" name="AddLoan">
-            <p> Place a Loan </p>
-            <form id="loanForm" method="post" action="Processing/Loans/processLoan.php">
-                
-            </form>
+
+
+        <div id="dialog-confirm" title="Empty the recycle bin?">
+            <p><span class="ui-icon ui-icon-alert" style="float:left; margin:0 7px 20px 0;"></span>These items will be permanently deleted and cannot be recovered. Are you sure?</p>
         </div>
-        
-        <button  id="placeHold">Create Hold</button>
-        <button  id="placeLoan">Create Hold</button>
+
+        <button  id="submitBtn">Create Hold/Loan</button>
     </body>
 </html>
