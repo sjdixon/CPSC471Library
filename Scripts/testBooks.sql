@@ -1,10 +1,8 @@
 use library;
 
 # Book
-delete from Book where libraryCode > 1;
-delete from Item where libraryCode > 1;
 set @v1 = (select max(i.libraryCode) from Item as i) + 1;
-insert into Item values (@v1,'Book','Fantasy Section','Harry Potter and the Philosophers Stone','1997',0,"Fantasy", "Children");
+insert into Item values (@v1,'Book','Fantasy Section','Harry Potter and the Philosopher\'s Stone','1997',0,"Fantasy", "Children");
 insert into Book (libraryCode, ISBN, authors) values (@v1, 0563533390, "JK Rowling");
 delete from Item_Instance where libraryCode=@v1;
 insert into Item_Instance values (1, @v1, 'New');
