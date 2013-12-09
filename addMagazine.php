@@ -1,7 +1,7 @@
 <?php	
-	//addBook.php - written by Gaby Comeau
-	//PHP script to add a book to the database
-	//header("Location: App_Index.php",TRUE,303);	
+	//addMagazine.php - written by Gaby Comeau
+	//PHP script to add a magazine to the database
+	header("Location: App_Index.php",TRUE,303);	
 	$host = "localhost";
 	$user = "ubuntu";
 	$pass = "stephen123";				
@@ -11,19 +11,24 @@
 	//and now the real fun begins
 	$id = 0;
 	$dbd = mysql_query("SELECT MAX(i.libraryCode) AS lCode FROM ITEM i");
-	//echo "Query result: $dbd";
 	$current_id = mysql_fetch_row($dbd);
-	//echo "Current max item: $current_id[0]<br>";
 	$id = $current_id[0]+ 1;
+	echo "Current max item: $current_id[0]<br>";
 	
-	$title = $_POST['name'];
-	$year = $_POST['spinner'];
-	$location = $_POST['location'];
-	$type = "Book";
-	$genre = $_POST['genre'];
-	$audience = $_POST['audience'];
-	$ISBN = $_POST['ISBN'];
-	$author = $_POST['authorName'];
+	$title = $_POST['name3'];
+	$year = $_POST['spinner3'];
+	$location = $_POST['location3'];
+	$type = "Magazine";
+	$genre = $_POST['genre3'];
+	$audience = $_POST['audience3'];
+	$date = $_POST['datepicker1'];
+	echo "Date: $date<br>";
+	$datestr = explode("/", $date);
+	echo "Date strings: $datestr[0]-$datestr[1]-$datestr[2]<br>";
+	$issue = "$datestr[2]-$datestr[0]-$datestr[1]";
+	echo $issue;
+	$sub = $_POST['subName'];
+	$pub = $_POST['pubName2'];
 					
 	$results = mysql_query("INSERT INTO Item VALUES ('$id','$type','$location','$title','$year','0','$genre','$audience')");
 	if(!$results){
@@ -31,9 +36,9 @@
     	trigger_error(mysql_error(), E_USER_ERROR);
     }
 
-	$results2 = mysql_query("INSERT INTO Book (authors, ISBN, libraryCode) VALUES ('$author', '$ISBN', '$id')"); 
+	$results2 = mysql_query("INSERT INTO Magazine (issue, subtitle, publisher, libraryCode) VALUES (CONVERT('$issue', DATE), '$sub', '$pub', '$id')"); 
 	if(!$results2){
-     	echo "could not insert into Book table <br />";        
+     	echo "could not insert into Magazine table <br />";        
 		trigger_error(mysql_error(), E_USER_ERROR);
      }
      
@@ -43,6 +48,5 @@
 		trigger_error(mysql_error(), E_USER_ERROR);
     }
 
-    //header("Location: App_Index.php");
         
 ?>

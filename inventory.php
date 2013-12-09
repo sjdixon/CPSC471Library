@@ -63,9 +63,15 @@
 			echo "<input id=\"spinner\" name=\"spinner\" value=\"2013\" /><br><br>";
 			echo "<label for=\"genre\">Genre: </label>";
 			echo "<input type =\"text\" name=\"genre\" id=\"genre\" class=\"text ui-widget-content ui-corner-all\" /><br><br>";
-			echo "<label for=\"amount\">Audience: </label>";
-			echo "<input type=\"text\" id=\"amount\" style=\"border: 0; color: #f6931f; background-color: #eeeeee; font-weight: bold;\" />";
-			echo "<div id=\"slider-range\"></div><br><br>";
+			echo "<label for=\"audience\">Audience: </label>";
+			echo "<select id=\"audience\" name=\"audience\">";
+				echo "<option value=\"\">Select Type</option>";
+				echo "<option value=\"Early Childhood\">Early Childhood</option>";
+				echo "<option value=\"Children\">Children</option>";
+				echo "<option value=\"Video\">Pre-Teens</option>";
+				echo "<option value=\"Newspaper\">Teens/Young Adults</option>";
+				echo "<option value=\"Adults\">Adults</option>";
+			echo "</select><br><br>";	
 			echo "<label for=\"location\">Location: </label>";
 			echo "<input type =\"text\" name=\"location\" id=\"location\" class=\"text ui-widget-content ui-corner-all\" /><br><br><br>";	
 			echo "<button type=\"submit\" name=\"submit\" value=\"Submit\">OK</button>";	
@@ -77,25 +83,14 @@
 			max: 2100,
 			step: 1
 		});
-		$(function() {
-			$( "#slider-range" ).slider({
-				range: true,
-				min: 0,
-				max: 30,
-				values: [15, 23],
-				slide: function( event, ui ) {
-					$( "#amount" ).val( ui.values[ 0 ] +  " - " +  ui.values[ 1 ] );
-				}
-			});
-			$( "#amount" ).val($( "#slider-range" ).slider( "values", 0 ) + " - " + $( "#slider-range" ).slider( "values", 1 ) );
-		});
+	
 		</script>
 	<?php	
 	echo "</div>";
 	
 	//new audio item form
 	echo "<div id=\"dialog2\" title=\"Add New Audio Item\">";
-		echo "<form>";
+		echo "<form action = \"addAudio.php\" method = \"post\">";
 			echo "<!--Add new item information in the form below:-->";
 			echo "<label for=\"name1\">Title: </label>";
 			echo "<input type =\"text\" name=\"name1\" id=\"name1\" class=\"text ui-widget-content ui-corner-all\" /><br><br>";
@@ -105,17 +100,22 @@
 			echo "<input id=\"spinner2\" name=\"spinner1\" value=\"2013\" /><br><br>";
 			echo "<label for=\"UPC\">UPC: </label>";
 			echo "<input type =\"text\" name=\"UPC\" id=\"UPC\" class=\"text ui-widget-content ui-corner-all\" /><br><br>";
-			echo "<label for=\"media\">Media Type: </label>";
-			echo "<input type =\"text\" name=\"media\" id=\"media\" class=\"text ui-widget-content ui-corner-all\" /><br><br>";
 			echo "<label for=\"producerName\">Production Company: </label>";
 			echo "<input type =\"text\" name=\"producerName\" id=\"producerName\" class=\"text ui-widget-content ui-corner-all\" /><br><br>";
 			echo "<label for=\"genre1\">Genre: </label>";
 			echo "<input type =\"text\" name=\"genre1\" id=\"genre1\" class=\"text ui-widget-content ui-corner-all\" /><br><br>";
-			echo "<label for=\"amount1\">Audience: </label>";
-			echo "<input type=\"text\" id=\"amount1\" style=\"border: 0; color: #f6931f; background-color: #eeeeee; font-weight: bold;\" />";
-			echo "<div id=\"slider-range1\"></div><br><br>";
+			echo "<label for=\"audience1\">Audience: </label>";
+			echo "<select id=\"audience1\" name=\"audience\">";
+				echo "<option value=\"\">Select Type</option>";
+				echo "<option value=\"Early Childhood\">Early Childhood</option>";
+				echo "<option value=\"Children\">Children</option>";
+				echo "<option value=\"Video\">Pre-Teens</option>";
+				echo "<option value=\"Newspaper\">Teens/Young Adults</option>";
+				echo "<option value=\"Adults\">Adults</option>";
+			echo "</select><br><br>";
 			echo "<label for=\"location1\">Location: </label>";
 			echo "<input type =\"text\" name=\"location1\" id=\"location1\" class=\"text ui-widget-content ui-corner-all\" /><br><br><br>";	
+			echo "<button type=\"submit\" name=\"submit\" value=\"Submit\">OK</button>";
 		echo "</form>";
 		?>
 		<script>
@@ -124,43 +124,38 @@
 			max: 2100,
 			step: 1
 		});
-		$(function() {
-			$( "#slider-range1" ).slider({
-				range: true,
-				min: 0,
-				max: 30,
-				values: [15, 23],
-				slide: function( event, ui ) {
-					$( "#amount1" ).val( ui.values[ 0 ] +  " - " +  ui.values[ 1 ] );
-				}
-			});
-			$( "#amount1" ).val($( "#slider-range1" ).slider( "values", 0 ) + " - " + $( "#slider-range" ).slider( "values", 1 ) );
-		});
 		</script>	
 	<?php	
 	echo "</div>";
 	
 	//new video item form
 	echo "<div id=\"dialog3\" title=\"Add New Video Item\">";
-		echo "<form>";
+		echo "<form action = \"addVideo.php\" method = \"post\">";
 			echo "<!--Add new item information in the form below:-->";
 			echo "<label for=\"name2\">Title: </label>";
 			echo "<input type =\"text\" name=\"name2\" id=\"name2\" class=\"text ui-widget-content ui-corner-all\" /><br><br>";
 			echo "<label for=\"UPC2\">UPC: </label>";
 			echo "<input type =\"text\" name=\"UPC2\" id=\"UPC2\" class=\"text ui-widget-content ui-corner-all\" /><br><br>";
-			echo "<label for=\"media2\">Media Type: </label>";
-			echo "<input type =\"text\" name=\"media2\" id=\"media2\" class=\"text ui-widget-content ui-corner-all\" /><br><br>";
+			echo "<label for=\"director\">Director: </label>";
+			echo "<input type =\"text\" name=\"director\" id=\"director\" class=\"text ui-widget-content ui-corner-all\" /><br><br>";
 			echo "<label for=\"producerName2\">Production Company: </label>";
 			echo "<input type =\"text\" name=\"producerName2\" id=\"prodName2\" class=\"text ui-widget-content ui-corner-all\" /><br><br>";
 			echo "<label for=\"spinner3\">Release Year: </label>";
 			echo "<input id=\"spinner3\" name=\"spinner2\" value=\"2013\" /><br><br>";
 			echo "<label for=\"genre2\">Genre: </label>";
 			echo "<input type =\"text\" name=\"genre2\" id=\"genre2\" class=\"text ui-widget-content ui-corner-all\" /><br><br>";
-			echo "<label for=\"amount2\">Audience: </label>";
-			echo "<input type=\"text\" id=\"amount2\" style=\"border: 0; color: #f6931f; background-color: #eeeeee; font-weight: bold;\" />";
-			echo "<div id=\"slider-range2\"></div><br><br>";
+			echo "<label for=\"audience2\">Audience: </label>";
+			echo "<select id=\"audience2\" name=\"audience\">";
+				echo "<option value=\"\">Select Type</option>";
+				echo "<option value=\"Early Childhood\">Early Childhood</option>";
+				echo "<option value=\"Children\">Children</option>";
+				echo "<option value=\"Video\">Pre-Teens</option>";
+				echo "<option value=\"Newspaper\">Teens/Young Adults</option>";
+				echo "<option value=\"Adults\">Adults</option>";
+			echo "</select><br><br>";
 			echo "<label for=\"location2\">Location: </label>";
 			echo "<input type =\"text\" name=\"location2\" id=\"location2\" class=\"text ui-widget-content ui-corner-all\" /><br><br><br>";
+			echo "<button type=\"submit\" name=\"submit\" value=\"Submit\">OK</button>";
 		echo "</form>";
 		?>
 		<script>
@@ -169,25 +164,13 @@
 			max: 2100,
 			step: 1
 		});
-		$(function() {
-			$( "#slider-range2" ).slider({
-				range: true,
-				min: 0,
-				max: 30,
-				values: [15, 23],
-				slide: function( event, ui ) {
-					$( "#amount2" ).val( ui.values[ 0 ] +  " - " +  ui.values[ 1 ] );
-				}
-			});
-			$( "#amount2" ).val($( "#slider-range2" ).slider( "values", 0 ) + " - " + $( "#slider-range" ).slider( "values", 1 ) );
-		});
 		</script>
 	<?php
 	echo "</div>";
 	
 	//new magazine
 	echo "<div id=\"dialog4\" title=\"Add New Magazine\">";
-		echo "<form>";
+		echo "<form action = \"addMagazine.php\" method = \"post\">";
 			echo "<!--Add new item information in the form below:-->";
 			echo "<label for=\"name3\">Title: </label>";
 			echo "<input type =\"text\" name=\"name3\" id=\"name3\" class=\"text ui-widget-content ui-corner-all\" /><br><br>";
@@ -195,19 +178,23 @@
 			echo "<input type =\"text\" name=\"subName\" id=\"subName\" class=\"text ui-widget-content ui-corner-all\" /><br><br>";
 			echo "<label for=\"spinner4\">Release Year: </label>";
 			echo "<input id=\"spinner4\" name=\"spinner3\" value=\"2013\" /><br><br>";
-			echo "<label for=\"issue\">Issue: </label>";
-			echo "<input type =\"text\" name=\"issue\" id=\"issue\" class=\"text ui-widget-content ui-corner-all\" /><br><br>";
+			echo "<p> Issue: <input type=\"text\" id=\"datepicker1\" name =\"datepicker1\" /></p><br>";
 			echo "<label for=\"pubName2\">Publisher: </label>";
 			echo "<input type =\"text\" name=\"pubName2\" id=\"pubName2\" class=\"text ui-widget-content ui-corner-all\" /><br><br>";
 			echo "<label for=\"genre3\">Genre: </label>";
 			echo "<input type =\"text\" name=\"genre3\" id=\"genre3\" class=\"text ui-widget-content ui-corner-all\" /><br><br>";
-			echo "<label for=\"amount3\">Audience:</label>";
-			echo "<input type=\"text\" id=\"amount3\" style=\"border: 0; color: #f6931f; background-color: #eeeeee; font-weight: bold;\" />";
-			echo "<div id=\"slider-range3\"></div>";
-			echo "<p>Date: <input type=\"text\" id=\"datepicker1\" /></p><br>";
-			echo "<label for=\"location3\">Location</label><br>";
+			echo "<label for=\"audience3\">Audience: </label>";
+			echo "<select id=\"audience3\" name=\"audience\">";
+				echo "<option value=\"\">Select Type</option>";
+				echo "<option value=\"Early Childhood\">Early Childhood</option>";
+				echo "<option value=\"Children\">Children</option>";
+				echo "<option value=\"Video\">Pre-Teens</option>";
+				echo "<option value=\"Newspaper\">Teens/Young Adults</option>";
+				echo "<option value=\"Adults\">Adults</option>";
+			echo "</select><br><br>";
+			echo "<label for=\"location3\">Location:</label>";
 			echo "<input type =\"text\" name=\"location3\" id=\"location3\" class=\"text ui-widget-content ui-corner-all\" /><br><br><br>";
-			
+			echo "<button type=\"submit\" name=\"submit\" value=\"Submit\">OK</button>";
 		echo "</form>";
 		?>
 		<script>
@@ -215,18 +202,6 @@
 			min: 1900,
 			max: 2100,
 			step: 1
-		});
-		$(function() {
-			$( "#slider-range3" ).slider({
-				range: true,
-				min: 0,
-				max: 30,
-				values: [15, 23],
-				slide: function( event, ui ) {
-					$( "#amount3" ).val( ui.values[ 0 ] +  " - " +  ui.values[ 1 ] );
-				}
-			});
-			$( "#amount3" ).val($( "#slider-range3" ).slider( "values", 0 ) + " - " + $( "#slider-range" ).slider( "values", 1 ) );
 		});
 		$(function() {
 			$( "#datepicker1" ).datepicker({
@@ -240,20 +215,29 @@
 	
 	//new newspaper
 	echo "<div id=\"dialog5\" title=\"Add New Newspaper\">";
-		echo "<form>";
+		echo "<form action = \"addNewspaper.php\" method = \"post\">";
 			echo "<!--Add new item information in the form below:-->";
 			echo "<label for=\"name4\">Title: </label>";
 			echo "<input type =\"text\" name=\"name4\" id=\"name4\" class=\"text ui-widget-content ui-corner-all\" /><br><br>";
 			echo "<label for=\"spinner5\">Release Year: </label>";
-			echo "<input id=\"spinner5\" name=\"spinner\" value=\"2013\" /><br><br>";
+			echo "<input id=\"spinner5\" name=\"spinner4\" value=\"2013\" /><br><br>";
+			echo "<p> Issue: <input type=\"text\" id=\"datepicker\" name =\"datepicker\" /></p><br>";
+			echo "<label for=\"pubName3\">Publisher: </label>";
+			echo "<input type =\"text\" name=\"pubName3\" id=\"pubName3\" class=\"text ui-widget-content ui-corner-all\" /><br><br>";
 			echo "<label for=\"genre4\">Genre: </label>";
 			echo "<input type =\"text\" name=\"genre4\" id=\"genre4\" class=\"text ui-widget-content ui-corner-all\" /><br><br>";
-			echo "<label for=\"amount4\">Audience: </label>";
-			echo "<input type=\"text\" id=\"amount4\" style=\"border: 0; color: #f6931f; background-color: #eeeeee; font-weight: bold;\" />";
-			echo "<div id=\"slider-range4\"></div>";
-			echo "<p>Date: <input type=\"text\" id=\"datepicker\" /></p><br>";
+			echo "<label for=\"audience4\">Audience: </label>";
+			echo "<select id=\"audience4\" name=\"audience\">";
+				echo "<option value=\"\">Select Type</option>";
+				echo "<option value=\"Early Childhood\">Early Childhood</option>";
+				echo "<option value=\"Children\">Children</option>";
+				echo "<option value=\"Video\">Pre-Teens</option>";
+				echo "<option value=\"Newspaper\">Teens/Young Adults</option>";
+				echo "<option value=\"Adults\">Adults</option>";
+			echo "</select><br><br>";
 			echo "<label for=\"location4\">Location: </label>";
 			echo "<input type =\"text\" name=\"location4\" id=\"location4\" class=\"text ui-widget-content ui-corner-all\" /><br><br><br>";
+			echo "<button type=\"submit\" name=\"submit\" value=\"Submit\">OK</button>";
 		echo "</form>";
 		?>
 		<script>
@@ -263,18 +247,6 @@
 			step: 1
 		});
 		$(function() {
-			$( "#slider-range4" ).slider({
-				range: true,
-				min: 0,
-				max: 30,
-				values: [15, 23],
-				slide: function( event, ui ) {
-					$( "#amount4" ).val( ui.values[ 0 ] +  " - " +  ui.values[ 1 ] );
-				}
-			});
-			$( "#amount4" ).val($( "#slider-range4" ).slider( "values", 0 ) + " - " + $( "#slider-range" ).slider( "values", 1 ) );
-		});
-		 $(function() {
 			$( "#datepicker" ).datepicker({
 				changeMonth: true,
 				changeYear: true
@@ -352,92 +324,72 @@
 	$( "#dialog2" ).dialog({ 
 		autoOpen: false, 
 		modal: true,
-		width: 400,
-		buttons:{ "OK": function(){
-				$( this ).dialog( "close" );
-		}}});
+		width: 400
+	});	
 	$( "#add2" ).click(function() {
 		$( "#dialog2" ).dialog( "open" );
 	});
 	$( "#dialog3" ).dialog({ 
 		autoOpen: false, 
 		modal: true,
-		width: 400,
-		buttons:{ "OK": function(){
-				$( this ).dialog( "close" );
-		}}});
+		width: 400
+	});	
 	$( "#add3" ).click(function() {
 		$( "#dialog3" ).dialog( "open" );
 	});
 	$( "#dialog4" ).dialog({ 
 		autoOpen: false, 
 		modal: true,
-		width: 400,
-		buttons:{ "OK": function(){	
-				$( this ).dialog( "close" );
-		}}});
+		width: 400
+	});	
 	$( "#add4" ).click(function() {
 		$( "#dialog4" ).dialog( "open" );
 	});
 	$( "#dialog5" ).dialog({ 
 		autoOpen: false, 
 		modal: true,
-		width: 400,
-		buttons:{ "OK": function(){
-				$( this ).dialog( "close" );
-		}}});
+		width: 400
+	});
 	$( "#add5" ).click(function() {
 		$( "#dialog5" ).dialog( "open" );
 	})
 	$( "#dialog6" ).dialog({ 
 		autoOpen: false, 
 		modal: true,
-		width: 400,
-		buttons:{ "OK": function(){
-			$( this ).dialog( "close" );
-		}},
-		 close: function() {
-		}});
+		width: 400
+	});
 	$( "#add_inst" ).click(function() {
 		$( "#dialog6" ).dialog( "open" );
 	});
 	$( "#dialog7" ).dialog({ 
 		autoOpen: false, 
 		modal: true,
-		width: 400,
-		buttons:{ "OK": function(){
-				$( this ).dialog( "close" );
-		}}});
+		width: 400
+	});
 	$( "#update2" ).click(function() {
 		$( "#dialog7" ).dialog( "open" );
 	});
 	$( "#dialog8" ).dialog({ 
 		autoOpen: false, 
 		modal: true,
-		width: 400,
-		buttons:{ "OK": function(){
-				$( this ).dialog( "close" );
-		}}});
+		width: 400
+	});
 	$( "#delete2" ).click(function() {
 		$( "#dialog8" ).dialog( "open" );
 	});
 	$( "#dialog9" ).dialog({ 
 		autoOpen: false, 
 		modal: true,
-		width: 400,
-		buttons:{ "OK": function(){
-				$( this ).dialog( "close" );
-		}}});
+		width: 400
+	});
 	$( "#delete1" ).click(function() {
 		$( "#dialog9" ).dialog( "open" );
 	});
 	$( "#dialog10" ).dialog({ 
 		autoOpen: false, 
 		modal: true,
-		width: 400,
-		buttons:{ "OK": function(){
-				$( this ).dialog( "close" );
-		}}});
+		width: 400
+	});
 	$( "#update1" ).click(function() {
 		$( "#dialog10" ).dialog( "open" );
 	});
