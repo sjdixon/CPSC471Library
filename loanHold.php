@@ -33,7 +33,7 @@ By: Stephen Dixon
                         });
 
                 $("#radio").buttonset();
-                $("#dueDate").datepicker();
+                $("#dueDate").datepicker({ dateFormat: 'yy-mm-dd' });
 
                 $(".radioSelect").each(function() {
                     showSpecificFields(this);
@@ -45,13 +45,22 @@ By: Stephen Dixon
                 function showSpecificFields(obj) {
                     if ($(obj).is(":checked")) {
                         var radioVal = $(obj).attr('id');
-                        $(".fieldSpecific").each(function() {
-                            if ($(this).attr('name') == radioVal) {
+                        if(radioVal==="loan"){
+                            $(".loanOnly").each(function(){
                                 $(this).show();
-                            } else {
+                            });
+                            $(".holdOnly").each(function(){
                                 $(this).hide();
-                            }
-                        });
+                            });
+                        }
+                        else if(radioVal==="hold"){
+                            $(".loanOnly").each(function(){
+                                $(this).hide();
+                            });
+                            $(".holdOnly").each(function(){
+                                $(this).show();
+                            });
+                        }
                     }
                 }
 
@@ -74,33 +83,35 @@ By: Stephen Dixon
                     <input type="radio" id="hold" name="radio" class="radioSelect" value="hold"><label for="hold">Hold</label>
                 </div><br/>
                 <div class="ui-widget">
-                    <select id="patronIdType">
+                    <select id="patronIdType" name="patronIdType">
                         <option value="Account">Library Account Number</option>
                         <option value="Name">Patron Name</option>
                         <option value="Phone Number">Phone Number</option>
                     </select>
-                    <label for="patronId" > : </label><input type="text" id="patronId">
+                    <label for="patronId" > : </label>
+                    <input type="text" id="patronId" name="patronId">
                 </div> <br/>
                 <div class="ui-widget">
-                    <select id="itemCodeType">
+                    <select id="itemCodeType" name="itemCodeType">
                         <option value="libraryCode">Library Code</option>
                         <option value="libraryItem">Title and/or Author</option>
                     </select>
-                    <label for="itemCode"> : </label><input id="itemCode"> 
-                    <label for="stocknum" class="fieldSpecific" name="loan"> Stock# </label>
-                    <input id="stockNum" name="loan" class="fieldSpecific" type="text">
+                    <label for="itemCode"> : </label>
+                    <input id="itemCode" name="itemCode"> 
+                    <label for="stock" class="loanOnly"> Stock# </label>
+                    <input id="stock" name="stock" class="loanOnly" type="text">
                 </div> 
                 
                 <br/>
 
-                <div id="date" class="ui-widget fieldSpecific" name="loan">
+                <div id="date" class="ui-widget loanOnly">
                     <label for="dueDate">Due Date: </label>
-                    <input type="text" id="dueDate">
+                    <input type="text" id="dueDate" name="dueDate">
                 </div>
 
-                <div id="timeToPickup" class="ui-widget fieldSpecific" name="hold">
+                <div id="timeToPickup" class="ui-widget holdOnly">
                     <label for="timeToPickup">Time to Pickup: </label>
-                    <select id="timeToPickup">
+                    <select id="timeToPickup" name="timeToPickup">
                         <option value="One Week">One Week</option>
                         <option value="Two Weeks">Two Weeks</option>
                         <option value="Three Weeks">Three Weeks</option>
@@ -113,20 +124,20 @@ By: Stephen Dixon
 
 
         <div id="dialog-confirm" title="Are you sure?">
-            <p class="fieldSpecific" name="loan">
+            <p class="loanOnly">
                 <span class="ui-icon ui-icon-alert" style="float:left; margin:0 7px 20px 0;"></span>
                 Are you sure you want to make a <strong>loan</strong> with that info?
             </p>
 
-            <p class="fieldSpecific" name="hold">
+            <p class="holdOnly" >
                 <span class="ui-icon ui-icon-alert" style="float:left; margin:0 7px 20px 0;"></span>
                 Are you sure you want to make a <strong>hold</strong> with that info?  
             </p>
         </div>
 
         <button  id="submitBtn">
-            <p class="fieldSpecific" name="loan">Create Loan</p>
-            <p class="fieldSpecific" name="hold">Create Hold</p>
+            <p class="loanOnly" name="loan">Create Loan</p>
+            <p class="holdOnly" name="hold">Create Hold</p>
         </button>
     </body>
 </html>
