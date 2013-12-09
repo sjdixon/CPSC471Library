@@ -27,10 +27,10 @@ if (operationType == "loan") {
     // First, check if there is an unloaned copy
     // If there is, place the instance on hold and set requestDate, dateHeld to curdate.
     // If not, place the item on hold and set requestDate to curdate.
-    $dateAvail = NULL;
-    $dateExpired = NULL;
-    $stocknum = NULL;
-    $query = "INSERT INTO Hold values($patronId, $itemCode, curdate(), '$dateExpired', '$dateAvail', NULL, $stocknum)";
+    $dateAvail = "NULL";
+    $dateExpired = "NULL";
+    $stocknum = "NULL";
+    $query = "INSERT INTO Hold (pAccount, libraryCode, dateHeld) values($patronId, $itemCode, curdate())";
 }
 
 echo "$query<br/>";
