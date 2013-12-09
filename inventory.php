@@ -16,12 +16,8 @@
 		echo "</div>";
 	echo "</form><br><br>";
 	
-	//add item instance
-	echo "<p>Use this form to add another copy of an already existing item</p>";
-	echo "<button type=\"button\" id = \"add_inst\">Add Item Instance</button><br><br><br>";
-	
 	//modify an item
-	echo "<p>Use this form to modify an item or item instance</p>";
+	echo "<p>Use this form to modify an item or copy of an item</p>";
 	echo "<form>";
 		echo "<iv id=\"radio2\" class=\"radioset\">";
 			echo "<input type=\"radio\" id=\"update1\" name=\"radio2\" /><label for=\"update1\">Modify Item</label>";
@@ -71,6 +67,7 @@
 				echo "<option value=\"Video\">Pre-Teens</option>";
 				echo "<option value=\"Newspaper\">Teens/Young Adults</option>";
 				echo "<option value=\"Adults\">Adults</option>";
+				echo "<option value=\"All Ages\">All Ages</option>"; 
 			echo "</select><br><br>";	
 			echo "<label for=\"location\">Location: </label>";
 			echo "<input type =\"text\" name=\"location\" id=\"location\" class=\"text ui-widget-content ui-corner-all\" /><br><br><br>";
@@ -115,6 +112,7 @@
 				echo "<option value=\"Video\">Pre-Teens</option>";
 				echo "<option value=\"Newspaper\">Teens/Young Adults</option>";
 				echo "<option value=\"Adults\">Adults</option>";
+				echo "<option value=\"All Ages\">All Ages</option>"; 
 			echo "</select><br><br>";
 			echo "<label for=\"location1\">Location: </label>";
 			echo "<input type =\"text\" name=\"location1\" id=\"location1\" class=\"text ui-widget-content ui-corner-all\" /><br><br><br>";	
@@ -159,6 +157,7 @@
 				echo "<option value=\"Video\">Pre-Teens</option>";
 				echo "<option value=\"Newspaper\">Teens/Young Adults</option>";
 				echo "<option value=\"Adults\">Adults</option>";
+				echo "<option value=\"All Ages\">All Ages</option>"; 
 			echo "</select><br><br>";			
 			echo "<label for=\"location2\">Location: </label>";
 			echo "<input type =\"text\" name=\"location2\" id=\"location2\" class=\"text ui-widget-content ui-corner-all\" /><br><br><br>";
@@ -202,6 +201,7 @@
 				echo "<option value=\"Video\">Pre-Teens</option>";
 				echo "<option value=\"Newspaper\">Teens/Young Adults</option>";
 				echo "<option value=\"Adults\">Adults</option>";
+				echo "<option value=\"All Ages\">All Ages</option>"; 
 			echo "</select><br><br>";
 			echo "<label for=\"location3\">Location:</label>";
 			echo "<input type =\"text\" name=\"location3\" id=\"location3\" class=\"text ui-widget-content ui-corner-all\" /><br><br><br>";
@@ -249,6 +249,7 @@
 				echo "<option value=\"Video\">Pre-Teens</option>";
 				echo "<option value=\"Newspaper\">Teens/Young Adults</option>";
 				echo "<option value=\"Adults\">Adults</option>";
+				echo "<option value=\"All Ages\">All Ages</option>"; 
 			echo "</select><br><br>";
 			echo "<label for=\"location4\">Location: </label>";
 			echo "<input type =\"text\" name=\"location4\" id=\"location4\" class=\"text ui-widget-content ui-corner-all\" /><br><br><br>";
@@ -275,49 +276,38 @@
 	<?php
 	echo "</div>";
 	
-	//new item instance
-	echo "<div id=\"dialog6\" title=\"Add Item Instance\">";
-		echo "<form>";
-			echo "<!--Add new item instance information in the form below:-->";
-			echo "<label for=\"stockNum\">Stock Number: </label>";
-			echo "<input type =\"text\" name=\"stockNum\" id=\"stockNum\" class=\"text ui-widget-content ui-corner-all\" /><br><br>";
-			echo "<label for=\"lCode\">Library Code: </label>";
-			echo "<input type =\"text\" name=\"lCode\" id=\"lCode\" class=\"text ui-widget-content ui-corner-all\" /><br><br>";
-			echo "<label for=\"status\">Status: </label>";
-			echo "<input type =\"text\" name=\"status\" id=\"status\" class=\"text ui-widget-content ui-corner-all\" /><br><br>";
-		echo "</form>";
-	echo "</div>";
-	
 	//modify item instance
-	echo "<div id=\"dialog7\" title=\"Modify Item Instance\">";
-		echo "<form>";
+	echo "<div id=\"dialog7\" title=\"Modify Copy\">";
+		echo "<form >";
 			echo "<!--Modify info in the form below:-->";
-			echo "<label for=\"stockNum1\">Stock Number: </label>";
-			echo "<input type =\"text\" name=\"stockNum1\" id=\"stockNum1\" class=\"text ui-widget-content ui-corner-all\" /><br><br>";
 			echo "<label for=\"lCode1\">Library Code: </label>";
 			echo "<input type =\"text\" name=\"lCode1\" id=\"lCode1\" class=\"text ui-widget-content ui-corner-all\" /><br><br>";
+			echo "<label for=\"stockNum1\">Stock Number: </label>";
+			echo "<input type =\"text\" name=\"stockNum1\" id=\"stockNum1\" class=\"text ui-widget-content ui-corner-all\" /><br><br>";
 			echo "<label for=\"status1\">Status: </label>";
 			echo "<input type =\"text\" name=\"status1\" id=\"status1\" class=\"text ui-widget-content ui-corner-all\" /><br><br>";
 		echo "</form>";
 	echo "</div>";
 	
 	//delete item instance
-	echo "<div id=\"dialog8\" title=\"Delete Item Instance\">";
-		echo "<form>";
+	echo "<div id=\"dialog8\" title=\"Delete Copy\">";
+		echo "<form action = \"Processing/deleteCopy.php\" method = \"post\">";
 			echo "<!--Details on the instance to be deleted:-->";
-			echo "<label for=\"stockNum2\">Stock Number: </label>";
-			echo "<input type =\"text\" name=\"stockNum2\" id=\"stockNum2\" class=\"text ui-widget-content ui-corner-all\" /><br><br>";
 			echo "<label for=\"lCode2\">Library Code: </label>";
 			echo "<input type =\"text\" name=\"lCode2\" id=\"lCode2\" class=\"text ui-widget-content ui-corner-all\" /><br><br>";
+			echo "<label for=\"stockNum2\">Stock Number: </label>";
+			echo "<input type =\"text\" name=\"stockNum2\" id=\"stockNum2\" class=\"text ui-widget-content ui-corner-all\" /><br><br>";
+			echo "<button type=\"submit\" name=\"submit\" value=\"Submit\">OK</button>";
 		echo "</form>";
 	echo "</div>";
 	
 	//delete item
 	echo "<div id=\"dialog9\" title=\"Delete Item\">";
-		echo "<form>";
+		echo "<form action=\"Processing/deleteItem.php\" method = \"post\">";
 			echo "<!--Info on the item to be deleted:-->";
 			echo "<label for=\"lCode3\">Library Code: </label>";
-			echo "<input type =\"text\" name=\lCode3\" id=\"lCode3\" class=\"text ui-widget-content ui-corner-all\" /><br><br>";
+			echo "<input type =\"text\" name=\"lCode3\" id=\"lCode3\" class=\"text ui-widget-content ui-corner-all\" /><br><br>";
+			echo "<button type=\"submit\" name=\"submit\" value=\"Submit\">OK</button>";
 		echo "</form>";
 	echo "</div>";
 	
@@ -327,6 +317,7 @@
 			echo "<!--Modify info in the form below:-->";
 			echo "<label for=\"lCode4\">Library Code: </label>";
 			echo "<input type =\"text\" name=\"lCode4\" id=\"lCode4\" class=\"text ui-widget-content ui-corner-all\" /><br><br>";
+			//Fun with Ajax goes here!
 		echo "</form>";
 	echo "</div>";
 

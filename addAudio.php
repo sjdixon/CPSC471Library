@@ -13,7 +13,7 @@
 	$dbd = mysql_query("SELECT MAX(i.libraryCode) AS lCode FROM ITEM i");
 	$current_id = mysql_fetch_row($dbd);
 	$id = $current_id[0]+ 1;
-	echo "Current max item: $current_id[0]<br>";
+	//echo "Current max item: $current_id[0]<br>";
 	
 	$title = $_POST['name1'];
 	$year = $_POST['spinner1'];
