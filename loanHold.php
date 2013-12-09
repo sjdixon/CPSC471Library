@@ -84,9 +84,10 @@ By: Stephen Dixon
                 </div><br/>
                 <div class="ui-widget">
                     <select id="patronIdType" name="patronIdType">
-                        <option value="Account">Library Account Number</option>
-                        <option value="Name">Patron Name</option>
-                        <option value="Phone Number">Phone Number</option>
+                        <option value="pAccount">Library Account Number</option>
+                        <option value="name">Patron Name</option>
+                        <option value="phone">Phone Number</option>
+                        <option value="email">Phone Number</option>
                     </select>
                     <label for="patronId" > : </label>
                     <input type="text" id="patronId" name="patronId">
@@ -94,7 +95,7 @@ By: Stephen Dixon
                 <div class="ui-widget">
                     <select id="itemCodeType" name="itemCodeType">
                         <option value="libraryCode">Library Code</option>
-                        <option value="libraryItem">Title and/or Author</option>
+                        <option value="title">Title</option>
                     </select>
                     <label for="itemCode"> : </label>
                     <input id="itemCode" name="itemCode"> 
