@@ -20,12 +20,14 @@
 <body onload="errorAlert()">
    <form action='verification.php'>
         <label for="username">Username: </label>
-        <input type='text' name="username" id="username">
+        <input type='number' name="username" id="username">
     
         <label for="password">Password: </label>
         <input type='password' name="password" id="password">
 
     <button type="submit" id="submit">Login</button>
     </form>
+    <br>
+    <a href="catalogue.php"><button>Go Back</button></a>
 </body>
 </html>

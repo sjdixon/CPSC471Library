@@ -1,3 +1,4 @@
+
 <!Done by Rhianne Hadfield> 
 <?php
         // Create connection
@@ -8,11 +9,11 @@
 	mysql_select_db("library");
           $username=$_POST['username'];
           $password=$_POST['password'];
-          
-          $q="SELECT count(*) FROM Librarian WHERE username='$username' and pass='$password'";
-         $ifCorrect=mysql_query($q);
-          
-         $count=$ifCorrect;
+          if($password==='Default123'){
+              $q="SELECT count(*) FROM Librarian WHERE id='$username'";
+              $ifCorrect=mysql_query($q);
+              while($one=mysql_fetch_row($ifCorrect))
+              {$count=$unique=$one[0]; }
 	 
 	if ($count == 1) {
             echo "Login Successfull";
@@ -22,4 +23,6 @@
              echo "Login not Successfull";
 	     header("Location: loginInvalidInput.php"); // Wherever you want the user to go when they fail the login
             }
+          }
+          else{  header("Location: loginInvalidInput.php");} // Wherever you want the user to go when they fail the login 
         ?>

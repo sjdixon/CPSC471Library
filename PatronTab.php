@@ -1,28 +1,7 @@
-<!doctype html>
-<html lang="en">
-<head>
-<meta charset="utf-8">
-<title>jQuery UI Dialog - Modal form</title>
-<link rel="stylesheet" href="http://code.jquery.com/ui/1.10.3/themes/smoothness/jquery-ui.css">
-<script src="http://code.jquery.com/jquery-1.9.1.js"></script>
-<script src="http://code.jquery.com/ui/1.10.3/jquery-ui.js"></script>
-<link rel="stylesheet" href="/resources/demos/style.css">
-<style>
-body { font-size: 62.5%; }
-label, input { display:block; }
-input.text { margin-bottom:12px; width:95%; padding: .4em; }
-fieldset { padding:0; border:0; margin-top:25px; }
-h1 { font-size: 1.2em; margin: .6em 0; }
-div#users-contain { width: 350px; margin: 20px 0; }
-div#users-contain table { margin: 1em 0; border-collapse: collapse; width: 100%; }
-div#users-contain table td, div#users-contain table th { border: 1px solid #eee; padding: .6em 10px; text-align: left; }
-.ui-dialog .ui-state-error { padding: .3em; }
-.validateTips { border: 1px solid transparent; padding: 0.3em; }
-</style>
+
+
 <script type="text/javascript"> 
-$(function(){
-   //$function 
-});
+
 //add  new patron           
 $(function() {
 var id=$("#pid"), 
@@ -72,17 +51,17 @@ allFields.removeClass( "ui-state-error" );
 bValid = bValid && checkLength( name, "name", 1, 50 );
 bValid = bValid && checkLength( email, "email", 1, 50 );
 bValid = bValid && checkLength( address, "address", 1, 45 );
-bValid = bValid && checkLength( phone, "phone", 10, 11 );
-bValid = bValid && checkLength( id, "id", 10, 10 );
+bValid = bValid && checkLength( phone, "phone", 7, 11 );
+bValid = bValid && checkLength( id, "id", 1, 10 );
 
 bValid = bValid && checkRegexp( name, /^([a-zA-Z])+$/i, "Name may consist of a-z, begin with a letter." );
 bValid = bValid && checkRegexp( email, /^((([a-z]|\d|[!#\$%&'\*\+\-\/=\?\^_`{\|}~]|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])+(\.([a-z]|\d|[!#\$%&'\*\+\-\/=\?\^_`{\|}~]|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])+)*)|((\x22)((((\x20|\x09)*(\x0d\x0a))?(\x20|\x09)+)?(([\x01-\x08\x0b\x0c\x0e-\x1f\x7f]|\x21|[\x23-\x5b]|[\x5d-\x7e]|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])|(\\([\x01-\x09\x0b\x0c\x0d-\x7f]|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF]))))*(((\x20|\x09)*(\x0d\x0a))?(\x20|\x09)+)?(\x22)))@((([a-z]|\d|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])|(([a-z]|\d|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])([a-z]|\d|-|\.|_|~|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])*([a-z]|\d|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])))\.)+(([a-z]|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])|(([a-z]|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])([a-z]|\d|-|\.|_|~|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])*([a-z]|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])))\.?$/i, "eg. ui@jquery.com" );
 bValid = bValid && checkRegexp( address, /^([0-9a-zA-Z])+$/, "Address field only allow : a-z 0-9" );
 bValid = bValid && checkRegexp( id, /^([0-9])+$/, "Id field only allow :0-9" );
-bValid = bValid && checkRegexp( phone, /^([0-9])+$/, "Phone field only allow :0-9" );
+bValid = bValid && checkRegexp( phone, /^([0-9]+[/-/])+$/, "Phone field only allow :0-9" );
     if(bValid){
-               $("form#nPatron").submit();         
-               $( this ).dialog( "close" );
+              $("#nPatron").submit();
+              $( this ).dialog( "close" );
               }
 },
 Cancel: function() {
@@ -141,26 +120,35 @@ $( "#dialog-confirm" ).dialog( "open" );
 });
 //search
 function Search() {
-    }
+      var searchText=document.getElementById('searchName').value();
+      var pTable=document.getElementById('#users');
+      var pTableColumnCount;
+      for(var rowIndex=0; rowIndex<pTable.rows.length; rowIndex++)
+      {
+          var rowdata='';
+          if(rowIndex==0){
+              pTableColumnCount=pTable.rows.item(rowIndex).cells.length();
+              continue;
+          }
+          for(var columnIndex=1; columnIndex<pTableColumnCount; columnIndex++)
+          {
+              rowData+=pTable.row.item(rowIndex).cells.item(columnIndex).textContent
+          }
+          if(rowData.indexOf(searchText)==-1)
+              ('#users')
+          else
+              pTable.rows.item(rowIndex).style.display='table-row';
+      }
+}
 function setCookie(){
-    
-      function createCookie(name,value,days) {
-	if (days) {
-		var date = new Date();
-		date.setTime(date.getTime()+(days*24*60*60*1000));
-		var expires = "; expires="+date.toGMTString();
-	}
-	else var expires = "";
-	document.cookie = name+"="+value+expires+"; path=/";
-         }
-         
-        $('button[name=button]').click(function(){
-        var id= $(this).attr("id");
-        createCookie("id", id,1);
-   }); }
+   
+        var id=$(this).attr("id");
+        alert(id);
+        $.cookie('pID', id, { expires: 1 });
+    }
 
 </script>
-</head>
+
 <body>   
 <div id="dialog-confirm" title="Delete Patrons">
 <form id='rPatron' action='removePatron.php' method='post'>
@@ -168,8 +156,8 @@ function setCookie(){
 </div>
 
 <div id="dialog-form" title="Add a New Patron">
-<form id="nPatron" action="NewPatron.php" method="post">
-<p class="validateTips">All form fields are required.</p>    
+<p class="validateTips">All form fields are required.</p>  
+<form id="nPatron" action="Processing/Patron/NewPatron.php" method="post">
 <fieldset>
 <label for=pid">Account Number</label>
 <input type="number" name="pid" id="pid" class="text ui-widget-content ui-corner-all">
@@ -188,9 +176,7 @@ function setCookie(){
 <div>
     
     
-    <input type="text" name="nameSearch" id="nameSearch" value="Search Name" class="text ui-widget-content ui-corner-all">
-    <input type="number" name="idSearch" id="idSearch" value="Search Id" class="text ui-widget-content ui-corner-all">
-    <input type="submit" value="Search">
+    <input type="text" id="nameSearch" class="search_box" onkeyup="Search()"/>
 
     <button id="add">Add new Patron</button>
     <button id="remove">Remove</button>
@@ -206,10 +192,11 @@ function setCookie(){
                 $holdDate=  mysql_query("Select expiryDate, pAccount, libraryCode FROM Hold");
             
                 while($row= mysql_fetch_assoc($holdDate)){
-                 $date2=new DateTime($row['expiryDate']);
-                $diff=date_diff($date,$date2);
-                $timeDiff=$diff->format(a);
-                if($timeDiff>0){
+                 $dateExpire=idate('s',$row['expiryDate']);
+                 $date=$expireDate=mktime(0, 0, 0, date("m"),   date("d"),   date("Y"));
+                 $dateCurrent=iDate('s',$date);
+                        
+                if($dateCurrent>$dateExpire){
                     $maxFineNum=mysql_query("SELECT MAX(fineNo) FROM Fine");
                     $maxFineNum++;
                     $accountNo=$row['pAccount'];
@@ -219,10 +206,11 @@ function setCookie(){
                 //checks for overdue loans
                 $loanDates=mysql_query("Select dateLoaned, pAccount, libraryCode, stockNum FROM Loan");
                 while($row=mysql_fetch_array($loanDates)){
-                $date2=new DateTime($row['dateLoaned']);
-                $diff=date_diff($date, date2);
-                $timeDiff=$diff->format(a);
-                if($timeDiff>0){
+                 $dateExpire=idate('s',$row['dateLoaned']);
+                 $date=$expireDate=mktime(0, 0, 0, date("m"),   date("d"),   date("Y"));
+                 $dateCurrent=iDate('s',$date);
+                        
+                if($dateCurrent>$dateExpire){
                     $maxFineNum=mysql_query("SELECT MAX(fineNo) FROM Fine");
                     $maxFineNum++;
                     $accountNo=$row['pAccount'];
@@ -236,10 +224,13 @@ function setCookie(){
                 $true=TRUE;
                 $expiredCards=mysql_query("SELECT membershipExpiryDate, pAccount FROM Patron WHERE membershipExpired='$false'");
                 while($row=mysql_fetch_array($expiredCards)){
-                    $date2=new DateTime($row['membershipExpiryDate']);
-                    $diff=date_diff($date,$date2);
-                    $timeDiff=$diff->format('%a');    
-                    if($timeDiff>0){
+                     $dateE=$row['membershipExpiryDate'];
+                    $dateEx=strtotime($dateE);
+                    $dateExpire=idate('s', $dateEx);
+                    $date=$expireDate=mktime(0, 0, 0, date("m"),   date("d"),   date("Y"));
+                    $dateCurrent=idate('s',$date);
+                        
+                if($dateCurrent>$dateExpire){
                          $accountNo=$row['pAccount'];
                          mysql_query("UPDATE Patron SET membershipExpired=$true WHERE pAccount='$accountNo'");
                     }
@@ -262,16 +253,16 @@ function setCookie(){
                     <?php
                     while ($row=mysql_fetch_array($query1)){
                         $expireValue="";
-                        if($row['membershipExpired']==1)
+                        if($row['membershipExpired']==0)
                         { $expireValue="No"; }
                         else{ $expireValue="Yes"; }
                    
                     echo "<tr>";
                     echo "<td><input type='checkbox' value=".$row['pAccount']." name='check[]'/></td>";  
-                    echo "<td name='id'>".$row['pAccount']."</td>";
-                    echo "<td name='name'>".$row['name']."</td>";
+                    echo "<td>".$row['pAccount']."</td>";
+                    echo "<td>".$row['name']."</td>";
                     echo "<td>".$expireValue."</td>";
-                    echo "<td><a href='PatronInformation.php'><button id=".$row['pAccount']." onclick='setCookie()'>View</button></a></td>";
+                    echo "<td><a href='PatronInformation.php'><button id=".$row['pAccount']." value=".$row['pAccount']." onclick='setCookie()' name='button'>View</button></a></td>";
                     echo "</tr>";
                     }
                     ?>
@@ -279,4 +270,3 @@ function setCookie(){
             </table>
 </div>
 </body>
-</html>
