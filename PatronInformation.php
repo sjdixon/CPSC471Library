@@ -1,27 +1,3 @@
-<!doctype html>
-<html lang="en">
-<head>
-<meta charset="utf-8">
-<title>Book a Book - Patron</title>
-<link rel="stylesheet" href="http://code.jquery.com/ui/1.10.3/themes/smoothness/jquery-ui.css">
-<script src="http://code.jquery.com/jquery-1.9.1.js"></script>
-<script src="http://code.jquery.com/ui/1.10.3/jquery-ui.js"></script>
-<link rel="stylesheet" href="/resources/demos/style.css">
-
- <style>
-body { font-size: 62.5%; }
-label, input { display:block; }
-input.text { margin-bottom:12px; width:100%; padding: .4em; }
-fieldset { padding:0; border:0; margin-top:25px; }
-h1 { font-size: 1.2em; margin: .6em 0; }
-div#Info_table { width: 400px; margin: 20px 0; }
-div#Info_table table { margin: 1em 0; border-collapse: collapse; width: 100%; }
-div#Info_table table td, div#Info_table table th { border: 1px solid #eee; padding: .6em 10px; text-align: left; }
-.ui-dialog .ui-state-error { padding: .3em; }
-.validateTips { border: 1px solid transparent; padding: 0.3em; }
-</style>
-
-
 <script>
 
    
@@ -65,8 +41,6 @@ $( "#datepicker" ).datepicker({
 showOn: "button",
 buttonImage: "images/calendar.gif",
 buttonImageOnly: true
-
-
 });
 });
 //Hold dialog Function
@@ -186,6 +160,7 @@ width: 350,
 modal: true,
 buttons: {
 "Commit": function() {
+    $("form#EditPatronForm").submit();
 $( this ).dialog( "close" );
 },
 Cancel: function() {
@@ -204,12 +179,14 @@ $("#dialogEdit").dialog( "open" );
 });
 });
 </script>
-</head>
+
 <body>
     <?php
      $server = mysql_connect("localhost","root", "root");
             $db =mysql_select_db("library", $server);
-      
+
+            $pId=$_COOKIE['pID'];
+        //$pId=1234567890;
     ?>
 <div>
 <a href="PatronTab.php"><button>Go Back</button></a>
@@ -217,16 +194,25 @@ $("#dialogEdit").dialog( "open" );
 <!Edit patron Information dialog format>  
 <div id="dialogEdit" title="Edit Contact Information">
 <p class="validateTips">All form fields are required.</p>
-<form>
+<form id="EditPatronForm" action="updatePatron.php" method="post">
 <fieldset>
-<label for="name">Name</label>
-<input type="text" name="name" id="name" class="text ui-widget-content ui-corner-all">
-<label for="addr">Address</label>
-<input type="text" name="addr" id="addr" class="text ui-widget-content ui-corner-all">
-<label for="email">Email</label>
-<input type="text" name="email" id="email" value="" class="text ui-widget-content ui-corner-all">
-<label for="phone">Phone Number</label>
-<input type="phone" name="phone" id="phone" value="" class="text ui-widget-content ui-corner-all">
+<?php
+    $existingDate=mysql_query("select * From Patron Where pAccount='$pId'");
+    
+    while($row=mysql_fetch_assoc($existingDate)){
+        $name=$row['name'];
+        $addr=$row['address'];
+        $mail=$row['email'];
+        $pNo=$row['phone'];
+     }?>
+       <label for="name">Name</label>
+       <input type="text" name="name" id="name" value="<? echo $name?>" class="text ui-widget-content ui-corner-all">
+       <label for="addr">Address</label>
+       <input type="text" name="addr" id="addr" value="<?php echo $addr?>"  class="text ui-widget-content ui-corner-all">
+       <label for="email">Email</label>
+       <input type="text" name="email" id="email" value="<?php echo $mail?>" class="text ui-widget-content ui-corner-all">
+       <label for="phone">Phone Number</label>
+       <input type="phone" name="phone" id="phone" value="<?php echo $pNo?>" class="text ui-widget-content ui-corner-all">
 </fieldset>
 </form>
 </div> 
@@ -266,7 +252,7 @@ $("#dialogEdit").dialog( "open" );
 <form>
 <fieldset>
 <label for="waiver">Waiver $<label id="waiver"></label></label>
-<label for="pay">Pay $<label id="pay"></label></label>
+<label for="pay">Pay $<label id="pay"> $</label></label>
 <lebel for="Patron">Patron: </label>
 <label for="Handled">Handled By<label id="HandledBy"></label></label>
 <label>Payed on:</label>
@@ -282,7 +268,7 @@ $("#dialogEdit").dialog( "open" );
 <table id="pInformation" class="ui-widget ui-widget-content">
 <thead>
 <tr class="ui-widget-header ">
-
+<?php $query=mysql_query("Select name, address, email, phone From Patron Where pAccount='$pId'");?>
 <th>Name</th>
 <th>Address</th>
 <th>Email</th>
@@ -291,10 +277,18 @@ $("#dialogEdit").dialog( "open" );
 </thead>
 <tbody>
 <tr>
-<td>""</td>
-<td>""</td>
-<td>""</td>
-<td>""</td>
+<?php
+while ($row=mysql_fetch_array($query)){
+    
+echo '<tr>';
+echo "<td>".$row['name']."</td>";
+echo "<td>".$row['address']."</td>";
+echo "<td>".$row['email']."</td>";
+echo "<td>".$row['phone']."</td>";
+echo '</tr>';
+}
+?>
+  
 </tr>
 </tbody>
 </table>
@@ -307,6 +301,7 @@ $("#dialogEdit").dialog( "open" );
 <div>
 <h1>Loans:</h1>
 <div id="Info_table">
+<?php $query2=mysql_query("Select title, dateLoaned, dateDue From Loan inner join Item on Loan.libraryCode=Item.libaryCode Where pAccount='$pId'");?>
 <table id="loans" class="ui-widget ui-widget-content">
 <thead>
 <tr class="ui-widget-header ">
@@ -317,12 +312,14 @@ $("#dialogEdit").dialog( "open" );
 </tr>
 </thead>
 <tbody>
-<tr>
-<td></td>
-<td></td>
-<td></td>
-<td></td>
-</tr>
+  <?php
+while($rows=mysql_fetch_assoc($query2)){
+echo '<tr>';
+echo "<td>".$row['title']."</td>";
+echo "<td>".$row['dateLoaned']."</td>";
+echo "<td>".$row['dateDue']."</td>";
+echo '</tr>';
+}?>
 </tbody>
 </table>
 </div>
@@ -334,18 +331,24 @@ $("#dialogEdit").dialog( "open" );
 <div>
 <h1>Holds:</h1>
 <div id="Info_table">
+<?php $query=mysql_query("Select title, dateHeld, availDate From Hold INNER JOIN Item ON Hold.libraryCode=Item.libaryCode Where pAccount='$pId'");?>
 <table id="Holds" class="ui-widget ui-widget-content">
 <thead>
 <tr class="ui-widget-header ">
 <th>Title</th>
+<th>Held At</th>
 <th>Pickup Date</th>
 </tr>
 </thead>
 <tbody>
-<tr>
-<td><ol id="selectable"><li>John Doe The Movie</li></ol></td>
-<td></td>
-</tr>
+    <?php
+ while($row=  mysql_fetch_array($query)){
+echo'<tr>';
+echo "<td>".$row['title']."</td>";
+echo "<td>".$row['dateHeld']."</td>";
+echo "<td>".$row['availDate']."</td>";
+echo '</tr>';}
+   ?>     
 </tbody>
 </table>
 </div>
@@ -357,6 +360,7 @@ $("#dialogEdit").dialog( "open" );
 <div>
 <h1>Fines:</h1>
 <div id="Info_table">
+<?php $query=mysql_query("Select title, reason, amountCharged From Fines INNER JOIN Item ON Fines.libraryCode=Item.libaryCode Where pAccount='$pId'");?>
 <table id="Fines" class="ui-widget ui-widget-content">
 <thead>
 <tr class="ui-widget-header ">
@@ -366,14 +370,17 @@ $("#dialogEdit").dialog( "open" );
 </tr>
 </thead>
 <tbody>
-<tr>
-<td><ol id="selectable"><li>John Doe The Movie</li></ol></td>
-<td></td>
-</tr>
+ <?php
+ while($row=mysql_fetch_array($query)){
+echo'<tr>';
+echo "<td>".$row['title']."</td>";
+echo "<td>".$row['reason']."</td>";
+echo "<td>".$row['amountCharged']."</td>";
+echo '</tr>';}
+?>
 </tbody>
 </table>
 </div>
 <button id="payWaiverFines">Pay/Waiver</button>
 </div>
 </body>
-</html>
