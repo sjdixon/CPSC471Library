@@ -24,12 +24,13 @@
 	$UPC = $_POST['UPC2'];
 	$director = $_POST['director'];
 	$prodComp = $_POST['producerName2'];
-	$ref = $_POST['isReference3'];
+	$ref = $_POST['isReference2'];
 	echo "Is Reference: $ref";
 	if ($ref == "on"){
 		$ref = 1;
 	}
 	else $ref = 0;
+	$copies = $_POST['copies2'];
 					
 	$results = mysql_query("INSERT INTO Item VALUES ('$id','$type','$location','$title','$year','$ref','$genre','$audience')");
 	if(!$results){
@@ -43,10 +44,12 @@
 		trigger_error(mysql_error(), E_USER_ERROR);
      }
      
-    $results3 = mysql_query("INSERT INTO ITEM_INSTANCE VALUES ('1', '$id', 'available')"); 
-	if(!$results3){
-     	echo "could not insert into Instance table <br />";        
-		trigger_error(mysql_error(), E_USER_ERROR);
+    for ($i = 1; $i <= $copies; $i++){ 	 
+   		$results3 = mysql_query("INSERT INTO ITEM_INSTANCE VALUES ('$i', '$id', 'available')"); 
+		if(!$results3){
+     		echo "could not insert into Instance table <br />";        
+			trigger_error(mysql_error(), E_USER_ERROR);
+    	}
     }
 
         

@@ -28,6 +28,7 @@
 		$ref = 1;
 	}
 	else $ref = 0;
+	$copies = $_POST['copies3'];
 
 	//echo "Date: $date<br>";
 	$datestr = explode("/", $date);
@@ -49,10 +50,12 @@
 		trigger_error(mysql_error(), E_USER_ERROR);
      }
      
-    $results3 = mysql_query("INSERT INTO ITEM_INSTANCE VALUES ('1', '$id', 'available')"); 
-	if(!$results3){
-     	echo "could not insert into Instance table <br />";        
-		trigger_error(mysql_error(), E_USER_ERROR);
+    for ($i = 1; $i <= $copies; $i++){ 	 
+   		$results3 = mysql_query("INSERT INTO ITEM_INSTANCE VALUES ('$i', '$id', 'available')"); 
+		if(!$results3){
+     		echo "could not insert into Instance table <br />";        
+			trigger_error(mysql_error(), E_USER_ERROR);
+    	}
     }
 
         

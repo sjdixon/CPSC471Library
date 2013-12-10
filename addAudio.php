@@ -24,7 +24,8 @@
 	$UPC = $_POST['UPC'];
 	$artists = $_POST['artistName'];
 	$prodComp = $_POST['producerName'];
-	$ref = $_POST['isReference3'];
+	$ref = $_POST['isReference1'];
+	$copies = $_POST['copies1'];
 	echo "Is Reference: $ref";
 	if ($ref == "on"){
 		$ref = 1;
@@ -43,11 +44,14 @@
 		trigger_error(mysql_error(), E_USER_ERROR);
      }
      
-    $results3 = mysql_query("INSERT INTO ITEM_INSTANCE VALUES ('1', '$id', 'available')"); 
-	if(!$results3){
-     	echo "could not insert into Instance table <br />";        
-		trigger_error(mysql_error(), E_USER_ERROR);
+    for ($i = 1; $i <= $copies; $i++){ 	 
+   		$results3 = mysql_query("INSERT INTO ITEM_INSTANCE VALUES ('$i', '$id', 'available')"); 
+		if(!$results3){
+     		echo "could not insert into Instance table <br />";        
+			trigger_error(mysql_error(), E_USER_ERROR);
+    	}
     }
+
 
         
 ?>
