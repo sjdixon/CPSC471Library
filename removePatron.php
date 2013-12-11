@@ -7,19 +7,8 @@
        
         foreach ($_POST['pIds'] as $id) {
           
-           $query="DELETE FROM Patron WHERE pAccount='$id'";
-        $result = mysql_query($query);
-        error_log(print_r($_REQUEST,true));
-
-        if($result){
-            echo "Your comment has been sent";
+        $query="DELETE FROM Patron WHERE pAccount='$id'";
+        mysql_query($query);
         }
-        else{
-            echo "Error in sending your comment";
-                echo "could not insert into Item table <br />";
-                trigger_error(mysql_error(), E_USER_ERROR);
-        }
-
-            
-        }
+        header("Location: PatronTab.php");
 ?>

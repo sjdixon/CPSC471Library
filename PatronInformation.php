@@ -1,6 +1,19 @@
-<script>
 
-   
+ <style>
+body { font-size: 62.5%; }
+label, input { display:block; }
+input.text { margin-bottom:12px; width:100%; padding: .4em; }
+fieldset { padding:0; border:0; margin-top:25px; }
+h1 { font-size: 1.2em; margin: .6em 0; }
+div#Info_table { width: 400px; margin: 20px 0; }
+div#Info_table table { margin: 1em 0; border-collapse: collapse; width: 100%; }
+div#Info_table table td, div#Info_table table th { border: 1px solid #eee; padding: .6em 10px; text-align: left; }
+.ui-dialog .ui-state-error { padding: .3em; }
+.validateTips { border: 1px solid transparent; padding: 0.3em; }
+</style>
+
+
+<script>   
 $(function() {
 $( "#accordion" ).accordion({
 collapsible: true
@@ -15,6 +28,18 @@ width: 350,
 modal: true,
 buttons: {
 "Renew Item": function() {
+ var rDate=$("#datepicker").val();
+ var searchIDs = $("#Holds input:checkbox:checked").map(function(){
+      return $(this).val();
+    }).get();
+      alert(searchIDs[0]);
+      
+    $.ajax({
+        url : 'cancelHolds.php',
+        method: 'post',
+        data : { pIds : searchIDs,
+                 Date: rDate}
+    }); 
 $( this ).dialog( "close" );
 },
 Cancel: function() {
@@ -52,6 +77,15 @@ width: 350,
 modal: true,
 buttons: {
 "Remove Hold": function() {
+     var searchIDs = $("#Holds input:checkbox:checked").map(function(){
+      return $(this).val();
+    }).get();
+      alert(searchIDs[0]);
+    $.ajax({
+        url : 'cancelHolds.php',
+        method: 'post',
+        data : { pIds : searchIDs }
+    });
 $( this ).dialog( "close" );
 },
 Cancel: function() {
@@ -91,6 +125,7 @@ width: 350,
 modal: true,
 buttons: {
 "Pay/Waiver Fines": function() {
+ $("form#payWaveFinesForm").submit();
 $( "#dialog-formConfirm" ).dialog( "open" );
 $( this ).dialog( "close" );
 
@@ -184,9 +219,13 @@ $("#dialogEdit").dialog( "open" );
     <?php
      $server = mysql_connect("localhost","root", "root");
             $db =mysql_select_db("library", $server);
-
-            $pId=$_COOKIE['pID'];
-        //$pId=1234567890;
+            
+           
+            
+            if (isset($_COOKIE["patronAccount"]))
+                $pId=$_COOKIE["patronAccount"];
+            else
+              header("Location: PatronTab.php");
     ?>
 <div>
 <a href="PatronTab.php"><button>Go Back</button></a>
@@ -212,17 +251,16 @@ $("#dialogEdit").dialog( "open" );
        <label for="email">Email</label>
        <input type="text" name="email" id="email" value="<?php echo $mail?>" class="text ui-widget-content ui-corner-all">
        <label for="phone">Phone Number</label>
-       <input type="phone" name="phone" id="phone" value="<?php echo $pNo?>" class="text ui-widget-content ui-corner-all">
+       <input type="text" name="phone" id="phone" value="<?php echo $pNo?>" class="text ui-widget-content ui-corner-all">
+       <input type="hidden" name="id" id="id" value="<?php echo $pId?>" class="text ui-widget-content ui-corner-all">
 </fieldset>
 </form>
 </div> 
 <!Dialog box for renewing an item>   
 <div id="dialog-form1" title="Renew Item">
-<form>
+<form action="renewItem.php" method="post"> 
 <fieldset>
-<form action="process.php" method="post"> 
-  <p>Date:</p><input type="text" id="datepicker" name="datepicker" value="Date"/>
-</form>
+  <p>Date:</p><input type="text" id="datepicker" name="datepicker" value=""/>
 </fieldset>
 </form>
 </div>    
@@ -230,13 +268,13 @@ $("#dialogEdit").dialog( "open" );
 <div id="RemoveHold" title="Cancel Hold">
 <p><span class="ui-icon ui-icon-alert" style="float:left; margin:0 7px 20px 0;"></span>Are you want to cancel the Hold</p>
 </div>
-   
+
 <div id="dialog-formPay" title="Pay/Wavier Fines">
 <p class="validateTips">All form fields are required.</p>
 <p class="validateTips"> Amount Owed: $</p>
-<form>
+<form id="PayWaveFinesForm" action="pwFines.php" method="post">
 <fieldset>
-<label for="waiver">Waiver $</label>
+<label for="waiver">Wave $</label>
 <input type="text" name="waiver" id="waiver" class="text ui-widget-content ui-corner-all">
 <label for="pay">Pay $</label>
 <input type="text" name="pay" id="pay" value="" class="text ui-widget-content ui-corner-all">
@@ -301,7 +339,7 @@ echo '</tr>';
 <div>
 <h1>Loans:</h1>
 <div id="Info_table">
-<?php $query2=mysql_query("Select title, dateLoaned, dateDue From Loan inner join Item on Loan.libraryCode=Item.libaryCode Where pAccount='$pId'");?>
+<?php $query2=mysql_query("Select * From Loan Where pAccount='$pId'");?>
 <table id="loans" class="ui-widget ui-widget-content">
 <thead>
 <tr class="ui-widget-header ">
@@ -314,10 +352,16 @@ echo '</tr>';
 <tbody>
   <?php
 while($rows=mysql_fetch_assoc($query2)){
+$info=array();
+$info.push($pId);
+$info.push($row['libraryCode']);
+$info.push($row['stockNum']);
+$info.push($row['dateLoaned']);
 echo '<tr>';
-echo "<td>".$row['title']."</td>";
+echo "<td>".$row['libraryCode']."</td>";
 echo "<td>".$row['dateLoaned']."</td>";
 echo "<td>".$row['dateDue']."</td>";
+echo "<td><td><input type='checkbox' value=$info name='check[]'/></td></td>";
 echo '</tr>';
 }?>
 </tbody>
@@ -331,22 +375,26 @@ echo '</tr>';
 <div>
 <h1>Holds:</h1>
 <div id="Info_table">
-<?php $query=mysql_query("Select title, dateHeld, availDate From Hold INNER JOIN Item ON Hold.libraryCode=Item.libaryCode Where pAccount='$pId'");?>
+<?php $query=mysql_query("Select libraryCode, dateHeld, availDate From Hold Where pAccount='$pId'");?>
 <table id="Holds" class="ui-widget ui-widget-content">
 <thead>
 <tr class="ui-widget-header ">
 <th>Title</th>
 <th>Held At</th>
 <th>Pickup Date</th>
+<th>Selected</th>
 </tr>
 </thead>
 <tbody>
     <?php
- while($row=  mysql_fetch_array($query)){
+ while($row= mysql_fetch_assoc($query)){$info=array();
+$info.push($pId);
+$info.push($row['libraryCode']);
 echo'<tr>';
-echo "<td>".$row['title']."</td>";
+echo "<td>".$row['libraryCode']."</td>";
 echo "<td>".$row['dateHeld']."</td>";
 echo "<td>".$row['availDate']."</td>";
+echo "<td><input type='checkbox' value=$info name='check[]'/></td>";
 echo '</tr>';}
    ?>     
 </tbody>
@@ -360,7 +408,7 @@ echo '</tr>';}
 <div>
 <h1>Fines:</h1>
 <div id="Info_table">
-<?php $query=mysql_query("Select title, reason, amountCharged From Fines INNER JOIN Item ON Fines.libraryCode=Item.libaryCode Where pAccount='$pId'");?>
+<?php $query3=mysql_query("Select * From Fine Where pAccount='$pId'"); ?>
 <table id="Fines" class="ui-widget ui-widget-content">
 <thead>
 <tr class="ui-widget-header ">
@@ -371,11 +419,12 @@ echo '</tr>';}
 </thead>
 <tbody>
  <?php
- while($row=mysql_fetch_array($query)){
+ while($row=mysql_fetch_assoc($query3)){
 echo'<tr>';
-echo "<td>".$row['title']."</td>";
+echo "<td>".$row['libraryCode']."</td>";
 echo "<td>".$row['reason']."</td>";
 echo "<td>".$row['amountCharged']."</td>";
+echo "<td><input type='checkbox' value=".$row['fineNo']." name='check[]'/></td>";
 echo '</tr>';}
 ?>
 </tbody>

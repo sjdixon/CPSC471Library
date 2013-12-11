@@ -1,8 +1,18 @@
-
-
+<style>
+body { font-size: 62.5%; }
+label, input { display:block; }
+input.text { margin-bottom:12px; width:95%; padding: .4em; }
+fieldset { padding:0; border:0; margin-top:25px; }
+h1 { font-size: 1.2em; margin: .6em 0; }
+div#users-contain { width: 350px; margin: 20px 0; }
+div#users-contain table { margin: 1em 0; border-collapse: collapse; width: 100%; }
+div#users-contain table td, div#users-contain table th { border: 1px solid #eee; padding: .6em 10px; text-align: left; }
+.ui-dialog .ui-state-error { padding: .3em; }
+.validateTips { border: 1px solid transparent; padding: 0.3em; }
+</style>
 <script type="text/javascript"> 
 
-//add  new patron           
+//add new patron           
 $(function() {
 var id=$("#pid"), 
 name = $( "#name" ),
@@ -19,6 +29,7 @@ setTimeout(function() {
 tips.removeClass( "ui-state-highlight", 1500 );
 }, 500 );
 }
+//This function checks the length of the string
 function checkLength( o, n, min, max ) {
 if ( o.val().length > max || o.val().length < min ) {
 o.addClass( "ui-state-error" );
@@ -54,13 +65,12 @@ bValid = bValid && checkLength( address, "address", 1, 45 );
 bValid = bValid && checkLength( phone, "phone", 7, 11 );
 bValid = bValid && checkLength( id, "id", 1, 10 );
 
-bValid = bValid && checkRegexp( name, /^([a-zA-Z])+$/i, "Name may consist of a-z, begin with a letter." );
 bValid = bValid && checkRegexp( email, /^((([a-z]|\d|[!#\$%&'\*\+\-\/=\?\^_`{\|}~]|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])+(\.([a-z]|\d|[!#\$%&'\*\+\-\/=\?\^_`{\|}~]|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])+)*)|((\x22)((((\x20|\x09)*(\x0d\x0a))?(\x20|\x09)+)?(([\x01-\x08\x0b\x0c\x0e-\x1f\x7f]|\x21|[\x23-\x5b]|[\x5d-\x7e]|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])|(\\([\x01-\x09\x0b\x0c\x0d-\x7f]|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF]))))*(((\x20|\x09)*(\x0d\x0a))?(\x20|\x09)+)?(\x22)))@((([a-z]|\d|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])|(([a-z]|\d|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])([a-z]|\d|-|\.|_|~|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])*([a-z]|\d|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])))\.)+(([a-z]|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])|(([a-z]|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])([a-z]|\d|-|\.|_|~|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])*([a-z]|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])))\.?$/i, "eg. ui@jquery.com" );
-bValid = bValid && checkRegexp( address, /^([0-9a-zA-Z])+$/, "Address field only allow : a-z 0-9" );
 bValid = bValid && checkRegexp( id, /^([0-9])+$/, "Id field only allow :0-9" );
-bValid = bValid && checkRegexp( phone, /^([0-9]+[/-/])+$/, "Phone field only allow :0-9" );
+
     if(bValid){
-              $("#nPatron").submit();
+              document.getElementById('nPatron').submit();
+              //document.nPatron.submit();
               $( this ).dialog( "close" );
               }
 },
@@ -78,29 +88,31 @@ $( "#add" )
 $( "#dialog-form" ).dialog( "open" );
 });
 });
-//selector
-$(function() {
-$( "#selected" ).buttonset();
-});
 //remove
  $(function() {
 $( "#dialog-confirm" ).dialog({
 autoOpen: false,
-height: 100,
+height: 150,
 width: 300,
 modal: true,
 buttons: {
 "Delete Patron(s)": function(){
+    //This gets the values from each checkbox that is checked
       var searchIDs = $("#users input:checkbox:checked").map(function(){
       return $(this).val();
     }).get();
-      alert(searchIDs[0]);
+    //Using Ajax function to jump to the remove Patron file, all checked Patrons are removed
     $.ajax({
         url : 'removePatron.php',
         method: 'post',
         data : { pIds : searchIDs }
     });
-
+//Since the page is not refreshed after using Ajax, this deletes checked rows from the html table  
+patronTable = document.getElementById('users');
+selected = document.getElementsByName('check[]');
+for (i=selected.length-1; i>=0; i--)
+{if (selected[i].checked == true){patronTable.deleteRow(i+1)}}
+ 
 $( this ).dialog( "close" );
 
 },
@@ -112,52 +124,44 @@ close: function() {
 allFields.val( "" ).removeClass( "ui-state-error" );
 }
 });
+
 $( "#remove" )
 .button()
 .click(function() {
 $( "#dialog-confirm" ).dialog( "open" );
 });
 });
-//search
-function Search() {
-      var searchText=document.getElementById('searchName').value();
-      var pTable=document.getElementById('#users');
-      var pTableColumnCount;
-      for(var rowIndex=0; rowIndex<pTable.rows.length; rowIndex++)
-      {
-          var rowdata='';
-          if(rowIndex==0){
-              pTableColumnCount=pTable.rows.item(rowIndex).cells.length();
-              continue;
-          }
-          for(var columnIndex=1; columnIndex<pTableColumnCount; columnIndex++)
-          {
-              rowData+=pTable.row.item(rowIndex).cells.item(columnIndex).textContent
-          }
-          if(rowData.indexOf(searchText)==-1)
-              ('#users')
-          else
-              pTable.rows.item(rowIndex).style.display='table-row';
-      }
-}
-function setCookie(){
-   
-        var id=$(this).attr("id");
-        alert(id);
-        $.cookie('pID', id, { expires: 1 });
-    }
 
+//Filters the table when a value is typed in.
+$(document).ready(function() {
+  var $rows=$("#users tbody>tr"), $cells=$rows.children();
+  $("#textSearch").keyup(function() {
+       var term = $(this).val()
+       //If the something has been entered into the text box, It will first hide all the rows
+       //Then if the value inside of a cell in one of the rows matches the entered term then those rows are displayed
+       //If nothing has been entered all of the rows in the table are appear
+       if(term != "") {
+            $rows.hide();
+            $cells.filter(function() {
+                return $(this).text().indexOf(term) > -1;
+            }).parent("tr").show();
+        } else {
+            $rows.show();
+        }
+    });
+});
 </script>
 
 <body>   
 <div id="dialog-confirm" title="Delete Patrons">
 <form id='rPatron' action='removePatron.php' method='post'>
-<p>These Patrons will be permanently deleted. Are you sure?</p>
+<p>These Patrons will be permanently deleted</p>
+</form>
 </div>
 
 <div id="dialog-form" title="Add a New Patron">
-<p class="validateTips">All form fields are required.</p>  
-<form id="nPatron" action="Processing/Patron/NewPatron.php" method="post">
+<p class="validateTips">All form fields are required.</p> 
+<form id="nPatron" name='nPatron' action='NewPatron.php' method='post' >
 <fieldset>
 <label for=pid">Account Number</label>
 <input type="number" name="pid" id="pid" class="text ui-widget-content ui-corner-all">
@@ -174,12 +178,8 @@ function setCookie(){
 </div>
 
 <div>
-    
-    
-    <input type="text" id="nameSearch" class="search_box" onkeyup="Search()"/>
-
-    <button id="add">Add new Patron</button>
-    <button id="remove">Remove</button>
+    <label for="textSearch">Search Table</label>
+    <input type="text" id="textSearch" class="text ui-widget-content ui-corner-all">
 </div>
 <div id="users-contain" class="ui-widget">
 <!This is the table that stores the values provided by the php above>
@@ -190,19 +190,20 @@ function setCookie(){
                 $t=time();
                 $date=date_create(date("y-m-d", $t));
                 $holdDate=  mysql_query("Select expiryDate, pAccount, libraryCode FROM Hold");
-            
+               
                 while($row= mysql_fetch_assoc($holdDate)){
                  $dateExpire=idate('s',$row['expiryDate']);
                  $date=$expireDate=mktime(0, 0, 0, date("m"),   date("d"),   date("Y"));
                  $dateCurrent=iDate('s',$date);
                         
-                if($dateCurrent>$dateExpire){
-                    $maxFineNum=mysql_query("SELECT MAX(fineNo) FROM Fine");
-                    $maxFineNum++;
-                    $accountNo=$row['pAccount'];
-                    $itemCode=$row['libraryCode'];
-                    mysql_query("INSERT INFO Fines (fineNo, pAccount, libraryCode, reason, dateFined) VALUES ('$maxFineNum','$accountNo','$itemCode','Hold','$date')");
-                }}
+                    if($dateCurrent>$dateExpire){
+                        $maxFineNum=mysql_query("SELECT MAX(fineNo) FROM Fine");
+                        $maxFineNum++;
+                        $accountNo=$row['pAccount'];
+                        $itemCode=$row['libraryCode'];
+                        mysql_query("INSERT INFO Fines (fineNo, pAccount, libraryCode, reason, dateFined) VALUES ('$maxFineNum','$accountNo','$itemCode','Hold','$date')");
+                    }   
+                 }
                 //checks for overdue loans
                 $loanDates=mysql_query("Select dateLoaned, pAccount, libraryCode, stockNum FROM Loan");
                 while($row=mysql_fetch_array($loanDates)){
@@ -210,21 +211,21 @@ function setCookie(){
                  $date=$expireDate=mktime(0, 0, 0, date("m"),   date("d"),   date("Y"));
                  $dateCurrent=iDate('s',$date);
                         
-                if($dateCurrent>$dateExpire){
-                    $maxFineNum=mysql_query("SELECT MAX(fineNo) FROM Fine");
-                    $maxFineNum++;
-                    $accountNo=$row['pAccount'];
-                    $itemCode=$row['libraryCode'];
-                    $instance=$row['stockNum'];
-                    mysql_query("INSERT INFO Fines (fineNo, pAccount, libraryCode, stockNum, reason, dateFined) VALUES ('$maxFineNum','$accountNo','$itemCode','$instance','Loan','$date')");
-                }
+                    if($dateCurrent>$dateExpire){
+                        $maxFineNum=mysql_query("SELECT MAX(fineNo) FROM Fine");
+                        $maxFineNum++;
+                        $accountNo=$row['pAccount'];
+                        $itemCode=$row['libraryCode'];
+                        $instance=$row['stockNum'];
+                        mysql_query("INSERT INFO Fines (fineNo, pAccount, libraryCode, stockNum, reason, dateFined) VALUES ('$maxFineNum','$accountNo','$itemCode','$instance','Loan','$date')");
+                    }
                 }
                 //Checks for expired Cards
                 $false=FALSE;
                 $true=TRUE;
                 $expiredCards=mysql_query("SELECT membershipExpiryDate, pAccount FROM Patron WHERE membershipExpired='$false'");
                 while($row=mysql_fetch_array($expiredCards)){
-                     $dateE=$row['membershipExpiryDate'];
+                    $dateE=$row['membershipExpiryDate'];
                     $dateEx=strtotime($dateE);
                     $dateExpire=idate('s', $dateEx);
                     $date=$expireDate=mktime(0, 0, 0, date("m"),   date("d"),   date("Y"));
@@ -256,17 +257,22 @@ function setCookie(){
                         if($row['membershipExpired']==0)
                         { $expireValue="No"; }
                         else{ $expireValue="Yes"; }
-                   
-                    echo "<tr>";
-                    echo "<td><input type='checkbox' value=".$row['pAccount']." name='check[]'/></td>";  
-                    echo "<td>".$row['pAccount']."</td>";
-                    echo "<td>".$row['name']."</td>";
-                    echo "<td>".$expireValue."</td>";
-                    echo "<td><a href='PatronInformation.php'><button id=".$row['pAccount']." value=".$row['pAccount']." onclick='setCookie()' name='button'>View</button></a></td>";
-                    echo "</tr>";
+                       
+                        echo "<tr>";
+                        echo "<td><input type='checkbox' value=".$row['pAccount']." name='check[]'/></td>";  
+                        echo "<td>".$row['pAccount']."</td>";
+                        echo "<td>".$row['name']."</td>";
+                        echo "<td>".$expireValue."</td>";
+                        echo "<td><form id='storeId' action='cacheId.php' method='post'>
+                            <input type='hidden' id='pAccount' name='pAccount' value=".$row['pAccount'].">
+                            <button type='sumbit'>View</button>
+                            </form></td>";
+                        echo "</tr>";
                     }
                     ?>
                 </tbody>
             </table>
+            <button id="add">Add new Patron</button>
+            <button id="remove">Remove Patron</button>
 </div>
 </body>

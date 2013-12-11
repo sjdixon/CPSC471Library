@@ -5,7 +5,11 @@
 	mysql_connect($host, $user, $pass) or die("Could not connect: " . mysql_error());
 	mysql_select_db("library");
         
-    $id=$_POST['pid']; $name=$_POST['name']; $email=$_POST['email']; $address=$_POST['address']; $phone=$_POST['phone'];   
+    $id=$_POST['pid'];
+    $name=$_POST['name']; 
+    $email=$_POST['email']; 
+    $address=$_POST['address']; 
+    $phone=$_POST['phone'];   
     $u="SELECT COUNT(*) FROM PATRON WHERE pAccount='$id'";
     $unique=mysql_query($u);
     $uni=mysql_fetch_row($unique);
@@ -18,9 +22,8 @@
     else{
     //Creates the expire date
     
-    $expireDate=mktime(0, 0, 0, date("m"),   date("d"),   date("Y")+1);
-    $q="INSERT INTO Patron (id, membershipStartDate, membersihpExpiryDate, membershipExpired, name, address, phone, email)
-    values ('$id', NULL, '$expireDate',false, '$name', '$address', '$phone', '$email')";
+    $expireDate=date('Y-m-d', strtotime("+365 day"));
+    $q="INSERT INTO Patron values ('$id', NULL, '$expireDate' ,false, '$name', '$address', '$phone', '$email')";
     $result = mysql_query($q);
 error_log(print_r($_REQUEST,true));
 
