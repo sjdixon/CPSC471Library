@@ -9,7 +9,7 @@
 	mysql_select_db("library");
           $username=$_POST['username'];
           $password=$_POST['password'];
-          if($password==='Default123'){
+          if($password===$user){
               $q="SELECT count(*) FROM Librarian WHERE id='$username'";
               $ifCorrect=mysql_query($q);
               while($one=mysql_fetch_row($ifCorrect))
@@ -21,8 +21,8 @@
             }
         else {
              echo "Login not Successfull";
-	     header("Location: loginInvalidInput.php"); // Wherever you want the user to go when they fail the login
+	     header("Location: Login.php"); // Wherever you want the user to go when they fail the login
             }
           }
-          else{  header("Location: loginInvalidInput.php");} // Wherever you want the user to go when they fail the login 
+          else{  header("Location: Login.php");} // Wherever you want the user to go when they fail the login 
         ?>
