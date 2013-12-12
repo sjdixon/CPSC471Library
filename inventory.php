@@ -51,10 +51,6 @@
 			echo "<input type =\"text\" name=\"ISBN\" id=\"ISBN\" class=\"text ui-widget-content ui-corner-all\" /><br><br>";
 			echo "<label for=\"authorName\">Author: </label>";
 			echo "<input type =\"text\" name=\"authorName\" id=\"authorName\" class=\"text ui-widget-content ui-corner-all\" /><br><br>";
-			echo "<label for=\"pubName\">Publisher: </label>";
-			echo "<input type =\"text\" name=\"pubName\" id=\"pubName\" class=\"text ui-widget-content ui-corner-all\" /><br><br>";
-			echo "<label for=\"edition\">Edition: </label>";
-			echo "<input type =\"text\" name=\"edition\" id=\"edition\" class=\"text ui-widget-content ui-corner-all\" /><br><br>";	
 			echo "<label for=\"spinner\">Release Year: </label>";
 			echo "<input id=\"spinner\" name=\"spinner\" value=\"2013\" /><br><br>";
 			echo "<label for=\"genre\">Genre: </label>";
@@ -64,8 +60,8 @@
 				echo "<option value=\"\">Select Type</option>";
 				echo "<option value=\"Early Childhood\">Early Childhood</option>";
 				echo "<option value=\"Children\">Children</option>";
-				echo "<option value=\"Video\">Pre-Teens</option>";
-				echo "<option value=\"Newspaper\">Teens/Young Adults</option>";
+				echo "<option value=\"Pre-Teens\">Pre-Teens</option>";
+				echo "<option value=\"Young Adults\">Teens/Young Adults</option>";
 				echo "<option value=\"Adults\">Adults</option>";
 				echo "<option value=\"All Ages\">All Ages</option>"; 
 			echo "</select><br><br>";	
@@ -116,8 +112,8 @@
 				echo "<option value=\"\">Select Type</option>";
 				echo "<option value=\"Early Childhood\">Early Childhood</option>";
 				echo "<option value=\"Children\">Children</option>";
-				echo "<option value=\"Video\">Pre-Teens</option>";
-				echo "<option value=\"Newspaper\">Teens/Young Adults</option>";
+				echo "<option value=\"Pre-Teens\">Pre-Teens</option>";
+				echo "<option value=\"Young Adults\">Teens/Young Adults</option>";
 				echo "<option value=\"Adults\">Adults</option>";
 				echo "<option value=\"All Ages\">All Ages</option>"; 
 			echo "</select><br><br>";
@@ -168,8 +164,8 @@
 				echo "<option value=\"\">Select Type</option>";
 				echo "<option value=\"Early Childhood\">Early Childhood</option>";
 				echo "<option value=\"Children\">Children</option>";
-				echo "<option value=\"Video\">Pre-Teens</option>";
-				echo "<option value=\"Newspaper\">Teens/Young Adults</option>";
+				echo "<option value=\"Pre-Teens\">Pre-Teens</option>";
+				echo "<option value=\"Young Adults\">Teens/Young Adults</option>";
 				echo "<option value=\"Adults\">Adults</option>";
 				echo "<option value=\"All Ages\">All Ages</option>"; 
 			echo "</select><br><br>";			
@@ -219,8 +215,8 @@
 				echo "<option value=\"\">Select Type</option>";
 				echo "<option value=\"Early Childhood\">Early Childhood</option>";
 				echo "<option value=\"Children\">Children</option>";
-				echo "<option value=\"Video\">Pre-Teens</option>";
-				echo "<option value=\"Newspaper\">Teens/Young Adults</option>";
+				echo "<option value=\"Pre-Teens\">Pre-Teens</option>";
+				echo "<option value=\"Young Adults\">Teens/Young Adults</option>";
 				echo "<option value=\"Adults\">Adults</option>";
 				echo "<option value=\"All Ages\">All Ages</option>"; 
 			echo "</select><br><br>";
@@ -274,8 +270,8 @@
 				echo "<option value=\"\">Select Type</option>";
 				echo "<option value=\"Early Childhood\">Early Childhood</option>";
 				echo "<option value=\"Children\">Children</option>";
-				echo "<option value=\"Video\">Pre-Teens</option>";
-				echo "<option value=\"Newspaper\">Teens/Young Adults</option>";
+				echo "<option value=\"Pre-Teens\">Pre-Teens</option>";
+				echo "<option value=\"Young Adults\">Teens/Young Adults</option>";
 				echo "<option value=\"Adults\">Adults</option>";
 				echo "<option value=\"All Ages\">All Ages</option>"; 
 			echo "</select><br><br>";
@@ -348,15 +344,36 @@
 	
 	//modify item
 	echo "<div id=\"dialog10\" title=\"Modify\">";
-		echo "<form>";
+		echo "<form id = \"modify\" action=\"Processing/modifyItem.php\" method=\"post\">";
 			echo "<!--Modify info in the form below:-->";
 			echo "<label for=\"lCode4\">Library Code: </label>";
 			echo "<input type =\"text\" name=\"lCode4\" id=\"lCode4\" class=\"text ui-widget-content ui-corner-all\" /><br><br>";
+			echo "<button type=\"button\" id=\"getItem\" name=\"getItem\">Get Item Info</button>";
 			//Fun with Ajax goes here!
+			?>
+			<script type="text/javascript">
+			$("#getItem").click(function getItem(){
+				var id = document.getElementById("lCode4").value;
+				if (id =="") {
+  					alert("You must enter an id!");
+  					//Set select back to Select Type
+  				}
+  				else {
+ 					xmlhttp=new XMLHttpRequest();
+					xmlhttp.onreadystatechange=function(){
+  						if (xmlhttp.readyState==4 && xmlhttp.status==200){
+    							document.getElementById("modify").innerHTML=xmlhttp.responseText;
+    					}
+  					}
+					xmlhttp.open("GET","Processing/getItem.php?libID="+id,true);
+					xmlhttp.send();
+				}
+			});	
+			</script>
+		<?php 	
 		echo "</form>";
 	echo "</div>";
-
-?>
+	?>
 <script type="text/javascript">
 	$( "#dialog" ).dialog({ 
 		autoOpen: false, 
