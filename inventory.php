@@ -309,14 +309,20 @@
 	
 	//modify item instance
 	echo "<div id=\"dialog7\" title=\"Modify Copy\">";
-		echo "<form >";
+		echo "<form id = \"modifyCopy\" action=\"Processing/modifyInstance.php\" method=\"post\">";
 			echo "<!--Modify info in the form below:-->";
 			echo "<label for=\"lCode1\">Library Code: </label>";
 			echo "<input type =\"text\" name=\"lCode1\" id=\"lCode1\" class=\"text ui-widget-content ui-corner-all\" /><br><br>";
 			echo "<label for=\"stockNum1\">Stock Number: </label>";
 			echo "<input type =\"text\" name=\"stockNum1\" id=\"stockNum1\" class=\"text ui-widget-content ui-corner-all\" /><br><br>";
 			echo "<label for=\"status1\">Status: </label>";
-			echo "<input type =\"text\" name=\"status1\" id=\"status1\" class=\"text ui-widget-content ui-corner-all\" /><br><br>";
+			echo "<select id=\"status1\" name=\"audience\">";
+				echo "<option value=\"\">Select Status</option>";
+				echo "<option value=\"available\">In Circulation</option>";
+				echo "<option value=\"missing\">Missing</option>"; 
+				echo "<option value=\"damaged\">Damaged</option>"; 
+			echo "</select><br><br>";
+			echo "<button type=\"submit\" name=\"submit\" value=\"Submit\">OK</button>";
 		echo "</form>";
 	echo "</div>";
 	
