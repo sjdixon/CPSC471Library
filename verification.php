@@ -21,8 +21,8 @@
             }
         else {
              echo "Login not Successfull";
-	     header("Location: Login.php"); // Wherever you want the user to go when they fail the login
+	     header("Location: loginInvalidInput.php"); // Wherever you want the user to go when they fail the login
             }
           }
-          else{  header("Location: Login.php");} // Wherever you want the user to go when they fail the login 
+          else{  header("Location: loginInvalidInput.php");} // Wherever you want the user to go when they fail the login 
         ?>
