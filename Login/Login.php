@@ -1,5 +1,4 @@
-<!Done by Rhianne Hadfield> 
-<!Display a the login page, but contains an alert to tell the user that they put in an invalid input>
+<!Done by Rhianne>
 <!DOCTYPE html>
 <html>
 <head>
@@ -9,21 +8,17 @@
 	<script type="text/javascript" src="jquery-ui-1.10.3.custom/js/jquery-ui-1.10.3.custom.js"></script>
 	<link href="jquery-ui-1.10.3.custom/css/ui-lightness/jquery-ui-1.10.3.custom.css" rel="stylesheet" type="text/css" />
 	<!--Other CSS elements to style headers and links not included in the JQuery CSS page-->
-	
-    
+
 	<script>
-            function errorAlert(){
-                alert("Invalid Username or Password");
-            }
 	</script>
 </head> 
-<body onload="errorAlert()">
-   <form action='verification.php'>
+<body>
+   <form action="verification.php" method="post">
         <label for="username">Username: </label>
         <input type='number' name="username" id="username">
     
         <label for="password">Password: </label>
-        <input type='password' name="password" id="password">
+        <input type='password' name="password" id="id">
 
     <button type="submit" id="submit">Login</button>
     </form>
