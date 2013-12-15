@@ -37,7 +37,7 @@ else{
 }
 
     
-   header("Location: PatronTab.php");
+   header("Location: App_Index.php");
    exit();
     }
     ?>

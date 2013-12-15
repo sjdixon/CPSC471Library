@@ -1,3 +1,4 @@
+
 <style>
 body { font-size: 62.5%; }
 label, input { display:block; }
@@ -70,7 +71,6 @@ bValid = bValid && checkRegexp( id, /^([0-9])+$/, "Id field only allow :0-9" );
 
     if(bValid){
               document.getElementById('nPatron').submit();
-              //document.nPatron.submit();
               $( this ).dialog( "close" );
               }
 },
@@ -82,7 +82,7 @@ close: function() {
 allFields.val( "" ).removeClass( "ui-state-error" );
 }
 });
-$( "#add" )
+$( "#addPatron" )
 .button()
 .click(function() {
 $( "#dialog-form" ).dialog( "open" );
@@ -111,7 +111,7 @@ buttons: {
 patronTable = document.getElementById('users');
 selected = document.getElementsByName('check[]');
 for (i=selected.length-1; i>=0; i--)
-{if (selected[i].checked == true){patronTable.deleteRow(i+1)}}
+{if (selected[i].checked === true){patronTable.deleteRow(i+1)}}
  
 $( this ).dialog( "close" );
 
@@ -125,7 +125,7 @@ allFields.val( "" ).removeClass( "ui-state-error" );
 }
 });
 
-$( "#remove" )
+$( "#removePatron" )
 .button()
 .click(function() {
 $( "#dialog-confirm" ).dialog( "open" );
@@ -185,18 +185,18 @@ $(document).ready(function() {
 <!This is the table that stores the values provided by the php above>
 <h1></h1>
 <?php
+            setcookie("patronAccount", "", time()-3600);
+
             $server = mysql_connect("localhost","root", "root");
-            $db =mysql_select_db("library", $server);
+            $db=mysql_select_db("library", $server);
                 $t=time();
-                $date=date_create(date("y-m-d", $t));
-                $holdDate=  mysql_query("Select expiryDate, pAccount, libraryCode FROM Hold");
+                $date=date('Y-m-d');
+                $holdDate=mysql_query("Select expiryDate, pAccount, libraryCode FROM Hold");
                
                 while($row= mysql_fetch_assoc($holdDate)){
-                 $dateExpire=idate('s',$row['expiryDate']);
-                 $date=$expireDate=mktime(0, 0, 0, date("m"),   date("d"),   date("Y"));
-                 $dateCurrent=iDate('s',$date);
-                        
-                    if($dateCurrent>$dateExpire){
+                 $dateExpire=$row['expiryDate'];
+ 
+                    if(strtotime($date)>strtotime($dateExpire)){
                         $maxFineNum=mysql_query("SELECT MAX(fineNo) FROM Fine");
                         $maxFineNum++;
                         $accountNo=$row['pAccount'];
@@ -207,11 +207,9 @@ $(document).ready(function() {
                 //checks for overdue loans
                 $loanDates=mysql_query("Select dateLoaned, pAccount, libraryCode, stockNum FROM Loan");
                 while($row=mysql_fetch_array($loanDates)){
-                 $dateExpire=idate('s',$row['dateLoaned']);
-                 $date=$expireDate=mktime(0, 0, 0, date("m"),   date("d"),   date("Y"));
-                 $dateCurrent=iDate('s',$date);
-                        
-                    if($dateCurrent>$dateExpire){
+                 $dateExpire=$row['dateLoaned'];
+       
+                    if(strtotime($date)>strtotime($dateExpire)){
                         $maxFineNum=mysql_query("SELECT MAX(fineNo) FROM Fine");
                         $maxFineNum++;
                         $accountNo=$row['pAccount'];
@@ -228,7 +226,7 @@ $(document).ready(function() {
                     $dateE=$row['membershipExpiryDate'];
                     $dateEx=strtotime($dateE);
                     $dateExpire=idate('s', $dateEx);
-                    $date=$expireDate=mktime(0, 0, 0, date("m"),   date("d"),   date("Y"));
+                    $date=mktime(0, 0, 0, date("m"),   date("d"),   date("Y"));
                     $dateCurrent=idate('s',$date);
                         
                 if($dateCurrent>$dateExpire){
@@ -272,7 +270,7 @@ $(document).ready(function() {
                     ?>
                 </tbody>
             </table>
-            <button id="add">Add new Patron</button>
-            <button id="remove">Remove Patron</button>
+            <button id="addPatron">Add new Patron</button>
+            <button id="removePatron">Remove Patron</button>
 </div>
 </body>

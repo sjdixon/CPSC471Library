@@ -1,3 +1,13 @@
+<!Done by Rhianne>
+<!DOCTYPE html>
+<html>
+<head>
+	<!--Main page of our web application. Contains the tab framework and script files needed for the rest of the app-->
+	<!--Gaby Comeau, November 22, 2013-->
+	<script type="text/javascript" src="//ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
+	<script type="text/javascript" src="jquery-ui-1.10.3.custom/js/jquery-ui-1.10.3.custom.js"></script>
+	<link href="jquery-ui-1.10.3.custom/css/ui-lightness/jquery-ui-1.10.3.custom.css" rel="stylesheet" type="text/css" />
+	<!--Other CSS elements to style headers and links not included in the JQuery CSS page-->
 
  <style>
 body { font-size: 62.5%; }
@@ -19,7 +29,7 @@ $( "#accordion" ).accordion({
 collapsible: true
 });
 });
-
+//Dialog method used for renewing loans
 $(function() {
 $( "#dialog-form1" ).dialog({
 autoOpen: false,
@@ -27,19 +37,23 @@ height: 300,
 width: 350,
 modal: true,
 buttons: {
-"Renew Item": function() {
- var rDate=$("#datepicker").val();
- var searchIDs = $("#Holds input:checkbox:checked").map(function(){
-      return $(this).val();
+"Renew Item": function() {        
+        var renewDate = "";
+        var selected = $("#radio input[type='radio']:checked");
+        if (selected.length > 0) {
+            renewDate = selected.val();
+        }
+        var info = $("#Holds input:checkbox:checked").map(function(){
+     return $(this).val();
     }).get();
-      alert(searchIDs[0]);
-      
-    $.ajax({
-        url : 'cancelHolds.php',
+        $.ajax({
+        url : 'remewItem.php',
         method: 'post',
-        data : { pIds : searchIDs,
-                 Date: rDate}
-    }); 
+        data : { info : info,
+                 rDate: renewDate
+               }
+            }); 
+window.location.href="PatronInformation.php";
 $( this ).dialog( "close" );
 },
 Cancel: function() {
@@ -50,24 +64,13 @@ close: function() {
 allFields.val( "" ).removeClass( "ui-state-error" );
 }
 });
-$( "#Renew" )
+$( "#renew" )
 .button()
 .click(function() {
 $( "#dialog-form1" ).dialog( "open" );
 });
 });
 
- $(function() {
-$( "#radio" ).buttonset();
-});
-//Date Picker
- $(function() {
-$( "#datepicker" ).datepicker({
-showOn: "button",
-buttonImage: "images/calendar.gif",
-buttonImageOnly: true
-});
-});
 //Hold dialog Function
  $(function() {
 $( "#RemoveHold" ).dialog({
@@ -77,15 +80,20 @@ width: 350,
 modal: true,
 buttons: {
 "Remove Hold": function() {
-     var searchIDs = $("#Holds input:checkbox:checked").map(function(){
-      return $(this).val();
+     var holdID = $("#Holds input:checkbox:checked").map(function(){
+     return $(this).val();
     }).get();
-      alert(searchIDs[0]);
+    
     $.ajax({
-        url : 'cancelHolds.php',
+        url : 'CancelHold.php',
         method: 'post',
-        data : { pIds : searchIDs }
-    });
+        data : { lCode : holdID}
+    }); 
+    //Since the page is not refreshed after using Ajax, this deletes checked rows from the html table  
+        holdTable = document.getElementById('Holds');
+        selected = document.getElementsByName('check[]');
+        for (i=selected.length-1; i>=0; i--)
+        {if (selected[i].checked === true){holdTable.deleteRow(i+1)}}
 $( this ).dialog( "close" );
 },
 Cancel: function() {
@@ -123,10 +131,42 @@ autoOpen: false,
 height: 300,
 width: 350,
 modal: true,
+
 buttons: {
 "Pay/Waiver Fines": function() {
- $("form#payWaveFinesForm").submit();
-$( "#dialog-formConfirm" ).dialog( "open" );
+    
+/*
+var waive=$( "#waiver" ).val();
+var waiveString=String(waive);
+waiveString="Waive: $".concat(waiveString.toString());
+var payString=String($( "#pay" ).val());
+payString="Pay: $".concat(waiveString.toString());
+var handleString=String($( "#Handled" ).val());
+handleString="Handled By: ".concat(waiveString.toString());
+document.getElementById('waiveC').innerHTML=waiveString;
+document.getElementById('payC').innerHTML=payString;
+document.getElementById('HandledByC').innerHTML=handleString;
+document.getElementById('patronC').innerHTML="Patron: "+<?php echo $_COOKIE["patronAccount"]?>;
+*/
+var fineID = $("#Fines input:checkbox:checked").map(function(){
+     return $(this).val();
+    }).get();
+    var pay=$( "#pay" ).val();
+    var waive=$( "#waiver" ).val();
+    var handle=$( "#Handled" ).val();
+    $.ajax({
+        url : 'PWFines.php',
+        method: 'post',
+        
+        data : { fine : fineID,
+                 pay: pay,
+                 waive: waive,
+                 handle: handle
+                 
+               }
+            });
+            window.location.href = "PatronInformation.php";
+//$( "#dialog-formConfirm" ).dialog( "open" );
 $( this ).dialog( "close" );
 
 },
@@ -144,7 +184,7 @@ $( "#payWaiverFines" )
 $( "#dialog-formPay" ).dialog( "open" );
 });
 });
-
+/*
  $(function() {
 $( "#dialog-formConfirm" ).dialog({
 autoOpen: false,
@@ -153,7 +193,9 @@ width: 350,
 modal: true,
 buttons: {
 "Ok": function() {
+ 
 $( this ).dialog( "close" );
+
 },
 "Go Back": function() {
 $( "#dialog-formPay" ).dialog( "open" );
@@ -170,7 +212,7 @@ $( "#payWaiverFines" )
 $( "#dialog-formPay" ).dialog( "open" );
 });
 });
-
+*/
 //Dialog box for Editing Patrons
 $(function() {
 var name= $( "#name" ),
@@ -213,23 +255,26 @@ $( "#edit" )
 $("#dialogEdit").dialog( "open" );
 });
 });
-</script>
 
+$(function() {
+$( "#radio" ).buttonset();
+});
+</script>
+</head>
 <body>
     <?php
      $server = mysql_connect("localhost","root", "root");
             $db =mysql_select_db("library", $server);
             
-           
-            
             if (isset($_COOKIE["patronAccount"]))
                 $pId=$_COOKIE["patronAccount"];
             else
-              header("Location: PatronTab.php");
+              header("Location: App_Index.php");
     ?>
 <div>
-<a href="PatronTab.php"><button>Go Back</button></a>
+<a href="App_Index.php"><button>Go Back</button></a>
 </div>
+    
 <!Edit patron Information dialog format>  
 <div id="dialogEdit" title="Edit Contact Information">
 <p class="validateTips">All form fields are required.</p>
@@ -245,7 +290,7 @@ $("#dialogEdit").dialog( "open" );
         $pNo=$row['phone'];
      }?>
        <label for="name">Name</label>
-       <input type="text" name="name" id="name" value="<? echo $name?>" class="text ui-widget-content ui-corner-all">
+       <input type="text" name="name" id="name" value="<?php echo $name?>" class="text ui-widget-content ui-corner-all">
        <label for="addr">Address</label>
        <input type="text" name="addr" id="addr" value="<?php echo $addr?>"  class="text ui-widget-content ui-corner-all">
        <label for="email">Email</label>
@@ -256,44 +301,45 @@ $("#dialogEdit").dialog( "open" );
 </fieldset>
 </form>
 </div> 
+
 <!Dialog box for renewing an item>   
 <div id="dialog-form1" title="Renew Item">
-<form action="renewItem.php" method="post"> 
 <fieldset>
-  <p>Date:</p><input type="text" id="datepicker" name="datepicker" value=""/>
-</fieldset>
+ <form>
+<div id="radio">
+<?php
+$oneWeek=date("y-m-d", strtotime("+7 days"));
+$twoWeeks=date("y-m-d", strtotime("+14 days"));
+$threeWeeks=date("y-m-d", strtotime("+21 days"));
+?>
+<input type="radio" id="renewOneWeek" name="radio" value=<?php echo $oneWeek ?> ><label for="renewOneWeek">One Week</label>
+<input type="radio" id="renewTwoWeeks" name="radio" value=<?php echo $twoWeeks ?> ><label for="renewTwoWeeks">Two Weeks</label>
+<input type="radio" id="renewThreeWeeks" name="radio" value=<?php echo $threeWeeks ?>><label for="renewThreeWeeks">Three Weeks</label>
+</div>
 </form>
+  </form>
+</fieldset>
 </div>    
 <!Dialog box for removing a hold>   
 <div id="RemoveHold" title="Cancel Hold">
 <p><span class="ui-icon ui-icon-alert" style="float:left; margin:0 7px 20px 0;"></span>Are you want to cancel the Hold</p>
 </div>
 
-<div id="dialog-formPay" title="Pay/Wavier Fines">
+<div id="dialog-formPay" title="Pay/Wavie Fines">
 <p class="validateTips">All form fields are required.</p>
 <p class="validateTips"> Amount Owed: $</p>
 <form id="PayWaveFinesForm" action="pwFines.php" method="post">
 <fieldset>
-<label for="waiver">Wave $</label>
+<label for="waiver">Waive $</label>
 <input type="text" name="waiver" id="waiver" class="text ui-widget-content ui-corner-all">
 <label for="pay">Pay $</label>
 <input type="text" name="pay" id="pay" value="" class="text ui-widget-content ui-corner-all">
 <label for="Handled">Handled By</label>
-<input type="text" name="Handled" id="Handled" value="" class="text ui-widget-content ui-corner-all">
-<label>Payed on:<label type="date" value=""></label></label>
-</fieldset>
-</form>
-</div>
-
-<div id="dialog-formConfirm" title="Pay/Wavier Fines">
-<p class="validateTips"> Amount Owned</p>
-<form>
-<fieldset>
-<label for="waiver">Waiver $<label id="waiver"></label></label>
-<label for="pay">Pay $<label id="pay"> $</label></label>
-<lebel for="Patron">Patron: </label>
-<label for="Handled">Handled By<label id="HandledBy"></label></label>
-<label>Payed on:</label>
+<input type="number" name="Handled" id="Handled" value="" class="text ui-widget-content ui-corner-all">
+<?php
+$date=date('Y-m-d');
+?>
+<label>Payed on:<label type="date" value=""><?php echo $date?></label></label>
 </fieldset>
 </form>
 </div>
@@ -339,11 +385,12 @@ echo '</tr>';
 <div>
 <h1>Loans:</h1>
 <div id="Info_table">
-<?php $query2=mysql_query("Select * From Loan Where pAccount='$pId'");?>
+<?php $query2=mysql_query("Select * From Loan Inner Join Item On Loan.libraryCode=Item.libraryCode Where pAccount='$pId'");?>
 <table id="loans" class="ui-widget ui-widget-content">
 <thead>
 <tr class="ui-widget-header ">
 <th>Title</th>
+<th>Stock Number</th>
 <th>Date Loaned</th>
 <th>Due Date</th>
 <th>Select</th>
@@ -353,21 +400,22 @@ echo '</tr>';
   <?php
 while($rows=mysql_fetch_assoc($query2)){
 $info=array();
-$info.push($pId);
-$info.push($row['libraryCode']);
-$info.push($row['stockNum']);
-$info.push($row['dateLoaned']);
+$info[]=$rows['libraryCode'];
+$info[]=$rows['stocknum'];
+$info[]=$rows['dateLoaned'];
+$infoStr=implode(",", $info);
 echo '<tr>';
-echo "<td>".$row['libraryCode']."</td>";
-echo "<td>".$row['dateLoaned']."</td>";
-echo "<td>".$row['dateDue']."</td>";
-echo "<td><td><input type='checkbox' value=$info name='check[]'/></td></td>";
+echo "<td>".$rows['title']."</td>";
+echo "<td>".$rows['stocknum']."</td>";
+echo "<td>".$rows['dateLoaned']."</td>";
+echo "<td>".$rows['dateDue']."</td>";
+echo "<td><input type='checkbox' value=$infoStr name='check[]'/></td>";
 echo '</tr>';
 }?>
 </tbody>
 </table>
 </div>
-<button id="Renew">Renew</button>
+<button id="renew">Renew</button>
 </div>
  
 <h3>Holds</h3>
@@ -375,7 +423,7 @@ echo '</tr>';
 <div>
 <h1>Holds:</h1>
 <div id="Info_table">
-<?php $query=mysql_query("Select libraryCode, dateHeld, availDate From Hold Where pAccount='$pId'");?>
+<?php $query=mysql_query("Select * From Hold Inner Join Item On Hold.libraryCode=Item.libraryCode Where pAccount='$pId'");?>
 <table id="Holds" class="ui-widget ui-widget-content">
 <thead>
 <tr class="ui-widget-header ">
@@ -387,14 +435,12 @@ echo '</tr>';
 </thead>
 <tbody>
     <?php
- while($row= mysql_fetch_assoc($query)){$info=array();
-$info.push($pId);
-$info.push($row['libraryCode']);
+ while($row= mysql_fetch_assoc($query)){
 echo'<tr>';
-echo "<td>".$row['libraryCode']."</td>";
+echo "<td>".$row['title']."</td>";
 echo "<td>".$row['dateHeld']."</td>";
 echo "<td>".$row['availDate']."</td>";
-echo "<td><input type='checkbox' value=$info name='check[]'/></td>";
+echo "<td><input type='checkbox' value=".$row['libraryCode']." name='check[]'/></td>";
 echo '</tr>';}
    ?>     
 </tbody>
@@ -408,22 +454,23 @@ echo '</tr>';}
 <div>
 <h1>Fines:</h1>
 <div id="Info_table">
-<?php $query3=mysql_query("Select * From Fine Where pAccount='$pId'"); ?>
+<?php $query3=mysql_query("Select * From Fine Inner Join Item On Fine.libraryCode=Item.libraryCode Where pAccount='$pId'"); ?>
 <table id="Fines" class="ui-widget ui-widget-content">
 <thead>
 <tr class="ui-widget-header ">
 <th>Item</th>
 <th>Reason</th>
 <th>Fine</th>
+<th>Select</th>
 </tr>
 </thead>
 <tbody>
  <?php
  while($row=mysql_fetch_assoc($query3)){
 echo'<tr>';
-echo "<td>".$row['libraryCode']."</td>";
+echo "<td>".$row['title']."</td>";
 echo "<td>".$row['reason']."</td>";
-echo "<td>".$row['amountCharged']."</td>";
+echo "<td>".$row['balance']."</td>";
 echo "<td><input type='checkbox' value=".$row['fineNo']." name='check[]'/></td>";
 echo '</tr>';}
 ?>
@@ -433,3 +480,4 @@ echo '</tr>';}
 <button id="payWaiverFines">Pay/Waiver</button>
 </div>
 </body>
+</html>
