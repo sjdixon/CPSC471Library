@@ -16,12 +16,8 @@
 		echo "</div>";
 	echo "</form><br><br>";
 	
-	//add item instance
-	echo "<p>Use this form to add another copy of an already existing item</p>";
-	echo "<button type=\"button\" id = \"add_inst\">Add Item Instance</button><br><br><br>";
-	
 	//modify an item
-	echo "<p>Use this form to modify an item or item instance</p>";
+	echo "<p>Use this form to modify an item or copy of an item</p>";
 	echo "<form>";
 		echo "<iv id=\"radio2\" class=\"radioset\">";
 			echo "<input type=\"radio\" id=\"update1\" name=\"radio2\" /><label for=\"update1\">Modify Item</label>";
@@ -55,10 +51,6 @@
 			echo "<input type =\"text\" name=\"ISBN\" id=\"ISBN\" class=\"text ui-widget-content ui-corner-all\" /><br><br>";
 			echo "<label for=\"authorName\">Author: </label>";
 			echo "<input type =\"text\" name=\"authorName\" id=\"authorName\" class=\"text ui-widget-content ui-corner-all\" /><br><br>";
-			echo "<label for=\"pubName\">Publisher: </label>";
-			echo "<input type =\"text\" name=\"pubName\" id=\"pubName\" class=\"text ui-widget-content ui-corner-all\" /><br><br>";
-			echo "<label for=\"edition\">Edition: </label>";
-			echo "<input type =\"text\" name=\"edition\" id=\"edition\" class=\"text ui-widget-content ui-corner-all\" /><br><br>";	
 			echo "<label for=\"spinner\">Release Year: </label>";
 			echo "<input id=\"spinner\" name=\"spinner\" value=\"2013\" /><br><br>";
 			echo "<label for=\"genre\">Genre: </label>";
@@ -68,12 +60,16 @@
 				echo "<option value=\"\">Select Type</option>";
 				echo "<option value=\"Early Childhood\">Early Childhood</option>";
 				echo "<option value=\"Children\">Children</option>";
-				echo "<option value=\"Video\">Pre-Teens</option>";
-				echo "<option value=\"Newspaper\">Teens/Young Adults</option>";
+				echo "<option value=\"Pre-Teens\">Pre-Teens</option>";
+				echo "<option value=\"Young Adults\">Teens/Young Adults</option>";
 				echo "<option value=\"Adults\">Adults</option>";
+				echo "<option value=\"All Ages\">All Ages</option>"; 
 			echo "</select><br><br>";	
 			echo "<label for=\"location\">Location: </label>";
-			echo "<input type =\"text\" name=\"location\" id=\"location\" class=\"text ui-widget-content ui-corner-all\" /><br><br><br>";	
+			echo "<input type =\"text\" name=\"location\" id=\"location\" class=\"text ui-widget-content ui-corner-all\" /><br><br>";
+			echo "<label for=\"copies\">Number of copies: </label>";
+			echo "<input id=\"copies\" name=\"copies\" value=\"1\" /><br><br>";
+			echo "<input type=\"checkbox\" id=\"check\" name=\"isReference\"><label for=\"check\">Check for Reference Item</label><br><br>";	
 			echo "<button type=\"submit\" name=\"submit\" value=\"Submit\">OK</button>";	
 		echo "</form>";
 		?>
@@ -83,7 +79,14 @@
 			max: 2100,
 			step: 1
 		});
-	
+		$( "#copies" ).spinner({
+			min: 1,
+			max: 500,
+			step: 1
+		});
+		$(function() {
+			$( "#check" ).button();
+		});
 		</script>
 	<?php	
 	echo "</div>";
@@ -109,12 +112,16 @@
 				echo "<option value=\"\">Select Type</option>";
 				echo "<option value=\"Early Childhood\">Early Childhood</option>";
 				echo "<option value=\"Children\">Children</option>";
-				echo "<option value=\"Video\">Pre-Teens</option>";
-				echo "<option value=\"Newspaper\">Teens/Young Adults</option>";
+				echo "<option value=\"Pre-Teens\">Pre-Teens</option>";
+				echo "<option value=\"Young Adults\">Teens/Young Adults</option>";
 				echo "<option value=\"Adults\">Adults</option>";
+				echo "<option value=\"All Ages\">All Ages</option>"; 
 			echo "</select><br><br>";
 			echo "<label for=\"location1\">Location: </label>";
-			echo "<input type =\"text\" name=\"location1\" id=\"location1\" class=\"text ui-widget-content ui-corner-all\" /><br><br><br>";	
+			echo "<input type =\"text\" name=\"location1\" id=\"location1\" class=\"text ui-widget-content ui-corner-all\" /><br><br>";
+			echo "<label for=\"copies1\">Number of copies: </label>";
+			echo "<input id=\"copies1\" name=\"copies1\" value=\"1\" /><br><br>";	
+			echo "<input type=\"checkbox\" id=\"check1\" name=\"isReference1\"><label for=\"check\">Check for Reference Item</label><br><br>";
 			echo "<button type=\"submit\" name=\"submit\" value=\"Submit\">OK</button>";
 		echo "</form>";
 		?>
@@ -123,6 +130,14 @@
 			min: 1900,
 			max: 2100,
 			step: 1
+		});
+		$( "#copies1" ).spinner({
+			min: 1,
+			max: 500,
+			step: 1
+		});
+		$(function() {
+			$( "#check1" ).button();
 		});
 		</script>	
 	<?php	
@@ -149,12 +164,16 @@
 				echo "<option value=\"\">Select Type</option>";
 				echo "<option value=\"Early Childhood\">Early Childhood</option>";
 				echo "<option value=\"Children\">Children</option>";
-				echo "<option value=\"Video\">Pre-Teens</option>";
-				echo "<option value=\"Newspaper\">Teens/Young Adults</option>";
+				echo "<option value=\"Pre-Teens\">Pre-Teens</option>";
+				echo "<option value=\"Young Adults\">Teens/Young Adults</option>";
 				echo "<option value=\"Adults\">Adults</option>";
-			echo "</select><br><br>";
+				echo "<option value=\"All Ages\">All Ages</option>"; 
+			echo "</select><br><br>";			
 			echo "<label for=\"location2\">Location: </label>";
-			echo "<input type =\"text\" name=\"location2\" id=\"location2\" class=\"text ui-widget-content ui-corner-all\" /><br><br><br>";
+			echo "<input type =\"text\" name=\"location2\" id=\"location2\" class=\"text ui-widget-content ui-corner-all\" /><br><br>";
+			echo "<label for=\"copies2\">Number of copies: </label>";
+			echo "<input id=\"copies2\" name=\"copies2\" value=\"1\" /><br><br>";;
+			echo "<input type=\"checkbox\" id=\"check2\" name=\"isReference2\"><label for=\"check2\">Check for Reference Item</label><br><br>";
 			echo "<button type=\"submit\" name=\"submit\" value=\"Submit\">OK</button>";
 		echo "</form>";
 		?>
@@ -163,6 +182,14 @@
 			min: 1900,
 			max: 2100,
 			step: 1
+		});
+		$( "#copies2" ).spinner({
+			min: 1,
+			max: 500,
+			step: 1
+		});
+		$(function() {
+			$( "#check2" ).button();
 		});
 		</script>
 	<?php
@@ -177,8 +204,8 @@
 			echo "<label for=\"subName\">Subtitle: </label>";
 			echo "<input type =\"text\" name=\"subName\" id=\"subName\" class=\"text ui-widget-content ui-corner-all\" /><br><br>";
 			echo "<label for=\"spinner4\">Release Year: </label>";
-			echo "<input id=\"spinner4\" name=\"spinner3\" value=\"2013\" /><br><br>";
-			echo "<p> Issue: <input type=\"text\" id=\"datepicker1\" name =\"datepicker1\" /></p><br>";
+			echo "<input id=\"spinner4\" name=\"spinner3\" value=\"2013\" /><br>";
+			echo "<p> Issue: <input type=\"text\" id=\"datepicker1\" name =\"datepicker1\" /></p>";
 			echo "<label for=\"pubName2\">Publisher: </label>";
 			echo "<input type =\"text\" name=\"pubName2\" id=\"pubName2\" class=\"text ui-widget-content ui-corner-all\" /><br><br>";
 			echo "<label for=\"genre3\">Genre: </label>";
@@ -188,12 +215,16 @@
 				echo "<option value=\"\">Select Type</option>";
 				echo "<option value=\"Early Childhood\">Early Childhood</option>";
 				echo "<option value=\"Children\">Children</option>";
-				echo "<option value=\"Video\">Pre-Teens</option>";
-				echo "<option value=\"Newspaper\">Teens/Young Adults</option>";
+				echo "<option value=\"Pre-Teens\">Pre-Teens</option>";
+				echo "<option value=\"Young Adults\">Teens/Young Adults</option>";
 				echo "<option value=\"Adults\">Adults</option>";
+				echo "<option value=\"All Ages\">All Ages</option>"; 
 			echo "</select><br><br>";
 			echo "<label for=\"location3\">Location:</label>";
-			echo "<input type =\"text\" name=\"location3\" id=\"location3\" class=\"text ui-widget-content ui-corner-all\" /><br><br><br>";
+			echo "<input type =\"text\" name=\"location3\" id=\"location3\" class=\"text ui-widget-content ui-corner-all\" /><br><br>";
+			echo "<label for=\"copies3\">Number of copies: </label>";
+			echo "<input id=\"copies3\" name=\"copies3\" value=\"1\" /><br><br>";
+			echo "<input type=\"checkbox\" id=\"check3\" name=\"isReference3\"><label for=\"check3\">Check for Reference Item</label><br><br>";
 			echo "<button type=\"submit\" name=\"submit\" value=\"Submit\">OK</button>";
 		echo "</form>";
 		?>
@@ -208,7 +239,15 @@
 				changeMonth: true,
 				changeYear: true
 			});
-		})
+		});
+		$( "#copies3" ).spinner({
+			min: 1,
+			max: 500,
+			step: 1
+		});
+		$(function() {
+			$( "#check3" ).button();
+		});
 		</script>
 	<?php
 	echo "</div>";
@@ -220,8 +259,8 @@
 			echo "<label for=\"name4\">Title: </label>";
 			echo "<input type =\"text\" name=\"name4\" id=\"name4\" class=\"text ui-widget-content ui-corner-all\" /><br><br>";
 			echo "<label for=\"spinner5\">Release Year: </label>";
-			echo "<input id=\"spinner5\" name=\"spinner4\" value=\"2013\" /><br><br>";
-			echo "<p> Issue: <input type=\"text\" id=\"datepicker\" name =\"datepicker\" /></p><br>";
+			echo "<input id=\"spinner5\" name=\"spinner4\" value=\"2013\" /><br>";
+			echo "<p> Issue: <input type=\"text\" id=\"datepicker\" name =\"datepicker\" /></p>";
 			echo "<label for=\"pubName3\">Publisher: </label>";
 			echo "<input type =\"text\" name=\"pubName3\" id=\"pubName3\" class=\"text ui-widget-content ui-corner-all\" /><br><br>";
 			echo "<label for=\"genre4\">Genre: </label>";
@@ -231,12 +270,16 @@
 				echo "<option value=\"\">Select Type</option>";
 				echo "<option value=\"Early Childhood\">Early Childhood</option>";
 				echo "<option value=\"Children\">Children</option>";
-				echo "<option value=\"Video\">Pre-Teens</option>";
-				echo "<option value=\"Newspaper\">Teens/Young Adults</option>";
+				echo "<option value=\"Pre-Teens\">Pre-Teens</option>";
+				echo "<option value=\"Young Adults\">Teens/Young Adults</option>";
 				echo "<option value=\"Adults\">Adults</option>";
+				echo "<option value=\"All Ages\">All Ages</option>"; 
 			echo "</select><br><br>";
 			echo "<label for=\"location4\">Location: </label>";
-			echo "<input type =\"text\" name=\"location4\" id=\"location4\" class=\"text ui-widget-content ui-corner-all\" /><br><br><br>";
+			echo "<input type =\"text\" name=\"location4\" id=\"location4\" class=\"text ui-widget-content ui-corner-all\" /><br><br>";
+			echo "<label for=\"copies4\">Number of copies: </label>";
+			echo "<input id=\"copies4\" name=\"copies4\" value=\"1\" /><br><br>";;
+			echo "<input type=\"checkbox\" id=\"check4\" name=\"isReference4\"><label for=\"check4\">Check for Reference Item</label><br><br>";
 			echo "<button type=\"submit\" name=\"submit\" value=\"Submit\">OK</button>";
 		echo "</form>";
 		?>
@@ -251,72 +294,97 @@
 				changeMonth: true,
 				changeYear: true
 			});
-		})
+		});
+		$( "#copies4" ).spinner({
+			min: 1,
+			max: 500,
+			step: 1
+		});
+		$(function() {
+			$( "#check4" ).button();
+		});
 		</script>
 	<?php
 	echo "</div>";
 	
-	//new item instance
-	echo "<div id=\"dialog6\" title=\"Add Item Instance\">";
-		echo "<form>";
-			echo "<!--Add new item instance information in the form below:-->";
-			echo "<label for=\"stockNum\">Stock Number: </label>";
-			echo "<input type =\"text\" name=\"stockNum\" id=\"stockNum\" class=\"text ui-widget-content ui-corner-all\" /><br><br>";
-			echo "<label for=\"lCode\">Library Code: </label>";
-			echo "<input type =\"text\" name=\"lCode\" id=\"lCode\" class=\"text ui-widget-content ui-corner-all\" /><br><br>";
-			echo "<label for=\"status\">Status: </label>";
-			echo "<input type =\"text\" name=\"status\" id=\"status\" class=\"text ui-widget-content ui-corner-all\" /><br><br>";
-		echo "</form>";
-	echo "</div>";
-	
 	//modify item instance
-	echo "<div id=\"dialog7\" title=\"Modify Item Instance\">";
-		echo "<form>";
+	echo "<div id=\"dialog7\" title=\"Modify Copy\">";
+		echo "<form id = \"modifyCopy\" action=\"Processing/modifyInstance.php\" method=\"post\">";
 			echo "<!--Modify info in the form below:-->";
-			echo "<label for=\"stockNum1\">Stock Number: </label>";
-			echo "<input type =\"text\" name=\"stockNum1\" id=\"stockNum1\" class=\"text ui-widget-content ui-corner-all\" /><br><br>";
 			echo "<label for=\"lCode1\">Library Code: </label>";
 			echo "<input type =\"text\" name=\"lCode1\" id=\"lCode1\" class=\"text ui-widget-content ui-corner-all\" /><br><br>";
+			echo "<label for=\"stockNum1\">Stock Number: </label>";
+			echo "<input type =\"text\" name=\"stockNum1\" id=\"stockNum1\" class=\"text ui-widget-content ui-corner-all\" /><br><br>";
 			echo "<label for=\"status1\">Status: </label>";
-			echo "<input type =\"text\" name=\"status1\" id=\"status1\" class=\"text ui-widget-content ui-corner-all\" /><br><br>";
+			echo "<select id=\"status1\" name=\"audience\">";
+				echo "<option value=\"\">Select Status</option>";
+				echo "<option value=\"available\">In Circulation</option>";
+				echo "<option value=\"missing\">Missing</option>"; 
+				echo "<option value=\"damaged\">Damaged</option>"; 
+			echo "</select><br><br>";
+			echo "<button type=\"submit\" name=\"submit\" value=\"Submit\">OK</button>";
 		echo "</form>";
 	echo "</div>";
 	
 	//delete item instance
-	echo "<div id=\"dialog8\" title=\"Delete Item Instance\">";
-		echo "<form>";
+	echo "<div id=\"dialog8\" title=\"Delete Copy\">";
+		echo "<form action = \"Processing/deleteCopy.php\" method = \"post\">";
 			echo "<!--Details on the instance to be deleted:-->";
-			echo "<label for=\"stockNum2\">Stock Number: </label>";
-			echo "<input type =\"text\" name=\"stockNum2\" id=\"stockNum2\" class=\"text ui-widget-content ui-corner-all\" /><br><br>";
 			echo "<label for=\"lCode2\">Library Code: </label>";
 			echo "<input type =\"text\" name=\"lCode2\" id=\"lCode2\" class=\"text ui-widget-content ui-corner-all\" /><br><br>";
+			echo "<label for=\"stockNum2\">Stock Number: </label>";
+			echo "<input type =\"text\" name=\"stockNum2\" id=\"stockNum2\" class=\"text ui-widget-content ui-corner-all\" /><br><br>";
+			echo "<button type=\"submit\" name=\"submit\" value=\"Submit\">OK</button>";
 		echo "</form>";
 	echo "</div>";
 	
 	//delete item
 	echo "<div id=\"dialog9\" title=\"Delete Item\">";
-		echo "<form>";
+		echo "<form action=\"Processing/deleteItem.php\" method = \"post\">";
 			echo "<!--Info on the item to be deleted:-->";
 			echo "<label for=\"lCode3\">Library Code: </label>";
-			echo "<input type =\"text\" name=\lCode3\" id=\"lCode3\" class=\"text ui-widget-content ui-corner-all\" /><br><br>";
+			echo "<input type =\"text\" name=\"lCode3\" id=\"lCode3\" class=\"text ui-widget-content ui-corner-all\" /><br><br>";
+			echo "<button type=\"submit\" name=\"submit\" value=\"Submit\">OK</button>";
 		echo "</form>";
 	echo "</div>";
 	
 	//modify item
 	echo "<div id=\"dialog10\" title=\"Modify\">";
-		echo "<form>";
+		echo "<form id = \"modify\" action=\"Processing/modifyItem.php\" method=\"post\">";
 			echo "<!--Modify info in the form below:-->";
 			echo "<label for=\"lCode4\">Library Code: </label>";
 			echo "<input type =\"text\" name=\"lCode4\" id=\"lCode4\" class=\"text ui-widget-content ui-corner-all\" /><br><br>";
+			echo "<button type=\"button\" id=\"getItem\" name=\"getItem\">Get Item Info</button>";
+			//Fun with Ajax goes here!
+			?>
+			<script type="text/javascript">
+			$("#getItem").click(function getItem(){
+				var id = document.getElementById("lCode4").value;
+				if (id =="") {
+  					alert("You must enter an id!");
+  					//Set select back to Select Type
+  				}
+  				else {
+ 					xmlhttp=new XMLHttpRequest();
+					xmlhttp.onreadystatechange=function(){
+  						if (xmlhttp.readyState==4 && xmlhttp.status==200){
+    							document.getElementById("modify").innerHTML=xmlhttp.responseText;
+    					}
+  					}
+					xmlhttp.open("GET","Processing/getItem.php?libID="+id,true);
+					xmlhttp.send();
+				}
+			});	
+			</script>
+		<?php 	
 		echo "</form>";
 	echo "</div>";
-
-?>
+	?>
 <script type="text/javascript">
 	$( "#dialog" ).dialog({ 
 		autoOpen: false, 
 		modal: true,
-		width: 400
+		width: 500
 	});	
 	$( "#add1" ).click(function() {
 		$( "#dialog" ).dialog( "open" );
@@ -324,7 +392,7 @@
 	$( "#dialog2" ).dialog({ 
 		autoOpen: false, 
 		modal: true,
-		width: 400
+		width: 500
 	});	
 	$( "#add2" ).click(function() {
 		$( "#dialog2" ).dialog( "open" );
@@ -332,7 +400,7 @@
 	$( "#dialog3" ).dialog({ 
 		autoOpen: false, 
 		modal: true,
-		width: 400
+		width: 500
 	});	
 	$( "#add3" ).click(function() {
 		$( "#dialog3" ).dialog( "open" );
@@ -340,7 +408,7 @@
 	$( "#dialog4" ).dialog({ 
 		autoOpen: false, 
 		modal: true,
-		width: 400
+		width: 500
 	});	
 	$( "#add4" ).click(function() {
 		$( "#dialog4" ).dialog( "open" );
@@ -348,11 +416,11 @@
 	$( "#dialog5" ).dialog({ 
 		autoOpen: false, 
 		modal: true,
-		width: 400
+		width: 500
 	});
 	$( "#add5" ).click(function() {
 		$( "#dialog5" ).dialog( "open" );
-	})
+	});
 	$( "#dialog6" ).dialog({ 
 		autoOpen: false, 
 		modal: true,

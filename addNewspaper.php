@@ -25,8 +25,15 @@
 	$datestr = explode("/", $date);
 	$issue = "$datestr[2]-$datestr[0]-$datestr[1]";
 	$pub = $_POST['pubName3'];
+	$ref = $_POST['isReference4'];
+	echo "Is Reference: $ref";
+	if ($ref == "on"){
+		$ref = 1;
+	}
+	else $ref = 0;
+	$copies = $_POST['copies4'];
 					
-	$results = mysql_query("INSERT INTO Item VALUES ('$id','$type','$location','$title','$year','0','$genre','$audience')");
+	$results = mysql_query("INSERT INTO Item VALUES ('$id','$type','$location','$title','$year','$ref','$genre','$audience')");
 	if(!$results){
       	echo "could not insert into Item table <br />";
     	trigger_error(mysql_error(), E_USER_ERROR);
@@ -38,10 +45,12 @@
 		trigger_error(mysql_error(), E_USER_ERROR);
      }
      
-    $results3 = mysql_query("INSERT INTO ITEM_INSTANCE VALUES ('1', '$id', 'available')"); 
-	if(!$results3){
-     	echo "could not insert into Instance table <br />";        
-		trigger_error(mysql_error(), E_USER_ERROR);
+    for ($i = 1; $i <= $copies; $i++){ 	 
+   		$results3 = mysql_query("INSERT INTO ITEM_INSTANCE VALUES ('$i', '$id', 'available')"); 
+		if(!$results3){
+     		echo "could not insert into Instance table <br />";        
+			trigger_error(mysql_error(), E_USER_ERROR);
+    	}
     }
 
         

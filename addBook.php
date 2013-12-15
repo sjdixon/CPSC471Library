@@ -1,7 +1,7 @@
 <?php	
 	//addBook.php - written by Gaby Comeau
 	//PHP script to add a book to the database
-	//header("Location: App_Index.php",TRUE,303);	
+	header("Location: App_Index.php",TRUE,303);	
 	$host = "localhost";
 	$user = "ubuntu";
 	$pass = "stephen123";				
@@ -24,8 +24,17 @@
 	$audience = $_POST['audience'];
 	$ISBN = $_POST['ISBN'];
 	$author = $_POST['authorName'];
+	$ref = $_POST['isReference'];
+	//echo "Is Reference: $ref";
+	if ($ref == "on"){
+		$ref = 1;
+	}
+	else $ref = 0;
+	$copies = $_POST['copies'];
+	//echo "#copies: $copies<br>";
+	
 					
-	$results = mysql_query("INSERT INTO Item VALUES ('$id','$type','$location','$title','$year','0','$genre','$audience')");
+	$results = mysql_query("INSERT INTO Item VALUES ('$id','$type','$location','$title','$year','$ref','$genre','$audience')");
 	if(!$results){
       	echo "could not insert into Item table <br />";
     	trigger_error(mysql_error(), E_USER_ERROR);
@@ -36,11 +45,12 @@
      	echo "could not insert into Book table <br />";        
 		trigger_error(mysql_error(), E_USER_ERROR);
      }
-     
-    $results3 = mysql_query("INSERT INTO ITEM_INSTANCE VALUES ('1', '$id', 'available')"); 
-	if(!$results3){
-     	echo "could not insert into Instance table <br />";        
-		trigger_error(mysql_error(), E_USER_ERROR);
+    for ($i = 1; $i <= $copies; $i++){ 	 
+   		$results3 = mysql_query("INSERT INTO ITEM_INSTANCE VALUES ('$i', '$id', 'available')"); 
+		if(!$results3){
+     		echo "could not insert into Instance table <br />";        
+			trigger_error(mysql_error(), E_USER_ERROR);
+    	}
     }
 
     //header("Location: App_Index.php");
