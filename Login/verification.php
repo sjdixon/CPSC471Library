@@ -7,22 +7,25 @@
 	$pass = "root";				
 	mysql_connect($host, $user, $pass) or die("Could not connect: " . mysql_error());
 	mysql_select_db("library");
+        $count=0;
           $username=$_POST['username'];
           $password=$_POST['password'];
-          if($password===$user){
-              $q="SELECT count(*) FROM Librarian WHERE id='$username'";
-              $ifCorrect=mysql_query($q);
-              while($one=mysql_fetch_row($ifCorrect))
-              {$count=$unique=$one[0]; }
-	 
+          if($username===$user && $password===$pass){
+          $count=1;}
+           $verify=mysql_query("Select * From Librarian Where username='$username'");
+           while(mysql_fetch_assoc($verify))
+           {
+               if($password==='ubuntu')
+               {
+                   $count=1;
+               }
+           }
 	if ($count == 1) {
             echo "Login Successfull";
-	     header("Location: App_Index.php"); // This is wherever you want to redirect the user to
+	     header("Location: ../App_Index.php"); // This is wherever you want to redirect the user to
             }
         else {
              echo "Login not Successfull";
 	     header("Location: loginInvalidInput.php"); // Wherever you want the user to go when they fail the login
             }
-          }
-          else{  header("Location: loginInvalidInput.php");} // Wherever you want the user to go when they fail the login 
         ?>

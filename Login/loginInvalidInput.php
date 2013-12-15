@@ -1,4 +1,5 @@
-<!Done by Rhianne>
+<!Done by Rhianne Hadfield> 
+<!Display a the login page, but contains an alert to tell the user that they put in an invalid input>
 <!DOCTYPE html>
 <html>
 <head>
@@ -11,15 +12,18 @@
 	
     
 	<script>
+            function errorAlert(){
+                alert("You have entered an invalid Username or password. To login you must enter a valid Librarian Id as a username and the correct password");
+            }
 	</script>
 </head> 
-<body>
-   <form action="verification.php" method="post">
+<body onload="errorAlert()">
+   <form action='verification.php' method="post">
         <label for="username">Username: </label>
         <input type='number' name="username" id="username">
     
         <label for="password">Password: </label>
-        <input type='password' name="password" id="id">
+        <input type='password' name="password" id="password">
 
     <button type="submit" id="submit">Login</button>
     </form>
