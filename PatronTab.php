@@ -1,4 +1,3 @@
-
 <script type="text/javascript"> 
 
 //add new patron           
@@ -183,13 +182,25 @@ $(document).ready(function() {
                
                 while($row= mysql_fetch_assoc($holdDate)){
                  $dateExpire=$row['expiryDate'];
- 
+                    
                     if(strtotime($date)>strtotime($dateExpire)){
                         $maxFineNum=mysql_query("SELECT MAX(fineNo) FROM Fine");
                         $maxFineNum++;
                         $accountNo=$row['pAccount'];
                         $itemCode=$row['libraryCode'];
-                        mysql_query("INSERT INFO Fines (fineNo, pAccount, libraryCode, reason, dateFined) VALUES ('$maxFineNum','$accountNo','$itemCode','Hold','$date')");
+                        $fineList=mysql_query("Select * From Fine Where pAccount='$accountNo' And libraryCode='$itemCode' And Not balance='0'");
+             
+                        if(!$row=mysql_fetch_assoc($fineList))
+                        {mysql_query("INSERT INFO Fines (fineNo, pAccount, libraryCode, reason, dateFined) VALUES ('$maxFineNum','$accountNo','$itemCode','Hold','$date')");}
+                        else
+                        {
+                         while($row=mysql_fetch_assoc($fineListt)){
+                             $balance=$_POST['balance'];
+                             $bal=$balance+0.20;
+                             $fineNo=$_POST['fineNo'];
+                             mysql_query("Update Fine Set balance='$bal', Where fineNo='$fineNo'");
+                         }
+                        }
                     }   
                  }
                 //checks for overdue loans
@@ -203,8 +214,21 @@ $(document).ready(function() {
                         $accountNo=$row['pAccount'];
                         $itemCode=$row['libraryCode'];
                         $instance=$row['stockNum'];
-                        mysql_query("INSERT INFO Fines (fineNo, pAccount, libraryCode, stockNum, reason, dateFined) VALUES ('$maxFineNum','$accountNo','$itemCode','$instance','Loan','$date')");
-                    }
+                         $fineList=mysql_query("Select * From Fine Where pAccount='$accountNo' And libraryCode='$itemCode' And stocknum='$instance' And Not balance='0'");
+             
+                        if(!$row=mysql_fetch_assoc($fineList))
+                        {
+                            mysql_query("INSERT INFO Fines (fineNo, pAccount, libraryCode, stockNum, reason, dateFined) VALUES ('$maxFineNum','$accountNo','$itemCode','$instance','Loan','$date')");
+                        }
+                        else {
+                            while($row=mysql_fetch_assoc($fineListt)){
+                             $balance=$_POST['balance'];
+                             $bal=$balance+0.20;
+                             $fineNo=$_POST['fineNo'];
+                             mysql_query("Update Fine Set balance='$bal', Where fineNo='$fineNo'");
+                         }
+                        }
+                     }
                 }
                 //Checks for expired Cards
                 $false=FALSE;
