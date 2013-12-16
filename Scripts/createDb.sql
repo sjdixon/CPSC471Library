@@ -64,7 +64,7 @@ create table Loan(
 );
 create table Hold(
 	pAccount int,
-	#stocknum int # removed since a hold is for ANY copy of a book, not a specific copy
+	stocknum int # removed since a hold is for ANY copy of a book, not a specific copy
 	libraryCode int,
 	dateHeld date NOT NULL,
 	expiryDate date,

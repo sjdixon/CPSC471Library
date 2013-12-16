@@ -76,7 +76,7 @@ if ($legal == TRUE) {
             $dueDate = $_POST['dueDate']; // if there is one
             $query = "INSERT INTO Loan values($pAccount,$stock,$libraryCode, curdate(),'$dueDate', NULL)";
             // Resolve the hold.
-            $updateQuery = "UPDATE Hold set pickupDate=curdate() where libraryCode=$libraryCode and stocknum=$stock and pAccount=$pAccount and pickupDate is NULL";
+            $updateQuery = "UPDATE Hold set pickupDate=now() where libraryCode=$libraryCode and stocknum=$stock and pAccount=$pAccount and pickupDate is NULL";
             mysql_query($updateQuery);
         } else {
             // Do not loan - someone else has a hold on it.
@@ -96,7 +96,7 @@ if ($legal == TRUE) {
         if ($numResults > 0) {
             // If there is, place the instance on hold and set requestDate, dateHeld to curdate.
             $stocknum = $availStock[0];
-            $dateAvail = "curdate()";
+            $dateAvail = "now()";
             $expiryDate = "NOW() + INTERVAL $timeToPickup";
             $query = "INSERT INTO Hold (pAccount, libraryCode, dateHeld, stocknum, availDate, expiryDate) " .
                     "values($pAccount, $libraryCode, curdate(), $stocknum, $dateAvail, $expiryDate)";

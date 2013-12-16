@@ -2,7 +2,7 @@ drop table Hold;
 create table Hold(
     pAccount int,
     libraryCode int,
-    dateHeld date NOT NULL,
+    dateHeld datetime NOT NULL,
     expiryDate date,
     availDate date default NULL,
     pickupDate date default NULL,
