@@ -4,7 +4,6 @@ mysql_select_db("library");
 echo "Connected to library <br/>";
 $query = mysql_query("select * from Librarian where endDate is NULL") or die("Could not query");
 
-echo "POSTED:  $_POST <br/>";
 
 // extract the index number
 foreach ($_POST as $k=>$v) {

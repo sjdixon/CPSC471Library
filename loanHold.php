@@ -32,6 +32,28 @@ By: Stephen Dixon
                             $("#dialog-confirm").dialog("open");
                         });
 
+                $("#dialog-return").dialog({
+                    autoOpen: false,
+                    height: 300,
+                    width: 350,
+                    modal: true,
+                    buttons: {
+                        Create: function() {
+                            $("form#returnForm").submit();
+                            $(this).dialog("close");
+                        },
+                        Cancel: function() {
+                            $(this).dialog("close");
+                        }
+                    }
+                });
+                
+                $("#returnBtn")
+                        .button()
+                        .click(function() {
+                            $("#dialog-return").dialog("open");
+                        });
+                
                 $("#radio").buttonset();
                 $("#dueDate").datepicker({ dateFormat: 'yy-mm-dd' });
 
@@ -84,9 +106,10 @@ By: Stephen Dixon
                 </div><br/>
                 <div class="ui-widget">
                     <select id="patronIdType" name="patronIdType">
-                        <option value="Account">Library Account Number</option>
-                        <option value="Name">Patron Name</option>
-                        <option value="Phone Number">Phone Number</option>
+                        <option value="pAccount">Library Account Number</option>
+                        <option value="name">Patron Name</option>
+                        <option value="phone">Phone Number</option>
+                        <option value="email">Phone Number</option>
                     </select>
                     <label for="patronId" > : </label>
                     <input type="text" id="patronId" name="patronId">
@@ -94,7 +117,7 @@ By: Stephen Dixon
                 <div class="ui-widget">
                     <select id="itemCodeType" name="itemCodeType">
                         <option value="libraryCode">Library Code</option>
-                        <option value="libraryItem">Title and/or Author</option>
+                        <option value="title">Title</option>
                     </select>
                     <label for="itemCode"> : </label>
                     <input id="itemCode" name="itemCode"> 
@@ -112,9 +135,11 @@ By: Stephen Dixon
                 <div id="timeToPickup" class="ui-widget holdOnly">
                     <label for="timeToPickup">Time to Pickup: </label>
                     <select id="timeToPickup" name="timeToPickup">
-                        <option value="One Week">One Week</option>
-                        <option value="Two Weeks">Two Weeks</option>
-                        <option value="Three Weeks">Three Weeks</option>
+                        <option value="1 week">One Week</option>
+                        <option value="2 week">Two Weeks</option>
+                        <option value="3 week">Three Weeks</option>
+                        <option value="1 day">One Day</option>
+                        <option value="3 day">Three Day</option>
                     </select>
                 </div>
                 <br/>
@@ -134,10 +159,29 @@ By: Stephen Dixon
                 Are you sure you want to make a <strong>hold</strong> with that info?  
             </p>
         </div>
+        
+        <div id="dialog-return" title="Return Loaned Item" class="ui-widget">
+            <form id="returnForm" method="post" action="Processing/Loans/return.php">
+                
+                    <label for="returrnedLibraryCode"> Library Code: </label>
+                    <input id="returnedLibraryCode" name="libraryCode"> 
+                    <label for="stock"> Stock# </label>
+                    <input id="stocknum" name="stocknum" type="text">
+                    
+                    <label for="state">Item State </label>
+                    <select id="state" name="state">
+                        <option value="OK"> OK</option>
+                        <option value="Damaged"> Damaged</option>
+                        <option value="Discard"> Discard</option>
+                        <option value="Disposed"> Disposed</option>
+                    </select>
+            </form>
+        </div>
 
         <button  id="submitBtn">
             <p class="loanOnly" name="loan">Create Loan</p>
             <p class="holdOnly" name="hold">Create Hold</p>
         </button>
+        <button id="returnBtn">Return Item</button>
     </body>
 </html>
