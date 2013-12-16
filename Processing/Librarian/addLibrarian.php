@@ -16,7 +16,7 @@ if($result){
 }
 else{
     echo "Error in sending your user";
-      	echo "could not insert into Item table <br />";
+      	echo "could not insert into Librarian table <br />";
     	trigger_error(mysql_error(), E_USER_ERROR);
 }
 
