@@ -96,8 +96,8 @@ By: Stephen Dixon
             <form id="operationForm" method="post" action="Processing/Loans/process.php">
 
                 <div id="radio" class="ui-widget">
-                    <input type="radio" id="loan" name="radio" checked="checked" class="radioSelect" value="loan"><label for="loan">Loan </label>
-                    <input type="radio" id="hold" name="radio" class="radioSelect" value="hold"><label for="hold">Hold</label>
+                    <input type="radio" id="loan" name="radio" class="radioSelect" value="loan"><label for="loan">Loan </label>
+                    <input type="radio" id="hold" name="radio" checked="checked" class="radioSelect" value="hold"><label for="hold">Hold</label>
                 </div><br/>
                 <div class="ui-widget">
                     <select id="patronIdType" name="patronIdType">

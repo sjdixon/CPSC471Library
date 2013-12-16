@@ -75,11 +75,9 @@ if ($legal == TRUE) {
             // Either no hold exists, or the patron who held it is loaning the item.
             $dueDate = $_POST['dueDate']; // if there is one
             $query = "INSERT INTO Loan values($pAccount,$stock,$libraryCode, curdate(),'$dueDate', NULL)";
-            if ($numRows > 0) {
-                // Resolve the hold.
-                $updateQuery = "UPDATE Hold set pickupDate=curdate() where libraryCode=$libraryCode and stocknum=$stock and pAccount=$pAccount and pickupDate is NULL";
-                mysql_query($updateQuery);
-            }
+            // Resolve the hold.
+            $updateQuery = "UPDATE Hold set pickupDate=curdate() where libraryCode=$libraryCode and stocknum=$stock and pAccount=$pAccount and pickupDate is NULL";
+            mysql_query($updateQuery);
         } else {
             // Do not loan - someone else has a hold on it.
             echo "Patron $libraryCode is trying to borrow a book that patron $row[0] has a hold on until $row[1].";
@@ -88,7 +86,7 @@ if ($legal == TRUE) {
         // Check if there is an unloaned copy
         $unloanedCopyQuery = "SELECT stocknum from Item_Instance as ii where ii.libraryCode=$libraryCode and " .
                 "stocknum not in (SELECT stocknum from Loan as l where " .
-                "l.libraryCode=ii.libraryCode and l.returned is null union".
+                "l.libraryCode=ii.libraryCode and l.returned is null union ".
                 "SELECT stocknum from Hold as h where h.libraryCode=ii.librarycode and pickupDate is NULL)";
         $result = mysql_query($unloanedCopyQuery);
         $availStock = mysql_fetch_row($result);
