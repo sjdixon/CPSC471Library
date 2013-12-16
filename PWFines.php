@@ -4,27 +4,39 @@
 	$pass = "stephen123";					
 	mysql_connect($host, $user, $pass) or die("Could not connect: " . mysql_error());
 	mysql_select_db("library");
-        foreach($_POST['fine'] as $fineNo){
+        foreach($_POST['check'] as $fineNo){
+        
         $fineData=mysql_query("Select * From Fine Where fineNo='$fineNo'");  
         
         while($row=mysql_fetch_assoc($fineData))
         {
-           $pay=$_POST['pay'];
+           $pay=$_POST['payment'];
+           $payment=intval($pay);
            $wave=$_POST['waive'];
            $balance=$row['balance'];
            $bal=$balance-$pay-$wave;
-            if($balance<0)
-            { $balance=0;}
-            $result=mysql_query("Update Fine Set balance='$bal', amountPaid='$pay', amountWaived='$wave' Where fineNo='$fineNo'");
+            if($bal<0)
+            { $bal=0;}
+            
+           $result=mysql_query("Update Fine Set balance='$bal', amountPaid='$payment', amountWaived='$wave' Where fineNo='$fineNo'");
+            error_log(print_r($_REQUEST,true));
+            if($result){
+    echo "Success";
+}
+else{
+    echo "Error in sending your user";
+      	echo "could not insert into Item table <br />";
+    	trigger_error(mysql_error(), E_USER_ERROR);
+}
 
 
-            $lId=$_POST['handle'];
+            $lId=$_POST['Handled'];
             $date=date('Y-m-d');
-            mysql_query("Insert Into Fine_Updated_By Values(fineNo='2', libId='10', dateUpdated=$date");
+            mysql_query("Insert Into Fine_Updated_By Values(fineNo='$fineNo', libId='$lId', dateUpdated=$date");
             
         }}
-        echo $pay;
-        echo $wave;
-        echo $bal;
         
-?>
+        header("Location: PatronInformation.php");
+        
+?> 
+       
