@@ -1,3 +1,4 @@
+<a href="MainPage.php">Logout</a>
 <p>Fill in the fields below to search the library catalogue</p>
 
 <select id="combobox" name="itemType">
