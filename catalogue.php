@@ -1,3 +1,5 @@
+
+<body>
 <a href="MainPage.php">Logout</a>
 <p>Fill in the fields below to search the library catalogue</p>
 
@@ -40,5 +42,5 @@
 <script>
 	$( "button" ).button();
 </script> 
-	
+	</body>
 
