@@ -23,6 +23,6 @@
     <button type="submit" id="submit">Login</button>
     </form>
     <br>
-    <a href="catalogue.php"><button>Go Back</button></a>
+    <a href="MainPage.php"><button>Go Back</button></a>
 </body>
 </html>
