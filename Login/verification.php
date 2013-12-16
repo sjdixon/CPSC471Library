@@ -1,10 +1,9 @@
-
 <!Done by Rhianne Hadfield> 
 <?php
         // Create connection
         $host = "localhost";
-	$user = "root";
-	$pass = "root";				
+	$user = "ubuntu";
+	$pass = "stephen123";				
 	mysql_connect($host, $user, $pass) or die("Could not connect: " . mysql_error());
 	mysql_select_db("library");
         
@@ -13,12 +12,7 @@
           $password=$_POST['password'];
           if($username===$user && $password===$pass){
           $count=1;}
-          if($username==="stephen" && $password==="abc123"){
-          $count=1;}
-          if($username==="admin" && $password==="letmein"){
-          $count=1;}
-          if($username==="ubuntu" && $password==="stephen123"){
-          $count=1;}
+          
            $verify=mysql_query("Select * From Librarian Where username='$username'");
            while(mysql_fetch_assoc($verify))
            {
