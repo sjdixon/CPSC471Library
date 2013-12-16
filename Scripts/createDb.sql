@@ -67,7 +67,7 @@ create table Hold(
 	#stocknum int # removed since a hold is for ANY copy of a book, not a specific copy
 	libraryCode int,
 	dateHeld date NOT NULL,
-	expiryDate date NOT NULL,
+	expiryDate date,
 	availDate date default NULL,
 	foreign key(pAccount) references Patron(pAccount),
 	foreign key(libraryCode) references Item(libraryCode),
