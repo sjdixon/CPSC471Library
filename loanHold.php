@@ -48,11 +48,6 @@ By: Stephen Dixon
                     }
                 });
                 
-                $("#returnBtn")
-                        .button()
-                        .click(function() {
-                            $("#dialog-return").dialog("open");
-                        });
                 
                 $("#radio").buttonset();
                 $("#dueDate").datepicker({ dateFormat: 'yy-mm-dd' });
@@ -160,28 +155,10 @@ By: Stephen Dixon
             </p>
         </div>
         
-        <div id="dialog-return" title="Return Loaned Item" class="ui-widget">
-            <form id="returnForm" method="post" action="Processing/Loans/return.php">
-                
-                    <label for="returrnedLibraryCode"> Library Code: </label>
-                    <input id="returnedLibraryCode" name="libraryCode"> 
-                    <label for="stock"> Stock# </label>
-                    <input id="stocknum" name="stocknum" type="text">
-                    
-                    <label for="state">Item State </label>
-                    <select id="state" name="state">
-                        <option value="OK"> OK</option>
-                        <option value="Damaged"> Damaged</option>
-                        <option value="Discard"> Discard</option>
-                        <option value="Disposed"> Disposed</option>
-                    </select>
-            </form>
-        </div>
 
         <button  id="submitBtn">
             <p class="loanOnly" name="loan">Create Loan</p>
             <p class="holdOnly" name="hold">Create Hold</p>
         </button>
-        <button id="returnBtn">Return Item</button>
     </body>
 </html>
