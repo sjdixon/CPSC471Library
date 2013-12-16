@@ -135,38 +135,20 @@ modal: true,
 buttons: {
 "Pay/Waiver Fines": function() {
     
-/*
-var waive=$( "#waiver" ).val();
+
+var waive=$( "#waive" ).val();
 var waiveString=String(waive);
 waiveString="Waive: $".concat(waiveString.toString());
-var payString=String($( "#pay" ).val());
-payString="Pay: $".concat(waiveString.toString());
+var payString=String($( "#payment" ).val());
+payString="Pay: $".concat(payString.toString());
 var handleString=String($( "#Handled" ).val());
-handleString="Handled By: ".concat(waiveString.toString());
+handleString="Handled By: ".concat(handleString.toString());
 document.getElementById('waiveC').innerHTML=waiveString;
 document.getElementById('payC').innerHTML=payString;
 document.getElementById('HandledByC').innerHTML=handleString;
 document.getElementById('patronC').innerHTML="Patron: "+<?php echo $_COOKIE["patronAccount"]?>;
-*/
-var fineID = $("#Fines input:checkbox:checked").map(function(){
-     return $(this).val();
-    }).get();
-    var pay=$( "#pay" ).val();
-    var waive=$( "#waiver" ).val();
-    var handle=$( "#Handled" ).val();
-    $.ajax({
-        url : 'PWFines.php',
-        method: 'post',
-        
-        data : { fine : fineID,
-                 pay: pay,
-                 waive: waive,
-                 handle: handle
-                 
-               }
-            });
-            window.location.href = "PatronInformation.php";
-//$( "#dialog-formConfirm" ).dialog( "open" );
+
+$( "#dialog-formConfirm" ).dialog( "open" );
 $( this ).dialog( "close" );
 
 },
@@ -184,7 +166,7 @@ $( "#payWaiverFines" )
 $( "#dialog-formPay" ).dialog( "open" );
 });
 });
-/*
+
  $(function() {
 $( "#dialog-formConfirm" ).dialog({
 autoOpen: false,
@@ -193,7 +175,7 @@ width: 350,
 modal: true,
 buttons: {
 "Ok": function() {
- 
+$("form#FineConfirm").submit();
 $( this ).dialog( "close" );
 
 },
@@ -212,7 +194,7 @@ $( "#payWaiverFines" )
 $( "#dialog-formPay" ).dialog( "open" );
 });
 });
-*/
+
 //Dialog box for Editing Patrons
 $(function() {
 var name= $( "#name" ),
@@ -263,7 +245,7 @@ $( "#radio" ).buttonset();
 </head>
 <body>
     <?php
-     $server = mysql_connect("localhost","root", "root");
+     $server = mysql_connect("localhost","ubuntu", "stephen123");
             $db =mysql_select_db("library", $server);
             
             if (isset($_COOKIE["patronAccount"]))
@@ -317,29 +299,62 @@ $threeWeeks=date("y-m-d", strtotime("+21 days"));
 <input type="radio" id="renewThreeWeeks" name="radio" value=<?php echo $threeWeeks ?>><label for="renewThreeWeeks">Three Weeks</label>
 </div>
 </form>
-  </form>
 </fieldset>
 </div>    
+
 <!Dialog box for removing a hold>   
 <div id="RemoveHold" title="Cancel Hold">
 <p><span class="ui-icon ui-icon-alert" style="float:left; margin:0 7px 20px 0;"></span>Are you want to cancel the Hold</p>
 </div>
 
+
 <div id="dialog-formPay" title="Pay/Wavie Fines">
 <p class="validateTips">All form fields are required.</p>
-<p class="validateTips"> Amount Owed: $</p>
-<form id="PayWaveFinesForm" action="pwFines.php" method="post">
+<form id="FineConfirm" action='PWFines.php' method="post">
 <fieldset>
-<label for="waiver">Waive $</label>
-<input type="text" name="waiver" id="waiver" class="text ui-widget-content ui-corner-all">
-<label for="pay">Pay $</label>
-<input type="text" name="pay" id="pay" value="" class="text ui-widget-content ui-corner-all">
+<table id="Fines" class="ui-widget ui-widget-content">
+<thead>
+<tr class="ui-widget-header ">
+<th>Item</th>
+<th>Fine</th>
+<th>Select</th>
+</tr>
+</thead>
+<tbody>
+ <?php
+ $query3=mysql_query("Select * From Fine Inner Join Item On Fine.libraryCode=Item.libraryCode Where pAccount='$pId'");
+ while($row=mysql_fetch_assoc($query3)){
+echo'<tr>';
+echo "<td>".$row['title']."</td>";
+echo "<td>".$row['balance']."</td>";
+echo "<td><input type='checkbox' value=".$row['fineNo']." name='check[]'/></td>";
+echo '</tr>';}
+?>
+</tbody>
+</table>
+    
+<label for="waive">Waive $</label>
+<input type="number" name="waive" id="waive" class="text ui-widget-content ui-corner-all">
+<label for="payment">Pay $</label>
+<input type="number" name="payment" id="payment" value="" class="text ui-widget-content ui-corner-all">
 <label for="Handled">Handled By</label>
 <input type="number" name="Handled" id="Handled" value="" class="text ui-widget-content ui-corner-all">
 <?php
 $date=date('Y-m-d');
 ?>
 <label>Payed on:<label type="date" value=""><?php echo $date?></label></label>
+</fieldset>
+</form>
+</div>
+
+ <div id="dialog-formConfirm" title="Pay/Wavier Fines">
+<form>
+<fieldset>
+<label id="waiveC">Waive $</label>
+<label id="payC">Pay $</label>
+<label id="patronC">Patron: </label>
+<label id="HandledByC">Handled By</label>
+<label>Payed on: <?php echo $date ?></label>
 </fieldset>
 </form>
 </div>
@@ -423,7 +438,9 @@ echo '</tr>';
 <div>
 <h1>Holds:</h1>
 <div id="Info_table">
-<?php $query=mysql_query("Select * From Hold Inner Join Item On Hold.libraryCode=Item.libraryCode Where pAccount='$pId'");?>
+<?php
+
+$query=mysql_query("Select * From Hold Inner Join Item On Hold.libraryCode=Item.libraryCode Where pAccount='$pId'");?>
 <table id="Holds" class="ui-widget ui-widget-content">
 <thead>
 <tr class="ui-widget-header ">
@@ -454,14 +471,13 @@ echo '</tr>';}
 <div>
 <h1>Fines:</h1>
 <div id="Info_table">
-<?php $query3=mysql_query("Select * From Fine Inner Join Item On Fine.libraryCode=Item.libraryCode Where pAccount='$pId'"); ?>
+<?php $query3=mysql_query("Select * From Fine Inner Join Item On Fine.libraryCode=Item.libraryCode Where pAccount='$pId' and NOT balance='0'"); ?>
 <table id="Fines" class="ui-widget ui-widget-content">
 <thead>
 <tr class="ui-widget-header ">
 <th>Item</th>
 <th>Reason</th>
 <th>Fine</th>
-<th>Select</th>
 </tr>
 </thead>
 <tbody>
@@ -471,7 +487,6 @@ echo'<tr>';
 echo "<td>".$row['title']."</td>";
 echo "<td>".$row['reason']."</td>";
 echo "<td>".$row['balance']."</td>";
-echo "<td><input type='checkbox' value=".$row['fineNo']." name='check[]'/></td>";
 echo '</tr>';}
 ?>
 </tbody>
