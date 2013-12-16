@@ -13,7 +13,6 @@
 </select>
 <input  type="text" id="searchString" name="searchString" size = "50"/>
 <select id="combobox1" name="searchType">
-	<option value="">Select one...</option>
 	<option value="Title">Title</option>
 	<option value="year">Year</option>
 	<option value="Genre">Genre</option>
