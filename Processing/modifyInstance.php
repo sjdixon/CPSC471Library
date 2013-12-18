@@ -9,9 +9,9 @@
 	mysql_connect($host, $user, $pass) or die("Could not connect: " . mysql_error());
 	mysql_select_db("library");	
 	
-	$item = $_POST['lCode1'];
-	$copy = $_POST['stockNum1'];
-	$status = $_POST['status1'];
+	$item = mysql_real_escape_string($_POST['lCode1']);
+	$copy = mysql_real_escape_string($_POST['stockNum1']);
+	$status = mysql_real_escape_string($_POST['status1']);
 	
 	$results = mysql_query("UPDATE Item_Instance SET state='$status' WHERE (libraryCode='$item' AND stockNum='$copy')");
 	if(!$results){

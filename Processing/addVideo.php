@@ -15,22 +15,22 @@
 	$id = $current_id[0]+ 1;
 	echo "Current max item: $current_id[0]<br>";
 	
-	$title = $_POST['name2'];
-	$year = $_POST['spinner2'];
-	$location = $_POST['location2'];
+	$title = mysql_real_escape_string($_POST['name2']);
+	$year = mysql_real_escape_string($_POST['spinner2']);
+	$location = mysql_real_escape_string($_POST['location2']);
 	$type = "Video";
-	$genre = $_POST['genre2'];
-	$audience = $_POST['audience2'];
-	$UPC = $_POST['UPC2'];
-	$director = $_POST['director'];
-	$prodComp = $_POST['producerName2'];
-	$ref = $_POST['isReference2'];
+	$genre = mysql_real_escape_string($_POST['genre2']);
+	$audience = mysql_real_escape_string($_POST['audience2']);
+	$UPC = mysql_real_escape_string($_POST['UPC2']);
+	$director = mysql_real_escape_string($_POST['director']);
+	$prodComp = mysql_real_escape_string($_POST['producerName2']);
+	$ref = mysql_real_escape_string($_POST['isReference2']);
 	echo "Is Reference: $ref";
 	if ($ref == "on"){
 		$ref = 1;
 	}
 	else $ref = 0;
-	$copies = $_POST['copies2'];
+	$copies = mysql_real_escape_string($_POST['copies2']);
 					
 	$results = mysql_query("INSERT INTO Item VALUES ('$id','$type','$location','$title','$year','$ref','$genre','$audience')");
 	if(!$results){
@@ -40,7 +40,7 @@
 
 	$results2 = mysql_query("INSERT INTO Video (libraryCode, UPC, directory, productionCompany) VALUES ('$id', '$UPC', '$director', '$prodComp')"); 
 	if(!$results2){
-     	echo "could not insert into Audio table <br />";        
+     	echo "could not insert into Video table <br />";        
 		trigger_error(mysql_error(), E_USER_ERROR);
      }
      

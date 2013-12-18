@@ -8,7 +8,7 @@
 	mysql_connect($host, $user, $pass) or die("Could not connect: " . mysql_error());
 	mysql_select_db("library");	
 	
-	$item = $_POST['lCode3'];
+	$item = mysql_real_escape_string($_POST['lCode3']);
 	//echo "Item code: $item<br>";
 	$typeq = mysql_query("SELECT itemType FROM Item WHERE libraryCode = '$item'");
 	$typerow = mysql_fetch_row($typeq);

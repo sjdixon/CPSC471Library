@@ -16,21 +16,21 @@
 	//echo "Current max item: $current_id[0]<br>";
 	$id = $current_id[0]+ 1;
 	
-	$title = $_POST['name'];
-	$year = $_POST['spinner'];
-	$location = $_POST['location'];
+	$title = mysql_real_escape_string($_POST['name']);
+	$year = mysql_real_escape_string($_POST['spinner']);
+	$location = mysql_real_escape_string($_POST['location']);
 	$type = "Book";
-	$genre = $_POST['genre'];
-	$audience = $_POST['audience'];
-	$ISBN = $_POST['ISBN'];
-	$author = $_POST['authorName'];
-	$ref = $_POST['isReference'];
+	$genre = mysql_real_escape_string($_POST['genre']);
+	$audience = mysql_real_escape_string($_POST['audience']);
+	$ISBN = mysql_real_escape_string($_POST['ISBN']);
+	$author = mysql_real_escape_string($_POST['authorName']);
+	$ref = mysql_real_escape_string($_POST['isReference']);
 	//echo "Is Reference: $ref";
 	if ($ref == "on"){
 		$ref = 1;
 	}
 	else $ref = 0;
-	$copies = $_POST['copies'];
+	$copies = mysql_real_escape_string($_POST['copies']);
 	//echo "#copies: $copies<br>";
 	
 					

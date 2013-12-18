@@ -1,19 +1,16 @@
 <?php
 	//search.php - written by Gaby Comeau
 	//Function to implement the search results div
-	$type = $_GET['type'];
-	$string = $_GET['string'];
-	$sType = $_GET['sType'];
 	$host = "localhost";
 	$user = "ubuntu";
 	$pass = "stephen123";				
 	mysql_connect($host, $user, $pass) or die("Could not connect: " . mysql_error());
 	mysql_select_db("library");	
+	$type = mysql_real_escape_string($_GET['type']);
+	$string = mysql_real_escape_string($_GET['string']);
+	$sType = mysql_real_escape_string($_GET['sType']);
 	
-	if ($type==''){
-			echo "<p>Error: No item type specified</p>";
-	}
-	else if($string==''){
+	if($string==''){
 			echo "<p>Error: No search string specified</p>";
 	}
 	else if($sType==''){
@@ -21,7 +18,7 @@
 	}
 	 
 	else if($sType== "Title"){
-		$result = mysql_query("SELECT * FROM ITEM WHERE title='$string' AND itemType='$type'");
+		$result = mysql_query("SELECT * FROM ITEM WHERE title='$string'");
 		echo "<table border=\"1\">";
 			echo "<tr>";
 				echo "<th>Title</th>";
@@ -45,7 +42,7 @@
 	}
 	
 	else if($sType == "Genre"){
-		$result = mysql_query("SELECT * FROM ITEM WHERE genre='$string' AND itemType='$type'");
+		$result = mysql_query("SELECT * FROM ITEM WHERE genre='$string'");
 		echo "<table border=\"1\">";
 			echo "<tr>";
 				echo "<th>Title</th>";
@@ -69,7 +66,7 @@
 	}
 	
 	else if($sType == "year"){
-		$result = mysql_query("SELECT * FROM ITEM WHERE year='$string' AND itemType='$type'");
+		$result = mysql_query("SELECT * FROM ITEM WHERE year='$string'");
 		echo "<table border=\"1\">";
 			echo "<tr>";
 				echo "<th>Title</th>";
@@ -93,7 +90,7 @@
 	}
 	
 	else if($sType == "libraryId"){
-		$result = mysql_query("SELECT * FROM ITEM WHERE libraryCode='$string' AND itemType='$type'");	
+		$result = mysql_query("SELECT * FROM ITEM WHERE libraryCode='$string'");	
 		echo "<table border=\"1\">";
 			echo "<tr>";
 				echo "<th>Title</th>";

@@ -15,17 +15,17 @@
 	$id = $current_id[0]+ 1;
 	echo "Current max item: $current_id[0]<br>";
 	
-	$title = $_POST['name4'];
-	$year = $_POST['spinner4'];
-	$location = $_POST['location4'];
+	$title = mysql_real_escape_string($_POST['name4']);
+	$year = mysql_real_escape_string($_POST['spinner4']);
+	$location = mysql_real_escape_string($_POST['location4']);
 	$type = "Newspaper";
-	$genre = $_POST['genre4'];
-	$audience = $_POST['audience4'];
+	$genre = mysql_real_escape_string($_POST['genre4']);
+	$audience = mysql_real_escape_string($_POST['audience4']);
 	$date = $_POST['datepicker'];
 	$datestr = explode("/", $date);
 	$issue = "$datestr[2]-$datestr[0]-$datestr[1]";
-	$pub = $_POST['pubName3'];
-	$ref = $_POST['isReference4'];
+	$pub = mysql_real_escape_string($_POST['pubName3']);
+	$ref = mysql_real_escape_string($_POST['isReference4']);
 	echo "Is Reference: $ref";
 	if ($ref == "on"){
 		$ref = 1;

@@ -15,17 +15,17 @@
 	$id = $current_id[0]+ 1;
 	//echo "Current max item: $current_id[0]<br>";
 	
-	$title = $_POST['name1'];
-	$year = $_POST['spinner1'];
-	$location = $_POST['location1'];
+	$title = mysql_real_escape_string($_POST['name1']);
+	$year = mysql_real_escape_string($_POST['spinner1']);
+	$location = mysql_real_escape_string($_POST['location1']);
 	$type = "Audio";
-	$genre = $_POST['genre1'];
-	$audience = $_POST['audience1'];
-	$UPC = $_POST['UPC'];
-	$artists = $_POST['artistName'];
-	$prodComp = $_POST['producerName'];
-	$ref = $_POST['isReference1'];
-	$copies = $_POST['copies1'];
+	$genre = mysql_real_escape_string($_POST['genre1']);
+	$audience = mysql_real_escape_string($_POST['audience1']);
+	$UPC = mysql_real_escape_string($_POST['UPC']);
+	$artists = mysql_real_escape_string($_POST['artistName']);
+	$prodComp = mysql_real_escape_string($_POST['producerName']);
+	$ref = mysql_real_escape_string($_POST['isReference1']);
+	$copies = mysql_real_escape_string($_POST['copies1']);
 	echo "Is Reference: $ref";
 	if ($ref == "on"){
 		$ref = 1;

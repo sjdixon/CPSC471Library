@@ -1,10 +1,9 @@
+<!--<?php //include "App_Index.php"?>-->
 
-
-// Script to generate main page and dialog pages to add and modify items in the library
+<!--Script to generate main page and dialog pages to add and modify items in the library
 // Gaby Comeau, Nov. 21, 2013
-// Quick note that this function inherits Javascript and CSS libraries from App_Index.php	
+// Quick note that this function inherits Javascript and CSS libraries from App_Index.php-->	
 	
-	//add new item
 	<p>Use this form to add a new item</p>
 	<form>
 		<div id="radio1" class="radioset">
@@ -16,16 +15,14 @@
 		</div>
 	</form><br><br>
 	
-	//modify an item
 	<p>Use this form to modify an item or copy of an item</p>
-	<form>";
-		<div id="radio2" class="radioset">";
-			echo "<input type="radio" id="update1" name="radio2" /><label for="update1">Modify Item</label>
-			echo "<input type="radio" id="update2" name="radio2" /><label for="update2">Modify Item Instance</label>
-		echo "</div>";
-	echo "</form><br><br><br>";
+	<form>
+		<div id="radio2" class="radioset">
+			<input type="radio" id="update1" name="radio2" /><label for="update1">Modify Item</label>
+			<input type="radio" id="update2" name="radio2" /><label for="update2">Modify Item Instance</label>
+		</div>
+	</form><br><br><br>
 	
-	//delete an item
 	<p>Use this form to delete an item or item instance</p>
 	<form>
 		<div id="radio3" class="radioset">
@@ -160,7 +157,7 @@
 			echo "<label for=\"genre2\">Genre: </label>";
 			echo "<input type =\"text\" name=\"genre2\" id=\"genre2\" class=\"text ui-widget-content ui-corner-all\" /><br><br>";
 			echo "<label for=\"audience2\">Audience: </label>";
-			echo "<select id=\"audience2\" name=\"audience\">";
+			echo "<select id=\"audience2\" name=\"audience2\">";
 				echo "<option value=\"\">Select Type</option>";
 				echo "<option value=\"Early Childhood\">Early Childhood</option>";
 				echo "<option value=\"Children\">Children</option>";
@@ -211,7 +208,7 @@
 			echo "<label for=\"genre3\">Genre: </label>";
 			echo "<input type =\"text\" name=\"genre3\" id=\"genre3\" class=\"text ui-widget-content ui-corner-all\" /><br><br>";
 			echo "<label for=\"audience3\">Audience: </label>";
-			echo "<select id=\"audience3\" name=\"audience\">";
+			echo "<select id=\"audience3\" name=\"audience3\">";
 				echo "<option value=\"\">Select Type</option>";
 				echo "<option value=\"Early Childhood\">Early Childhood</option>";
 				echo "<option value=\"Children\">Children</option>";
@@ -266,7 +263,7 @@
 			echo "<label for=\"genre4\">Genre: </label>";
 			echo "<input type =\"text\" name=\"genre4\" id=\"genre4\" class=\"text ui-widget-content ui-corner-all\" /><br><br>";
 			echo "<label for=\"audience4\">Audience: </label>";
-			echo "<select id=\"audience4\" name=\"audience\">";
+			echo "<select id=\"audience4\" name=\"audience4\">";
 				echo "<option value=\"\">Select Type</option>";
 				echo "<option value=\"Early Childhood\">Early Childhood</option>";
 				echo "<option value=\"Children\">Children</option>";
@@ -316,7 +313,7 @@
 			echo "<label for=\"stockNum1\">Stock Number: </label>";
 			echo "<input type =\"text\" name=\"stockNum1\" id=\"stockNum1\" class=\"text ui-widget-content ui-corner-all\" /><br><br>";
 			echo "<label for=\"status1\">Status: </label>";
-			echo "<select id=\"status1\" name=\"audience\">";
+			echo "<select id=\"status1\" name=\"status1\">";
 				echo "<option value=\"\">Select Status</option>";
 				echo "<option value=\"available\">In Circulation</option>";
 				echo "<option value=\"missing\">Missing</option>"; 
