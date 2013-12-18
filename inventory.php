@@ -16,7 +16,7 @@
 	</form><br><br>
 	
 	<p>Use this form to return an item</p>
-	<button id="returnBtn" name="returnBtn"> Return Item</button><br><br>
+	<button id="returnBtn" name="returnBtn"> Return Item</button><br><br><br>
 	
 	<p>Use this form to modify an item or copy of an item</p>
 	<form>
@@ -32,7 +32,7 @@
 			<input type="radio" id="delete1" name="radio3" /><label for="delete1">Delete Item</label>
 			<input type="radio" id="delete2" name="radio3"/><label for="delete2">Delete Item Instance</label>
 		</div>
-	<form><br><br>
+	</form><br><br>
 
 <script>
 	$( "button" ).button();
@@ -40,11 +40,12 @@
 		$( ".radioset").buttonset();
 	});
 </script>
-<?php
+
 	//new book form
-	echo "<div id=\"dialog\" title=\"Add New Book\">";
-		echo "<form action = \"Processing/addBook.php\" method = \"post\">";
-			echo "<!--Add new item information in the form below:-->";
+	<div id="dialog" title="Add New Book">
+		<form id="bookForm" action="Processing/addBook.php" method="post">
+			<!--Add new item information in the form below:-->
+			<?php
 			echo "<label for=\"name\">Title: </label>";
 			echo "<input type =\"text\" name=\"name\" id=\"name\" class=\"text ui-widget-content ui-corner-all\" /><br><br>";
 			echo "<label for=\"ISBN\">ISBN: </label>";
@@ -70,30 +71,32 @@
 			echo "<label for=\"copies\">Number of copies: </label>";
 			echo "<input id=\"copies\" name=\"copies\" value=\"1\" /><br><br>";
 			echo "<input type=\"checkbox\" id=\"check\" name=\"isReference\"><label for=\"check\">Check for Reference Item</label><br><br>";	
-			echo "<button type=\"submit\" name=\"submit\" value=\"Submit\">OK</button>";	
-		echo "</form>";
-		?>
+			echo "<button type=\"submit\" name=\"submit\" value=\"Submit\">OK</button>";?>
+		</form>
 		<script>
 		$( "#spinner" ).spinner({
 			min: 1900,
 			max: 2100,
 			step: 1
+		}).bind("keydown", function (event) {
+    		event.preventDefault();
 		});
 		$( "#copies" ).spinner({
 			min: 1,
 			max: 500,
 			step: 1
+		}).bind("keydown", function (event) {
+    		event.preventDefault();
 		});
 		$(function() {
 			$( "#check" ).button();
 		});
-		</script>
-	<?php	
-	echo "</div>";
-	
+		</script>	
+	</div>
+	<?php
 	//new audio item form
 	echo "<div id=\"dialog2\" title=\"Add New Audio Item\">";
-		echo "<form action = \"Processing/addAudio.php\" method = \"post\">";
+		echo "<form action =\"Processing/addAudio.php\" method =\"post\">";
 			echo "<!--Add new item information in the form below:-->";
 			echo "<label for=\"name1\">Title: </label>";
 			echo "<input type =\"text\" name=\"name1\" id=\"name1\" class=\"text ui-widget-content ui-corner-all\" /><br><br>";
@@ -130,11 +133,15 @@
 			min: 1900,
 			max: 2100,
 			step: 1
+		}).bind("keydown", function (event) {
+    		event.preventDefault();
 		});
 		$( "#copies1" ).spinner({
 			min: 1,
 			max: 500,
 			step: 1
+		}).bind("keydown", function (event) {
+    		event.preventDefault();
 		});
 		$(function() {
 			$( "#check1" ).button();
@@ -182,11 +189,15 @@
 			min: 1900,
 			max: 2100,
 			step: 1
+		}).bind("keydown", function (event) {
+    		event.preventDefault();
 		});
 		$( "#copies2" ).spinner({
 			min: 1,
 			max: 500,
 			step: 1
+		}).bind("keydown", function (event) {
+    		event.preventDefault();
 		});
 		$(function() {
 			$( "#check2" ).button();
@@ -233,6 +244,8 @@
 			min: 1900,
 			max: 2100,
 			step: 1
+		}).bind("keydown", function (event) {
+    		event.preventDefault();
 		});
 		$(function() {
 			$( "#datepicker1" ).datepicker({
@@ -244,6 +257,8 @@
 			min: 1,
 			max: 500,
 			step: 1
+		}).bind("keydown", function (event) {
+    		event.preventDefault();
 		});
 		$(function() {
 			$( "#check3" ).button();
@@ -288,6 +303,8 @@
 			min: 1900,
 			max: 2100,
 			step: 1
+		}).bind("keydown", function (event) {
+    		event.preventDefault();
 		});
 		$(function() {
 			$( "#datepicker" ).datepicker({
@@ -299,6 +316,8 @@
 			min: 1,
 			max: 500,
 			step: 1
+		}).bind("keydown", function (event) {
+    		event.preventDefault();
 		});
 		$(function() {
 			$( "#check4" ).button();
@@ -380,6 +399,23 @@
 		echo "</form>";
 	echo "</div>";
 	?>
+	<div id="return" title="Return Loaned Item" class="ui-widget">
+            <form id="returnForm" method="post" action="Processing/Loans/returnItem.php">
+                
+                    <label for="returrnedLibraryCode"> Library Code: </label>
+                    <input id="returnedLibraryCode" name="libraryCode"> <br/>
+                    <label for="stock"> Stock# </label>
+                    <input id="stocknum" name="stocknum" type="text"><br/>
+                    
+                    <label for="state">Action </label>
+                    <select id="state" name="state">
+                        <option value="OK"> Return Item</option>
+                        <option value="Damaged"> Return & Mark as Damaged</option>
+                        <option value="Discard"> Return & Mark as Discard</option>
+                    </select>
+            </form>
+        </div>
+
 <script type="text/javascript">
 	$( "#dialog" ).dialog({ 
 		autoOpen: false, 
@@ -461,7 +497,7 @@
 	$( "#update1" ).click(function() {
 		$( "#dialog10" ).dialog( "open" );
 	});
-	$("#dialog-return").dialog({
+	$("#return").dialog({
      	autoOpen: false,
 		height: 250,
 		width: 800,
@@ -481,7 +517,7 @@
 		}
 	});
 	$("#returnBtn").button().click(function(){
-		$("#dialog-return").dialog("open");
+		$("#return").dialog("open");
 	});
 
 </script>

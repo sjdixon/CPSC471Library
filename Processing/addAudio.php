@@ -1,7 +1,7 @@
 <?php	
 	//addAudio.php - written by Gaby Comeau
 	//PHP script to add an audio item to the database
-	header("Location: ../App_Index.php",TRUE,303);	
+	//header("Location: ../App_Index.php",TRUE,303);	
 	$host = "localhost";
 	$user = "ubuntu";
 	$pass = "stephen123";				
@@ -17,6 +17,7 @@
 	
 	$title = mysql_real_escape_string($_POST['name1']);
 	$year = mysql_real_escape_string($_POST['spinner1']);
+	echo $year;
 	$location = mysql_real_escape_string($_POST['location1']);
 	$type = "Audio";
 	$genre = mysql_real_escape_string($_POST['genre1']);
