@@ -85,9 +85,14 @@ By: Stephen Dixon
                 $("#terminate-user-form").dialog({
                     autoOpen: false,
                     height: 600,
-                    width: 600,
+                    width: 630,
                     modal: true,
                     buttons: {
+                        "Delete Permanently" : function() {
+                            $("form#termLibrarians").attr("action", "Processing/Librarian/removeLibrarian.php");
+                            $("form#termLibrarians").submit();
+                            $(this).dialog("close");
+                        },
                         "Mark Employment as Terminated": function() {
                             $("form#termLibrarians").submit();
                             $(this).dialog("close");
