@@ -139,12 +139,12 @@ By: Stephen Dixon
                         $query = mysql_query("select id, name, startDate, username from Librarian where endDate is NULL");
                         while ($row = mysql_fetch_array($query)) {
                             echo "<tr>";
-                            echo "<td>" . $row[id] . "</td>";
-                            echo "<td>" . $row[name] . "</td>";
-                            echo "<td>" . $row[startDate] . "</td>";
-                            echo "<td>" . $row[username] . "</td>";
+                            echo "<td>" . $row['id'] . "</td>";
+                            echo "<td>" . $row['name'] . "</td>";
+                            echo "<td>" . $row['startDate'] . "</td>";
+                            echo "<td>" . $row['username'] . "</td>";
                             $checkboxId = "checkbox" . $row[id];
-                            echo "<td><input type=\"checkbox\" class=\"chcktbl\" name=\"" . $checkboxId . "\" /></td>";
+                            echo "<td><input type='checkbox' class='chcktbl' name='$checkboxId' /></td>";
                             echo "</tr>";
                         }
                         ?>
