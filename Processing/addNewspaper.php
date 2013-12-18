@@ -1,7 +1,7 @@
 <?php	
 	//addNewspaper.php - written by Gaby Comeau
 	//PHP script to add a newspaper to the database
-	header("Location: App_Index.php",TRUE,303);	
+	header("Location: ../App_Index.php",TRUE,303);	
 	$host = "localhost";
 	$user = "ubuntu";
 	$pass = "stephen123";				

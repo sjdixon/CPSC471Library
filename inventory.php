@@ -1,39 +1,39 @@
 
-<?php
+
 // Script to generate main page and dialog pages to add and modify items in the library
 // Gaby Comeau, Nov. 21, 2013
 // Quick note that this function inherits Javascript and CSS libraries from App_Index.php	
 	
 	//add new item
-	echo "<p>Use this form to add a new item</p>";
-	echo "<form>";
-		echo "<div id=\"radio1\" class=\"radioset\">";
-			echo "<input type=\"radio\" id=\"add1\" name=\"radio1\" /><label for=\"add1\">Book</label>";
-			echo "<input type=\"radio\" id=\"add2\" name=\"radio1\" /><label for=\"add2\">Audio</label>";
-			echo "<input type=\"radio\" id=\"add3\" name=\"radio1\" /><label for=\"add3\">Video</label>";
-			echo "<input type=\"radio\" id=\"add4\" name=\"radio1\" /><label for=\"add4\">Magazine</label>";
-			echo "<input type=\"radio\" id=\"add5\" name=\"radio1\" /><label for=\"add5\">Newspaper</label>";
-		echo "</div>";
-	echo "</form><br><br>";
+	<p>Use this form to add a new item</p>
+	<form>
+		<div id="radio1" class="radioset">
+			<input type="radio" id="add1" name="radio1" /><label for="add1">Book</label>
+			<input type="radio" id="add2" name="radio1" /><label for="add2">Audio</label>
+			<input type="radio" id="add3" name="radio1" /><label for="add3">Video</label>
+			<input type="radio" id="add4" name="radio1" /><label for="add4">Magazine</label>
+			<input type="radio" id="add5" name="radio1" /><label for="add5">Newspaper</label>
+		</div>
+	</form><br><br>
 	
 	//modify an item
-	echo "<p>Use this form to modify an item or copy of an item</p>";
-	echo "<form>";
-		echo "<iv id=\"radio2\" class=\"radioset\">";
-			echo "<input type=\"radio\" id=\"update1\" name=\"radio2\" /><label for=\"update1\">Modify Item</label>";
-			echo "<input type=\"radio\" id=\"update2\" name=\"radio2\" /><label for=\"update2\">Modify Item Instance</label>";
+	<p>Use this form to modify an item or copy of an item</p>
+	<form>";
+		<div id="radio2" class="radioset">";
+			echo "<input type="radio" id="update1" name="radio2" /><label for="update1">Modify Item</label>
+			echo "<input type="radio" id="update2" name="radio2" /><label for="update2">Modify Item Instance</label>
 		echo "</div>";
 	echo "</form><br><br><br>";
 	
 	//delete an item
-	echo "<p>Use this form to delete an item or item instance</p>";
-	echo "<form>";
-		echo "<iv id=\"radio3\" class=\"radioset\">";
-			echo "<input type=\"radio\" id=\"delete1\" name=\"radio3\" /><label for=\"delete1\">Delete Item</label>";
-			echo "<input type=\"radio\" id=\"delete2\" name=\"radio3\"/><label for=\"delete2\">Delete Item Instance</label>";
-		echo "</div>";
-	echo "</form><br><br><br>";
-?>
+	<p>Use this form to delete an item or item instance</p>
+	<form>
+		<div id="radio3" class="radioset">
+			<input type="radio" id="delete1" name="radio3" /><label for="delete1">Delete Item</label>
+			<input type="radio" id="delete2" name="radio3"/><label for="delete2">Delete Item Instance</label>
+		</div>
+	<form><br><br><br>
+
 <script>
 	$( "button" ).button();
 	$(function() {
@@ -43,7 +43,7 @@
 <?php
 	//new book form
 	echo "<div id=\"dialog\" title=\"Add New Book\">";
-		echo "<form action = \"addBook.php\" method = \"post\">";
+		echo "<form action = \"Processing/addBook.php\" method = \"post\">";
 			echo "<!--Add new item information in the form below:-->";
 			echo "<label for=\"name\">Title: </label>";
 			echo "<input type =\"text\" name=\"name\" id=\"name\" class=\"text ui-widget-content ui-corner-all\" /><br><br>";
@@ -93,7 +93,7 @@
 	
 	//new audio item form
 	echo "<div id=\"dialog2\" title=\"Add New Audio Item\">";
-		echo "<form action = \"addAudio.php\" method = \"post\">";
+		echo "<form action = \"Processing/addAudio.php\" method = \"post\">";
 			echo "<!--Add new item information in the form below:-->";
 			echo "<label for=\"name1\">Title: </label>";
 			echo "<input type =\"text\" name=\"name1\" id=\"name1\" class=\"text ui-widget-content ui-corner-all\" /><br><br>";
@@ -145,7 +145,7 @@
 	
 	//new video item form
 	echo "<div id=\"dialog3\" title=\"Add New Video Item\">";
-		echo "<form action = \"addVideo.php\" method = \"post\">";
+		echo "<form action = \"Processing/addVideo.php\" method = \"post\">";
 			echo "<!--Add new item information in the form below:-->";
 			echo "<label for=\"name2\">Title: </label>";
 			echo "<input type =\"text\" name=\"name2\" id=\"name2\" class=\"text ui-widget-content ui-corner-all\" /><br><br>";
@@ -197,7 +197,7 @@
 	
 	//new magazine
 	echo "<div id=\"dialog4\" title=\"Add New Magazine\">";
-		echo "<form action = \"addMagazine.php\" method = \"post\">";
+		echo "<form action = \"Processing/addMagazine.php\" method = \"post\">";
 			echo "<!--Add new item information in the form below:-->";
 			echo "<label for=\"name3\">Title: </label>";
 			echo "<input type =\"text\" name=\"name3\" id=\"name3\" class=\"text ui-widget-content ui-corner-all\" /><br><br>";
@@ -254,7 +254,7 @@
 	
 	//new newspaper
 	echo "<div id=\"dialog5\" title=\"Add New Newspaper\">";
-		echo "<form action = \"addNewspaper.php\" method = \"post\">";
+		echo "<form action = \"Processing/addNewspaper.php\" method = \"post\">";
 			echo "<!--Add new item information in the form below:-->";
 			echo "<label for=\"name4\">Title: </label>";
 			echo "<input type =\"text\" name=\"name4\" id=\"name4\" class=\"text ui-widget-content ui-corner-all\" /><br><br>";

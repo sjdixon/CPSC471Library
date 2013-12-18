@@ -1,7 +1,7 @@
 <?php	
-	//addMagazine.php - written by Gaby Comeau
-	//PHP script to add a magazine to the database
-	header("Location: App_Index.php",TRUE,303);	
+	//addAudio.php - written by Gaby Comeau
+	//PHP script to add an audio item to the database
+	header("Location: ../App_Index.php",TRUE,303);	
 	$host = "localhost";
 	$user = "ubuntu";
 	$pass = "stephen123";				
@@ -15,28 +15,22 @@
 	$id = $current_id[0]+ 1;
 	//echo "Current max item: $current_id[0]<br>";
 	
-	$title = $_POST['name3'];
-	$year = $_POST['spinner3'];
-	$location = $_POST['location3'];
-	$type = "Magazine";
-	$genre = $_POST['genre3'];
-	$audience = $_POST['audience3'];
-	$date = $_POST['datepicker1'];
-	$ref = $_POST['isReference3'];
+	$title = $_POST['name1'];
+	$year = $_POST['spinner1'];
+	$location = $_POST['location1'];
+	$type = "Audio";
+	$genre = $_POST['genre1'];
+	$audience = $_POST['audience1'];
+	$UPC = $_POST['UPC'];
+	$artists = $_POST['artistName'];
+	$prodComp = $_POST['producerName'];
+	$ref = $_POST['isReference1'];
+	$copies = $_POST['copies1'];
 	echo "Is Reference: $ref";
 	if ($ref == "on"){
 		$ref = 1;
 	}
 	else $ref = 0;
-	$copies = $_POST['copies3'];
-
-	//echo "Date: $date<br>";
-	$datestr = explode("/", $date);
-	//echo "Date strings: $datestr[0]-$datestr[1]-$datestr[2]<br>";
-	$issue = "$datestr[2]-$datestr[0]-$datestr[1]";
-	//echo $issue;
-	$sub = $_POST['subName'];
-	$pub = $_POST['pubName2'];
 					
 	$results = mysql_query("INSERT INTO Item VALUES ('$id','$type','$location','$title','$year','$ref','$genre','$audience')");
 	if(!$results){
@@ -44,9 +38,9 @@
     	trigger_error(mysql_error(), E_USER_ERROR);
     }
 
-	$results2 = mysql_query("INSERT INTO Magazine (issue, subtitle, publisher, libraryCode) VALUES (CONVERT('$issue', DATE), '$sub', '$pub', '$id')"); 
+	$results2 = mysql_query("INSERT INTO Audio (libraryCode, artists, productionCompany, UPC) VALUES ('$id', '$artists', '$prodComp', '$UPC')"); 
 	if(!$results2){
-     	echo "could not insert into Magazine table <br />";        
+     	echo "could not insert into Audio table <br />";        
 		trigger_error(mysql_error(), E_USER_ERROR);
      }
      
@@ -57,6 +51,7 @@
 			trigger_error(mysql_error(), E_USER_ERROR);
     	}
     }
+
 
         
 ?>

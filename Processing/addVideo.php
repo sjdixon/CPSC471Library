@@ -1,7 +1,7 @@
 <?php	
 	//addVideo.php - written by Gaby Comeau
 	//PHP script to add a video item to the database
-	header("Location: App_Index.php",TRUE,303);	
+	header("Location: ../App_Index.php",TRUE,303);	
 	$host = "localhost";
 	$user = "ubuntu";
 	$pass = "stephen123";				
