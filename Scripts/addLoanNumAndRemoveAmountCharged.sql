@@ -1,0 +1,4 @@
+use library;
+ALTER TABLE Loan ADD loanNum INT NOT NULL AUTO_INCREMENT;
+AlTER TABLE Loan ADD UNIQUE (loanNum);
+ALTER TABLE Fine DROP amountCharged;

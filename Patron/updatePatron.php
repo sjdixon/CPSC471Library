@@ -1,7 +1,7 @@
 <?php
     $host = "localhost";
 	$user = "ubuntu";
-	$pass = "stephen123";				
+	$pass = "stephen123";		
 	mysql_connect($host, $user, $pass) or die("Could not connect: " . mysql_error());
 	mysql_select_db("library");
     $pId=$_POST['id'];
@@ -23,5 +23,5 @@ else{
     	trigger_error(mysql_error(), E_USER_ERROR);
 }
 
-    header("Location: PatronInformation.php");
+    header("Location: ../PatronInformation.php");
 ?> 

@@ -39,8 +39,8 @@
         }
         $("#dialog-form").dialog({
             autoOpen: false,
-            height: 300,
-            width: 350,
+            height: 450,
+            width: 400,
             modal: true,
             buttons: {
                 "Create an account": function() {
@@ -50,11 +50,12 @@
                     bValid = bValid && checkLength(name, "name", 1, 50);
                     bValid = bValid && checkLength(email, "email", 1, 50);
                     bValid = bValid && checkLength(address, "address", 1, 45);
-                    bValid = bValid && checkLength(phone, "phone", 7, 11);
+                    bValid = bValid && checkLength(phone, "phone", 7, 15);
                     bValid = bValid && checkLength(id, "id", 1, 10);
 
                     bValid = bValid && checkRegexp(email, /^((([a-z]|\d|[!#\$%&'\*\+\-\/=\?\^_`{\|}~]|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])+(\.([a-z]|\d|[!#\$%&'\*\+\-\/=\?\^_`{\|}~]|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])+)*)|((\x22)((((\x20|\x09)*(\x0d\x0a))?(\x20|\x09)+)?(([\x01-\x08\x0b\x0c\x0e-\x1f\x7f]|\x21|[\x23-\x5b]|[\x5d-\x7e]|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])|(\\([\x01-\x09\x0b\x0c\x0d-\x7f]|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF]))))*(((\x20|\x09)*(\x0d\x0a))?(\x20|\x09)+)?(\x22)))@((([a-z]|\d|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])|(([a-z]|\d|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])([a-z]|\d|-|\.|_|~|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])*([a-z]|\d|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])))\.)+(([a-z]|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])|(([a-z]|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])([a-z]|\d|-|\.|_|~|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])*([a-z]|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])))\.?$/i, "eg. ui@jquery.com");
                     bValid = bValid && checkRegexp(id, /^([0-9])+$/, "Id field only allow :0-9");
+                    bValid = bValid && checkRegexp(phone, /^([0-9]|\d|[-])+$/, "Phone number can only be in the form 2242918 or 224-2918 ");
 
                     if (bValid) {
                         document.getElementById('nPatron').submit();
@@ -90,7 +91,7 @@
                     }).get();
                     //Using Ajax function to jump to the remove Patron file, all checked Patrons are removed
                     $.ajax({
-                        url: 'removePatron.php',
+                        url: 'Patron/removePatron.php',
                         method: 'post',
                         data: {pIds: searchIDs}
                     });
@@ -152,18 +153,18 @@
 
     <div id="dialog-form" title="Add a New Patron">
         <p class="validateTips">All form fields are required.</p> 
-        <form id="nPatron" name='nPatron' action='NewPatron.php' method='post' >
+        <form id="nPatron" name='nPatron' action='Patron/NewPatron.php' method='post' >
             <fieldset>
                 <label for=pid">Account Number</label>
-                <input type="number" name="pid" id="pid" class="text ui-widget-content ui-corner-all">
+                <input type="number" name="pid" id="pid" class="text ui-widget-content ui-corner-all"><br>
                 <label for="name">Name</label>
-                <input type="text" name="name" id="name"  class="text ui-widget-content ui-corner-all">
+                <input type="text" name="name" id="name"  class="text ui-widget-content ui-corner-all"><br>
                 <label for="email">Email</label>
-                <input type="text" name="email" id="email"  class="text ui-widget-content ui-corner-all">
+                <input type="text" name="email" id="email"  class="text ui-widget-content ui-corner-all"><br>
                 <label for="address">Address</label>
-                <input type="text" name="address" id="address" class="text ui-widget-content ui-corner-all">
+                <input type="text" name="address" id="address" class="text ui-widget-content ui-corner-all"><br>
                 <label for="phone">Phone</label>
-                <input type="text" name="phone" id="phone" class="text ui-widget-content ui-corner-all">
+                <input type="text" name="phone" id="phone" class="text ui-widget-content ui-corner-all"><br>
             </fieldset>
         </form>
     </div>
@@ -180,73 +181,8 @@
 
         $server = mysql_connect("localhost", "ubuntu", "stephen123");
         $db = mysql_select_db("library", $server);
-        $t = time();
-        $date = date('Y-m-d');
-        $holdDate = mysql_query("Select expiryDate, pAccount, libraryCode FROM Hold");
-
-        while ($row = mysql_fetch_assoc($holdDate)) {
-            $dateExpire = $row['expiryDate'];
-
-            if (strtotime($date) > strtotime($dateExpire)) {
-                $maxFineNum = mysql_query("SELECT MAX(fineNo) FROM Fine");
-                $maxFineNum++;
-                $accountNo = $row['pAccount'];
-                $itemCode = $row['libraryCode'];
-                $fineList = mysql_query("Select * From Fine Where pAccount='$accountNo' And libraryCode='$itemCode' And Not balance='0'");
-
-                if (!$row = mysql_fetch_assoc($fineList)) {
-                    mysql_query("INSERT INFO Fines (fineNo, pAccount, libraryCode, reason, dateFined) VALUES ('$maxFineNum','$accountNo','$itemCode','Hold','$date')");
-                } else {
-                    while ($row = mysql_fetch_assoc($fineListt)) {
-                        $balance = $_POST['balance'];
-                        $bal = $balance + 0.20;
-                        $fineNo = $_POST['fineNo'];
-                        mysql_query("Update Fine Set balance='$bal', Where fineNo='$fineNo'");
-                    }
-                }
-            }
-        }
-        //checks for overdue loans
-        $loanDates = mysql_query("Select dateLoaned, pAccount, libraryCode, stockNum FROM Loan");
-        while ($row = mysql_fetch_array($loanDates)) {
-            $dateExpire = $row['dateLoaned'];
-
-            if (strtotime($date) > strtotime($dateExpire)) {
-                $maxFineNum = mysql_query("SELECT MAX(fineNo) FROM Fine");
-                $maxFineNum++;
-                $accountNo = $row['pAccount'];
-                $itemCode = $row['libraryCode'];
-                $instance = $row['stockNum'];
-                $fineList = mysql_query("Select * From Fine Where pAccount='$accountNo' And libraryCode='$itemCode' And stocknum='$instance' And Not balance='0'");
-
-                if (!$row = mysql_fetch_assoc($fineList)) {
-                    mysql_query("INSERT INFO Fines (fineNo, pAccount, libraryCode, stockNum, reason, dateFined) VALUES ('$maxFineNum','$accountNo','$itemCode','$instance','Loan','$date')");
-                } else {
-                    while ($row = mysql_fetch_assoc($fineListt)) {
-                        $balance = $_POST['balance'];
-                        $bal = $balance + 0.20;
-                        $fineNo = $_POST['fineNo'];
-                        mysql_query("Update Fine Set balance='$bal', Where fineNo='$fineNo'");
-                    }
-                }
-            }
-        }
-        //Checks for expired Cards
-        $false = FALSE;
-        $true = TRUE;
-        $expiredCards = mysql_query("SELECT membershipExpiryDate, pAccount FROM Patron WHERE membershipExpired='$false'");
-        while ($row = mysql_fetch_array($expiredCards)) {
-            $dateE = $row['membershipExpiryDate'];
-            $dateEx = strtotime($dateE);
-            $dateExpire = idate('s', $dateEx);
-            $date = mktime(0, 0, 0, date("m"), date("d"), date("Y"));
-            $dateCurrent = idate('s', $date);
-
-            if ($dateCurrent > $dateExpire) {
-                $accountNo = $row['pAccount'];
-                mysql_query("UPDATE Patron SET membershipExpired=$true WHERE pAccount='$accountNo'");
-            }
-        }
+        
+              
         $query1 = mysql_query("select * from Patron");
         ?>
         <table id="users" class="ui-widget ui-widget-content">
@@ -275,7 +211,7 @@ while ($row = mysql_fetch_array($query1)) {
     echo "<td>" . $row['pAccount'] . "</td>";
     echo "<td>" . $row['name'] . "</td>";
     echo "<td>" . $expireValue . "</td>";
-    echo "<td><form id='storeId' action='cacheId.php' method='post'>
+    echo "<td><form action='cacheId.php' method='post'>
                             <input type='hidden' id='pAccount' name='pAccount' value=" . $row['pAccount'] . ">
                             <button type='sumbit'>View</button>
                             </form></td>";

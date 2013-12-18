@@ -10,25 +10,15 @@
         
         while($row=mysql_fetch_assoc($fineData))
         {
-           $pay=$_POST['payment'];
-           $payment=intval($pay);
-           $wave=$_POST['waive'];
+           $payment=$_POST['payment'];
+           $waive=$_POST['waive'];
            $balance=$row['balance'];
-           $bal=$balance-$pay-$wave;
+           $bal=$balance-$payment-$waive;
+          
             if($bal<0)
             { $bal=0;}
             
-           $result=mysql_query("Update Fine Set balance='$bal', amountPaid='$payment', amountWaived='$wave' Where fineNo='$fineNo'");
-            error_log(print_r($_REQUEST,true));
-            if($result){
-    echo "Success";
-}
-else{
-    echo "Error in sending your user";
-      	echo "could not insert into Item table <br />";
-    	trigger_error(mysql_error(), E_USER_ERROR);
-}
-
+            mysql_query("Update Fine Set balance='$bal' Where fineNo='$fineNo'");
 
             $lId=$_POST['Handled'];
             $date=date('Y-m-d');
@@ -36,7 +26,7 @@ else{
             
         }}
         
-        header("Location: PatronInformation.php");
+       
         
 ?> 
        

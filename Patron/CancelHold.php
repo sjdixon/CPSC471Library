@@ -10,6 +10,6 @@ $host = "localhost";
         $itemId=$item;
         mysql_query("Delete From Hold where pAccount='$pId' and libraryCode='$itemId'");
        }
-       header("Location: PatronInformation.php");
+       header("Location: ../PatronInformation.php");
         
 ?>
