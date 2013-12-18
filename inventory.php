@@ -15,13 +15,16 @@
 		</div>
 	</form><br><br>
 	
+	<p>Use this form to return an item</p>
+	<button id="returnBtn" name="returnBtn"> Return Item</button><br><br>
+	
 	<p>Use this form to modify an item or copy of an item</p>
 	<form>
 		<div id="radio2" class="radioset">
 			<input type="radio" id="update1" name="radio2" /><label for="update1">Modify Item</label>
 			<input type="radio" id="update2" name="radio2" /><label for="update2">Modify Item Instance</label>
 		</div>
-	</form><br><br><br>
+	</form><br><br>
 	
 	<p>Use this form to delete an item or item instance</p>
 	<form>
@@ -29,7 +32,7 @@
 			<input type="radio" id="delete1" name="radio3" /><label for="delete1">Delete Item</label>
 			<input type="radio" id="delete2" name="radio3"/><label for="delete2">Delete Item Instance</label>
 		</div>
-	<form><br><br><br>
+	<form><br><br>
 
 <script>
 	$( "button" ).button();
@@ -458,4 +461,27 @@
 	$( "#update1" ).click(function() {
 		$( "#dialog10" ).dialog( "open" );
 	});
+	$("#dialog-return").dialog({
+     	autoOpen: false,
+		height: 250,
+		width: 800,
+		modal: true,
+		buttons: {
+			"Return Item and Keep Window Open": function() {
+				$("form#returnForm").submit();
+			},
+			"Return Item and Close": function(){
+				$("form#returnForm").submit();
+				$(this).dialog("close");
+                            
+			},
+			"Close Window": function() {
+				$(this).dialog("close");
+			}
+		}
+	});
+	$("#returnBtn").button().click(function(){
+		$("#dialog-return").dialog("open");
+	});
+
 </script>
