@@ -10,5 +10,5 @@
         $query="DELETE FROM Patron WHERE pAccount='$id'";
         mysql_query($query);
         }
-        header("Location: PatronTab.php");
+        header("Location: ../../PatronTab.php");
 ?>

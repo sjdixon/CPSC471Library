@@ -38,22 +38,7 @@
                     modal: true,
                     buttons: {
                         "Renew Item": function() {
-                            var renewDate = "";
-                            var selected = $("#radio input[type='radio']:checked");
-                            if (selected.length > 0) {
-                                renewDate = selected.val();
-                            }
-                            var info = $("#Holds input:checkbox:checked").map(function() {
-                                return $(this).val();
-                            }).get();
-                            $.ajax({
-                                url: 'remewItem.php',
-                                method: 'post',
-                                data: {info: info,
-                                    rDate: renewDate
-                                }
-                            });
-                            window.location.href = "PatronInformation.php";
+                            $("form#RenewItemForm").submit();
                             $(this).dialog("close");
                         },
                         Cancel: function() {
@@ -85,7 +70,7 @@
                             }).get();
 
                             $.ajax({
-                                url: 'CancelHold.php',
+                                url: 'Patron/CancelHold.php',
                                 method: 'post',
                                 data: {lCode: holdID}
                             });
@@ -115,12 +100,12 @@
                         });
             });
         //Fines Pay page
-            $(function() {
-                var Waiver = $("#waiver"),
-                        Pay = $("#pay"),
-                        Handled = $("#Handled"),
-                        allFields = $([]).add(Waiver).add(Pay).add(Handled),
-                        tips = $(".validateTips");
+           $(function() {
+                var  waive=$("#waive"),
+                    payment=$("#payment"),
+                     Handled = $("#Handled");
+                allFields = $([]).add(waive).add(payment).add(Handled),
+                tips = $(".validateTips");
                 function updateTips(t) {
                     tips
                             .text(t)
@@ -129,7 +114,25 @@
                         tips.removeClass("ui-state-highlight", 1500);
                     }, 500);
                 }
-
+                function checkLength(o, n, min, max) {
+                    if (o.val().length > max || o.val().length < min) {
+                        o.addClass("ui-state-error");
+                        updateTips("Length of " + n + " must be between " +
+                                min + " and " + max + ".");
+                        return false;
+                    } else {
+                        return true;
+                    }
+                }
+                function checkRegexp(o, regexp, n) {
+                    if (!(regexp.test(o.val()))) {
+                        o.addClass("ui-state-error");
+                        updateTips(n);
+                        return false;
+                    } else {
+                        return true;
+                    }
+                }
                 $("#dialog-formPay").dialog({
                     autoOpen: false,
                     height: 300,
@@ -137,14 +140,22 @@
                     modal: true,
                     buttons: {
                         "Pay/Waiver Fines": function() {
-
-
-                            var waive = $("#waive").val();
-                            var waiveString = String(waive);
+                         var bValid = true;
+                    allFields.removeClass("ui-state-error");
+                    bValid = bValid && checkLength(waive, "Waive", 1, 3);
+                    bValid = bValid && checkLength(payment, "Payment", 1, 3);
+                    bValid = bValid && checkLength(Handled, "Handled By", 1, 4);
+                    
+                    bValid = bValid && checkRegexp(waive, /^([0-9])+$/, "You may only enter a number");
+                    bValid = bValid && checkRegexp(payment, /^([0-9])+$/, "You may only enter a number");
+                     bValid = bValid && checkRegexp(Handled, /^([0-9])+$/, "You may only enter a number");
+                    if(bValid){
+                            //This section transfers the values in entered in the dialog form to the modal confirmation dialog box, before opening the modal confirmation dialog box.
+                            var waiveString = String(waive.val());
                             waiveString = "Waive: $".concat(waiveString.toString());
-                            var payString = String($("#payment").val());
+                            var payString = String(payment.val());
                             payString = "Pay: $".concat(payString.toString());
-                            var handleString = String($("#Handled").val());
+                            var handleString = String(Handled.val());
                             handleString = "Handled By: ".concat(handleString.toString());
                             document.getElementById('waiveC').innerHTML = waiveString;
                             document.getElementById('payC').innerHTML = payString;
@@ -153,7 +164,7 @@
 
                             $("#dialog-formConfirm").dialog("open");
                             $(this).dialog("close");
-
+                            }
                         },
                         Cancel: function() {
                             $(this).dialog("close");
@@ -163,67 +174,93 @@
                         allFields.val("").removeClass("ui-state-error");
                     }
                 });
-                $("#payWaiverFines")
-                        .button()
-                        .click(function() {
-                            $("#dialog-formPay").dialog("open");
-                        });
-            });
-
-            $(function() {
-                $("#dialog-formConfirm").dialog({
+                 $(function() {
+                    $("#dialog-formConfirm").dialog({
                     autoOpen: false,
                     height: 300,
                     width: 350,
                     modal: true,
                     buttons: {
-                        "Ok": function() {
-                            $("form#FineConfirm").submit();
-                            $(this).dialog("close");
+                    "Ok": function() {
+                    $("form#FineConfirm").submit();
+                    $(this).dialog("close");
 
-                        },
-                        "Go Back": function() {
-                            $("#dialog-formPay").dialog("open");
-                            $(this).dialog("close");
-                        }
+                    },
+                    "Go Back": function() {
+                    $("#dialog-formPay").dialog("open");
+                    $(this).dialog("close");
+                    }
                     },
                     close: function() {
-                        allFields.val("").removeClass("ui-state-error");
+                    allFields.val("").removeClass("ui-state-error");
                     }
-                });
-                $("#payWaiverFines")
-                        .button()
-                        .click(function() {
-                            $("#dialog-formPay").dialog("open");
-                        });
-            });
-
-        //Dialog box for Editing Patrons
+                    });
+                    $("#payWaiverFines")
+                    .button()
+                    .click(function() {
+                    $("#dialog-formPay").dialog("open");
+                    });
+                    });
+                                });
+      
+            //edit patron
             $(function() {
-                var name = $("#name"),
-                        addr = $("#addr"),
-                        email = $("#email"),
-                        phone = $("#phone"),
-                        allFields = $([]).add(name).add(addr).add(email).add(phone),
-                        tips = $(".validateTips");
-                function updateTips(t) {
-                    tips
-                            .text(t)
-                            .addClass("ui-state-highlight");
-                    setTimeout(function() {
-                        tips.removeClass("ui-state-highlight", 1500);
-                    }, 500);
-                }
+               var name = $("#name"),
+                email = $("#email"),
+                address = $("#addr"),
+                phone = $("#phone");
+        allFields = $([]).add(name).add(email).add(address).add(phone).add(id),
+                tips = $(".validateTips");
+        function updateTips(t) {
+            tips
+                    .text(t)
+                    .addClass("ui-state-highlight");
+            setTimeout(function() {
+                tips.removeClass("ui-state-highlight", 1500);
+            }, 500);
+        }
+//This function checks the length of the string
+        function checkLength(o, n, min, max) {
+            if (o.val().length > max || o.val().length < min) {
+                o.addClass("ui-state-error");
+                updateTips("Length of " + n + " must be between " +
+                        min + " and " + max + ".");
+                return false;
+            } else {
+                return true;
+            }
+        }
+        function checkRegexp(o, regexp, n) {
+            if (!(regexp.test(o.val()))) {
+                o.addClass("ui-state-error");
+                updateTips(n);
+                return false;
+            } else {
+                return true;
+            }
+        }
+        $("#dialogEdit").dialog({
+            autoOpen: false,
+            height: 300,
+            width: 350,
+            modal: true,
+            buttons: {
+                "Create an account": function() {
 
-                $("#dialogEdit").dialog({
-                    autoOpen: false,
-                    height: 300,
-                    width: 350,
-                    modal: true,
-                    buttons: {
-                        "Commit": function() {
+                    var bValid = true;
+                    allFields.removeClass("ui-state-error");
+                    bValid = bValid && checkLength(name, "name", 1, 50);
+                    bValid = bValid && checkLength(email, "email", 1, 50);
+                    bValid = bValid && checkLength(address, "address", 1, 45);
+                    bValid = bValid && checkLength(phone, "phone", 7,7); 
+                   
+
+                    bValid = bValid && checkRegexp(email, /^((([a-z]|\d|[!#\$%&'\*\+\-\/=\?\^_`{\|}~]|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])+(\.([a-z]|\d|[!#\$%&'\*\+\-\/=\?\^_`{\|}~]|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])+)*)|((\x22)((((\x20|\x09)*(\x0d\x0a))?(\x20|\x09)+)?(([\x01-\x08\x0b\x0c\x0e-\x1f\x7f]|\x21|[\x23-\x5b]|[\x5d-\x7e]|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])|(\\([\x01-\x09\x0b\x0c\x0d-\x7f]|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF]))))*(((\x20|\x09)*(\x0d\x0a))?(\x20|\x09)+)?(\x22)))@((([a-z]|\d|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])|(([a-z]|\d|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])([a-z]|\d|-|\.|_|~|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])*([a-z]|\d|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])))\.)+(([a-z]|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])|(([a-z]|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])([a-z]|\d|-|\.|_|~|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])*([a-z]|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])))\.?$/i, "eg. ui@jquery.com");
+                    bValid = bValid && checkRegexp(phone, /^([0-9])+$/, "Phone number can only be in the form 2242918 or 224-2918 ");
+                    if (bValid) {
                             $("form#EditPatronForm").submit();
                             $(this).dialog("close");
+                    }
                         },
                         Cancel: function() {
                             $(this).dialog("close");
@@ -244,6 +281,8 @@
             $(function() {
                 $("#radio").buttonset();
             });
+            
+             
         </script>
     </head>
     <body>
@@ -253,8 +292,8 @@
 
         if (isset($_COOKIE["patronAccount"]))
             $pId = $_COOKIE["patronAccount"];
-        else
-            header("Location: App_Index.php");
+       else
+           header("Location: App_Index.php");
         ?>
         <div>
             <a href="App_Index.php"><button>Go Back</button></a>
@@ -263,7 +302,7 @@
         <!Edit patron Information dialog format>  
     <div id="dialogEdit" title="Edit Contact Information">
         <p class="validateTips">All form fields are required.</p>
-        <form id="EditPatronForm" action="updatePatron.php" method="post">
+        <form id="EditPatronForm" action="Processing/Patron/updatePatron.php" method="post">
             <fieldset>
                 <?php
                 $existingDate = mysql_query("select * From Patron Where pAccount='$pId'");
@@ -291,16 +330,50 @@
     <!Dialog box for renewing an item>   
     <div id="dialog-form1" title="Renew Item">
         <fieldset>
-            <form>
-                <div id="radio">
-                    <?php
-                    $oneWeek = date("y-m-d", strtotime("+7 days"));
-                    $twoWeeks = date("y-m-d", strtotime("+14 days"));
-                    $threeWeeks = date("y-m-d", strtotime("+21 days"));
-                    ?>
-                    <input type="radio" id="renewOneWeek" name="radio" value=<?php echo $oneWeek ?> ><label for="renewOneWeek">One Week</label>
-                    <input type="radio" id="renewTwoWeeks" name="radio" value=<?php echo $twoWeeks ?> ><label for="renewTwoWeeks">Two Weeks</label>
-                    <input type="radio" id="renewThreeWeeks" name="radio" value=<?php echo $threeWeeks ?>><label for="renewThreeWeeks">Three Weeks</label>
+            <form id="RenewItemForm" action="Processing/Patron/renewItem.php" method="post">
+                
+                <?php $query2 = mysql_query("Select * From Loan Inner Join Item On Loan.libraryCode=Item.libraryCode Where pAccount='$pId'"); ?>
+                 <table id="Fines" class="ui-widget ui-widget-content">
+                    <thead>
+                        <tr class="ui-widget-header ">
+                            <th>Item</th>
+                            <th>Date due</th>
+                            <th>Select</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <?php
+                        $query3 = mysql_query("Select * From Loan Inner Join Item On Loan.libraryCode=Item.libraryCode Where pAccount='$pId' and returned Is NULL");
+                        error_log(print_r($_REQUEST,true));
+
+if($query3){
+    echo "Success";
+    
+}
+else{
+    echo "Error in sending your user";
+      	echo "could not insert into Item table <br />";
+    	trigger_error(mysql_error(), E_USER_ERROR);
+}
+                        while ($row = mysql_fetch_assoc($query3)) {
+                            echo'<tr>';
+                            echo "<td>" . $row['title'] . "</td>";
+                            echo "<td>" . $row['dateDue'] . "</td>";
+                            echo "<td><input type='checkbox' value=" . $row['loanNum'] . " name='check[]'/></td>";
+                            echo '</tr>';
+                        }
+                        ?>
+                    </tbody>
+                </table>
+                <div id='radio'>
+                        <?php
+                        $oneweek=date("y-m-d", strtotime("+1 week"));
+                        $twoweeks=date("y-m-d", strtotime("+2 week"));
+                        $threeweeks=date("y-m-d", strtotime("+3 week"));
+                        ?>
+                        <input type="radio" id="radio1" name="radio" value=<?php echo $oneweek?>><label for="radio1">One Week</label>
+                        <input type="radio" id="radio2" name="radio" checked="checked" value=<?php echo $twoweeks?>><label for="radio2">Two weeks</label>
+                        <input type="radio" id="radio3" name="radio" value=<?php echo $threeweeks?>><label for="radio3">Three weeks</label>
                 </div>
             </form>
         </fieldset>
@@ -313,8 +386,8 @@
 
 
     <div id="dialog-formPay" title="Pay/Wavie Fines">
-        <p class="validateTips">All form fields are required.</p>
-        <form id="FineConfirm" action='PWFines.php' method="post">
+        
+        <form id="FineConfirm" action='Processing/Patron/PWFines.php' method="post">
             <fieldset>
                 <table id="Fines" class="ui-widget ui-widget-content">
                     <thead>
@@ -326,7 +399,7 @@
                     </thead>
                     <tbody>
                         <?php
-                        $query3 = mysql_query("Select * From Fine Inner Join Item On Fine.libraryCode=Item.libraryCode Where pAccount='$pId'");
+                        $query3 = mysql_query("Select * From Fine Inner Join Item On Fine.libraryCode=Item.libraryCode Where pAccount='$pId' and Not balance='0'");
                         while ($row = mysql_fetch_assoc($query3)) {
                             echo'<tr>';
                             echo "<td>" . $row['title'] . "</td>";
@@ -337,9 +410,9 @@
                         ?>
                     </tbody>
                 </table>
-
+                <p class="validateTips">All form fields are required.</p>
                 <label for="waive">Waive $</label>
-                <input type="number" name="waive" id="waive" class="text ui-widget-content ui-corner-all">
+                <input type="number" name="waive" id="waive" value="" class="text ui-widget-content ui-corner-all">
                 <label for="payment">Pay $</label>
                 <input type="number" name="payment" id="payment" value="" class="text ui-widget-content ui-corner-all">
                 <label for="Handled">Handled By</label>
@@ -413,23 +486,17 @@
                             <th>Stock Number</th>
                             <th>Date Loaned</th>
                             <th>Due Date</th>
-                            <th>Select</th>
+                           
                         </tr>
                     </thead>
                     <tbody>
                         <?php
                         while ($rows = mysql_fetch_assoc($query2)) {
-                            $info = array();
-                            $info[] = $rows['libraryCode'];
-                            $info[] = $rows['stocknum'];
-                            $info[] = $rows['dateLoaned'];
-                            $infoStr = implode(",", $info);
                             echo '<tr>';
                             echo "<td>" . $rows['title'] . "</td>";
                             echo "<td>" . $rows['stocknum'] . "</td>";
                             echo "<td>" . $rows['dateLoaned'] . "</td>";
                             echo "<td>" . $rows['dateDue'] . "</td>";
-                            echo "<td><input type='checkbox' value=$infoStr name='check[]'/></td>";
                             echo '</tr>';
                         }
                         ?>

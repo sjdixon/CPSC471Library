@@ -1,7 +1,7 @@
 <?php	
-	//addAudio.php - written by Gaby Comeau
-	//PHP script to add an audio item to the database
-	header("Location: App_Index.php",TRUE,303);	
+	//addBook.php - written by Gaby Comeau
+	//PHP script to add a book to the database
+	header("Location: ../App_Index.php",TRUE,303);	
 	$host = "localhost";
 	$user = "ubuntu";
 	$pass = "stephen123";				
@@ -11,26 +11,28 @@
 	//and now the real fun begins
 	$id = 0;
 	$dbd = mysql_query("SELECT MAX(i.libraryCode) AS lCode FROM ITEM i");
+	//echo "Query result: $dbd";
 	$current_id = mysql_fetch_row($dbd);
-	$id = $current_id[0]+ 1;
 	//echo "Current max item: $current_id[0]<br>";
+	$id = $current_id[0]+ 1;
 	
-	$title = $_POST['name1'];
-	$year = $_POST['spinner1'];
-	$location = $_POST['location1'];
-	$type = "Audio";
-	$genre = $_POST['genre1'];
-	$audience = $_POST['audience1'];
-	$UPC = $_POST['UPC'];
-	$artists = $_POST['artistName'];
-	$prodComp = $_POST['producerName'];
-	$ref = $_POST['isReference1'];
-	$copies = $_POST['copies1'];
-	echo "Is Reference: $ref";
+	$title = mysql_real_escape_string($_POST['name']);
+	$year = mysql_real_escape_string($_POST['spinner']);
+	$location = mysql_real_escape_string($_POST['location']);
+	$type = "Book";
+	$genre = mysql_real_escape_string($_POST['genre']);
+	$audience = mysql_real_escape_string($_POST['audience']);
+	$ISBN = mysql_real_escape_string($_POST['ISBN']);
+	$author = mysql_real_escape_string($_POST['authorName']);
+	$ref = mysql_real_escape_string($_POST['isReference']);
+	//echo "Is Reference: $ref";
 	if ($ref == "on"){
 		$ref = 1;
 	}
 	else $ref = 0;
+	$copies = mysql_real_escape_string($_POST['copies']);
+	//echo "#copies: $copies<br>";
+	
 					
 	$results = mysql_query("INSERT INTO Item VALUES ('$id','$type','$location','$title','$year','$ref','$genre','$audience')");
 	if(!$results){
@@ -38,12 +40,11 @@
     	trigger_error(mysql_error(), E_USER_ERROR);
     }
 
-	$results2 = mysql_query("INSERT INTO Audio (libraryCode, artists, productionCompany, UPC) VALUES ('$id', '$artists', '$prodComp', '$UPC')"); 
+	$results2 = mysql_query("INSERT INTO Book (authors, ISBN, libraryCode) VALUES ('$author', '$ISBN', '$id')"); 
 	if(!$results2){
-     	echo "could not insert into Audio table <br />";        
+     	echo "could not insert into Book table <br />";        
 		trigger_error(mysql_error(), E_USER_ERROR);
      }
-     
     for ($i = 1; $i <= $copies; $i++){ 	 
    		$results3 = mysql_query("INSERT INTO ITEM_INSTANCE VALUES ('$i', '$id', 'available')"); 
 		if(!$results3){
@@ -52,6 +53,6 @@
     	}
     }
 
-
+    //header("Location: App_Index.php");
         
 ?>

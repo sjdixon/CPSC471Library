@@ -17,49 +17,69 @@
             p {font-family: Verdana,Arial,sans-serif; color: #115B79}
             select {font-family: Verdana,Arial,sans-serif; color: #115B79}
         </style>
-
+        <script>
+            //Filters the table when a value is typed in.
+    $(document).ready(function() {
+        var $rows = $("#ItemsTable tbody>tr"), $cells = $rows.children();
+        $("#searchString").keyup(function() {
+            var term = $(this).val()
+            //If the something has been entered into the text box, It will first hide all the rows
+            //Then if the value inside of a cell in one of the rows matches the entered term then those rows are displayed
+            //If nothing has been entered all of the rows in the table are appear
+            if (term != "") {
+                $rows.hide();
+                $cells.filter(function() {
+                    return $(this).text().indexOf(term) > -1;
+                }).parent("tr").show();
+            } else {
+                $rows.show();
+            }
+        });
+    });
+        </script>
     </head>
+    
     <body>
     <a href="Login/Login.php">Login</a>
-    <p>Fill in the fields below to search the library catalogue</p>
-    
-    <select id="combobox" name="itemType">
-    	<option value="">Select Type</option>
-    	<option value="Book">Book</option>
-    	<option value="Audio">Audio</option>
-    	<option value="Video">Video</option>
-    	<option value="Newspaper">Newspaper</option>
-    	<option value="Magazine">Magazine</option>
-    </select>
+    <p>You can filter through our database by entering the title, genre, audience, year, or type of the item you wish to search for.</p>
+    <p>All entered values must be must exactly match what you are looking for or it will not appear.</p>
     <input  type="text" id="searchString" name="searchString" size = "50"/>
-    <select id="combobox1" name="searchType">
-    	<option value="">Select one...</option>
-    	<option value="Title">Title</option>
-    	<option value="year">Year</option>
-    	<option value="Genre">Genre</option>
-    	<option value="libraryId">Book Code</option>
-    </select>
-    <button type="button" id="Search" name="Search">Search</button>
-    <script type="text/javascript">
-    	$("#Search").click(function search(){
-    		var string = document.getElementById("searchString").value;
-    		var type = document.getElementById("combobox").value;
-    		var checkString = document.getElementById("combobox1").value;
-    		xmlreq = new XMLHttpRequest();
-    		xmlreq.onreadystatechange=function(){
-    			console.log(xmlreq.readyState);
-     			if (xmlreq.readyState==4 && xmlreq.status==200){
-       				document.getElementById("searchResults").innerHTML=xmlreq.responseText;
-     			}
-    		}
-    		xmlreq.open("GET","Processing/search.php?type="+type+"&string="+string+"&sType="+checkString,true);
-    		xmlreq.send();
-    		});	
-    	</script>	
+    <?php
+     $server = mysql_connect("localhost", "ubuntu", "stephen123");
+     $db = mysql_select_db("library", $server); 
+     $itemList=mysql_query("Select * From Item");
+    ?>
+    <form>
+        <table id="ItemsTable" class="ui-widget ui-widget-content">
+             <thead>
+                <tr id="row" class="ui-widget-header ">
+                    <th>Title</th>
+                    <th>Type</th>
+                    <th>Year</th>
+                    <th>Shelf Location</th>
+                    <th>Audience</th>
+                    <th>Genre</th>
+                    <th>Reference</th>
+                </tr>
+            </thead>
+            <tbody>
+                <?php
+                while($row=mysql_fetch_assoc($itemList)){
+                    if($row['isReference']==0){$ref='No';}
+                    else{$ref='Yes';}
+                    
+                    echo "<tr>";
+                    echo "<td>" . $row['title'] . "</td>";
+                    echo "<td>" .$row['itemType']. "</td>";
+                    echo "<td>" . $row['year'] . "</td>";
+                    echo "<td>" . $row['shelfLoc'] . "</td>";
+                    echo "<td>" . $row['audience'] . "</td>";
+                    echo "<td>" . $row['genre'] . "</td>";
+                    echo "<td>" . $ref . "</td>";
+                    echo "</tr>";
+                }
+                ?>
+            </tbody>
+        </table>
     </form>	
-    <div id="searchResults"></div>
-    
-    <script>
-    	$( "button" ).button();
-    </script> 
     </body>

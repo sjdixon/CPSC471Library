@@ -1,7 +1,7 @@
  <?php 
     $host = "localhost";
 	$user = "ubuntu";
-	$pass = "stephen123";				
+	$pass = "stephen123";			
 	mysql_connect($host, $user, $pass) or die("Could not connect: " . mysql_error());
 	mysql_select_db("library");
         
@@ -10,13 +10,11 @@
     $email=$_POST['email']; 
     $address=$_POST['address']; 
     $phone=$_POST['phone'];   
-    $u="SELECT COUNT(*) FROM PATRON WHERE pAccount='$id'";
-    $unique=mysql_query($u);
-    $uni=mysql_fetch_row($unique);
-    $unique=$uni[0]; 
-    if($unique!=0)
+    $u="SELECT * FROM PATRON WHERE pAccount='$id'";
+    $uni=mysql_fetch_row($u);
+    if($uni!=0)
     {
-    header("Location: PatronTab.php");
+    header("Location: ../../App_Index.php");
     exit();
     }
     else{
@@ -37,7 +35,7 @@ else{
 }
 
     
-   header("Location: App_Index.php");
+   header("Location: ../../App_Index.php");
    exit();
     }
     ?>

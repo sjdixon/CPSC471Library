@@ -74,7 +74,7 @@
                 <li> <a href="loanHold.php">Add Loans/Holds</a></li>
                 <li> <a href="librarian.php">Librarian</a></li>
                 <li> <a href="holdShelf.php">View Hold Shelf</a></li>
-                <li> <a id="returnBtn" href="holdShelf.php"> Returns </a></li>
+                <!--<li> <a id="returnBtn" href="holdShelf.php"> Returns </a></li>-->
             </ul>
             <div id="tabs-1">
             </div>
