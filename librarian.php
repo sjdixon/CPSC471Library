@@ -12,7 +12,9 @@ By: Stephen Dixon
             $(function() {
                 var name = $("#name"),
                         username = $("#username"),
-                        allFields = $([]).add(name).add(username),
+                        password =$("#password"),
+                        secondPassword=$("#cPassword"),
+                        allFields = $([]).add(name).add(username).add(password) .add(secondPassword),
                         tips = $(".validateTips");
                 function updateTips(t) {
                     tips
@@ -41,6 +43,17 @@ By: Stephen Dixon
                         return true;
                     }
                 }
+                function samePassword(p1, p2, n)
+                {
+                    if(p1.val()==p2.val())
+                        {
+                           return true; 
+                        }
+                        p1.addClass("ui-state-error");
+                        p2.addClass("ui-state-error");
+                        updateTips(n);
+                        return false;
+                }
                 $("#dialog-form").dialog({
                     autoOpen: false,
                     height: 300,
@@ -54,7 +67,7 @@ By: Stephen Dixon
                             bValid = bValid && checkLength(username, "username", 3, 16);
                             bValid = bValid && checkRegexp(username, /^[a-z]([0-9a-z_])+$/i, "Username may consist of a-z, 0-9, underscores, begin with a letter.");
                             // From jquery.validate.js (by joern), contributed by Scott Gonzalez: http://projects.scottsplayground.com/email_address_validation/
-
+                            bValid = bValid && samePassword(password, secondPassword, "The passwords are not the same");
 
                             if (bValid) {
                                 $("form#addLibrarianForm").submit();
@@ -124,6 +137,10 @@ By: Stephen Dixon
                     <input type="text" name="name" id="name" class="text ui-widget-content ui-corner-all">
                     <label for="username">Username</label>
                     <input type="text" name="username" id="username" class="text ui-widget-content ui-corner-all">
+                    <label for="password">Enter Password</label>
+                    <input type="password" name="password" id="password" class="text ui-widget-content ui-corner-all"/>
+                     <label for="cPassword">Confirm Password</label>
+                    <input type="password" name="cPassword" id="cPassword" class="text ui-widget-content ui-corner-all"/>
                 </fieldset>
             </form>
         </div>
