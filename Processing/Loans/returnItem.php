@@ -27,14 +27,14 @@ echo "$updateState <br/>";
 $isRelevant = "availDate is null and libraryCode=$libraryCode";
 $minDate = "Select min(dateHeld), timeToPickup from Hold as h2 where h2.availDate is null and h2.libraryCode=$libraryCode";
 $minDateResult = mysql_query($minDate);
-$row = mysql_fetch_row($minDateResult);
+if (mysql_num_rows($minDateResult) != 0) {
+    $row = mysql_fetch_row($minDateResult);
+    $updateHolds = "Update Hold set availDate=now(), stocknum=$stocknum, expiryDate=now() + interval $row[1] " .
+            "where $isRelevant and dateHeld='$row[0]'";
+    $result = mysql_query($updateHolds);
+    echo "$updateHolds <br/>";
+}
 
-$updateHolds = "Update Hold set availDate=now(), stocknum=$stocknum, expiryDate=now() + interval $row[1] ".
-        "where $isRelevant and dateHeld='$row[0]'";
-$result = mysql_query($updateHolds);
-echo "$updateHolds <br/>";
-
-//$updateExpirationDate = "Update Hold set expiryDate=now() + interval $row[1] where libraryCode=$libraryCode and expiryDate is null and availDate is not null";
-//$expiryDate = mysql_query($updateExpirationDate);
-//echo "$expiryDate <br/>";
+header("Location: ../../inventory.php");
+exit();
 ?>
