@@ -12,8 +12,9 @@ By: Stephen Dixon
             $(function() {
                 var name = $("#name"),
                         username = $("#username"),
-                        userpass = $("#password"),
-                        allFields = $([]).add(name).add(username).add(userpass),
+                        password = $("#password"),
+						repeat = $("#repeat"),
+                        allFields = $([]).add(name).add(username).add(password).add(repeat),
                         tips = $(".validateTips");
                 function updateTips(t) {
                     tips
@@ -42,6 +43,21 @@ By: Stephen Dixon
                         return true;
                     }
                 }
+                function checkSamePassword(p1, p2, n)
+                {
+                    if(p1.val()==p2.val())
+                        {
+                           return true; 
+                        }
+                        p1.addClass("ui-state-error");
+                        p2.addClass("ui-state-error");
+                        updateTips(n);
+                                setTimeout(function() {
+                                    p1.removeClass("ui-state-error", 1500);
+									p2.removeClass("ui-state-error", 1500)
+                                }, 500);
+                        return false;
+                }
                 $("#dialog-form").dialog({
                     autoOpen: false,
                     height: 300,
@@ -52,15 +68,13 @@ By: Stephen Dixon
                             var bValid = true;
                             allFields.removeClass("ui-state-error");
                             bValid = bValid && checkLength(name, "name", 3, 20);
-                            //bValid = bValid && checkRegexp(name, "^([A-Z][a-z]*((\s)))+[A-Z][a-z]*$", "Name must be of the form FirstName LastName and consist only of letters.");
-                            //bValid = bValid && checkLength(username, "username", 3, 16);
-                            //bValid = bValid && checkRegexp(username, /^[a-z]([0-9a-z_])+$/i, "Username may consist of a-z, 0-9, underscores, begin with a letter.");
+                            bValid = bValid && checkLength(username, "username", 3, 16);
+                            bValid = bValid && checkRegexp(username, /^[a-z]([0-9a-z_])+$/i, "Username may consist of a-z, 0-9, underscores, begin with a letter.");
                             // From jquery.validate.js (by joern), contributed by Scott Gonzalez: http://projects.scottsplayground.com/email_address_validation/
-
+                            bValid = bValid && checkSamePassword(password, repeat, "The passwords are not the same");
 
                             if (bValid) {
                                 $("form#addLibrarianForm").submit();
-
 
                                 // This would be useful if page didn't redirect
                                 $("#users tbody").append("<tr>" +
@@ -111,11 +125,11 @@ By: Stephen Dixon
                 });
 
 
-                var repeat = $("#cp-repeat"),
-                        password = $("#cp-password"),
-                        authPassword = $("#cp-AuthPassword"),
-                        username = $("#cp-Username");
-                var changeFields = $([]).add(repeat).add(password);
+                var cpRepeat = $("#cp-repeat"),
+                        cpPassword = $("#cp-password"),
+                        cpAuthPass = $("#cp-AuthPassword"),
+                        cpUsername = $("#cp-Username");
+                var changeFields = $([]).add(cpRepeat).add(cpPassword);
                 $("#changePassword").dialog({
                     autoOpen: false,
                     height: 600,
@@ -124,17 +138,9 @@ By: Stephen Dixon
                     buttons: {
                         "Change Password": function() {
                             changeFields.removeClass("ui-state-error");
-                            if (password.val() === repeat.val()) {
+                            if (checkSamePassword(cpPassword, cpRepeat,"Must have matching passwords") {
                                 $("form#changePasswordForm").submit();
                                 $(this).dialog("close");
-                            }
-                            else {
-                                alert("Password=" + password + " and Repeat=" + repeat);
-                                updateTips("Must have matching passwords");
-                                changeFields.addClass("ui-state-error");
-                                setTimeout(function() {
-                                    changeFields.removeClass("ui-state-error", 1500);
-                                }, 500);
                             }
                         },
                         Cancel: function() {
