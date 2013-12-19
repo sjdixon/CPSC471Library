@@ -13,13 +13,11 @@ By: Stephen Dixon
                 var name = $("#name"),
                         username = $("#username"),
                         password = $("#password"),
-						repeat = $("#repeat"),
+                        repeat = $("#repeat"),
                         allFields = $([]).add(name).add(username).add(password).add(repeat),
                         tips = $(".validateTips");
                 function updateTips(t) {
-                    tips
-                            .text(t)
-                            .addClass("ui-state-highlight");
+                    tips.text(t).addClass("ui-state-highlight");
                     setTimeout(function() {
                         tips.removeClass("ui-state-highlight", 1500);
                     }, 500);
@@ -43,20 +41,14 @@ By: Stephen Dixon
                         return true;
                     }
                 }
-                function checkSamePassword(p1, p2, n)
-                {
-                    if(p1.val()==p2.val())
-                        {
-                           return true; 
-                        }
-                        p1.addClass("ui-state-error");
-                        p2.addClass("ui-state-error");
-                        updateTips(n);
-                                setTimeout(function() {
-                                    p1.removeClass("ui-state-error", 1500);
-									p2.removeClass("ui-state-error", 1500)
-                                }, 500);
-                        return false;
+                function checkSamePassword(p1, p2, n) {
+                    if (p1.val() === p2.val()) {
+                        return true;
+                    }
+                    p1.addClass("ui-state-error");
+                    p2.addClass("ui-state-error");
+                    updateTips(n);
+                    return false;
                 }
                 $("#dialog-form").dialog({
                     autoOpen: false,
@@ -89,17 +81,15 @@ By: Stephen Dixon
                         },
                         Cancel: function() {
                             $(this).dialog("close");
+                        },
+                        Close: function() {
+                            allFields.val("").removeClass("ui-state-error");
                         }
-                    },
-                    close: function() {
-                        allFields.val("").removeClass("ui-state-error");
                     }
                 });
-                $("#create-user")
-                        .button()
-                        .click(function() {
-                            $("#dialog-form").dialog("open");
-                        });
+                $("#create-user").button().click(function() {
+                    $("#dialog-form").dialog("open");
+                });
                 $("#terminate-user-form").dialog({
                     autoOpen: false,
                     height: 600,
@@ -123,13 +113,8 @@ By: Stephen Dixon
                 $("#terminate-user").button().click(function() {
                     $("#terminate-user-form").dialog("open");
                 });
-
-
                 var cpRepeat = $("#cp-repeat"),
-                        cpPassword = $("#cp-password"),
-                        cpAuthPass = $("#cp-AuthPassword"),
-                        cpUsername = $("#cp-Username");
-                var changeFields = $([]).add(cpRepeat).add(cpPassword);
+                        cpPassword = $("#cp-password");
                 $("#changePassword").dialog({
                     autoOpen: false,
                     height: 600,
@@ -137,8 +122,9 @@ By: Stephen Dixon
                     modal: true,
                     buttons: {
                         "Change Password": function() {
-                            changeFields.removeClass("ui-state-error");
-                            if (checkSamePassword(cpPassword, cpRepeat,"Must have matching passwords") {
+                            cpRepeat.removeClass("ui-state-error");
+                            cpPassword.removeClass("ui-state-error");
+                            if (checkSamePassword(cpPassword, cpRepeat, "Must have matching passwords") {
                                 $("form#changePasswordForm").submit();
                                 $(this).dialog("close");
                             }
@@ -178,6 +164,7 @@ By: Stephen Dixon
                 </fieldset>
             </form>
         </div>
+
         <div id="terminate-user-form" title="Remove User">
             <form id="termLibrarians" action="Processing/Librarian/terminateLibrarian.php" method="post">
                 <table id="termCands" class="ui-widget ui-widget-content">
@@ -242,7 +229,7 @@ By: Stephen Dixon
 
         <div id="changePassword" class="ui-widget">
             <h1> Change Password</h1>
-            <p class="validateTips">All form fields are required.<br/> You may either use your password or admin password to update.</p>
+            <p class="validateTips"> All form fields are required.</p>
             <form id="changePasswordForm" action="Processing/Librarian/changePassword.php" method="post">
                 <fieldset>
                     <label for="cp-Username">Username</label>
@@ -255,8 +242,8 @@ By: Stephen Dixon
                     <input type="password" name="repeat" id="cp-repeat" class="text ui-widget-content ui-corner-all"> <br/>
                 </fieldset>
             </form>
-
         </div>
+
         <button  id="create-user">Create</button>
         <button id="terminate-user">Remove</button>
         <button id="changePasswordBtn">Modify Passwords</button>
