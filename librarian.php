@@ -124,7 +124,8 @@ By: Stephen Dixon
                         "Change Password": function() {
                             cpRepeat.removeClass("ui-state-error");
                             cpPassword.removeClass("ui-state-error");
-                            if (checkSamePassword(cpPassword, cpRepeat, "Must have matching passwords") {
+                            var valid = checkSamePassword(cpPassword, cpRepeat, "Must have matching passwords");
+                            if (valid) {
                                 $("form#changePasswordForm").submit();
                                 $(this).dialog("close");
                             }
