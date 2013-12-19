@@ -1,4 +1,9 @@
 <?php
+
+/**
+ * Created by Stephen Dixon
+ */
+
 mysql_connect("localhost", "ubuntu", "stephen123") or die("Could not connect: " . mysql_error());
 mysql_select_db("library");
 echo "Connected to library <br/>";
@@ -18,8 +23,7 @@ foreach ($_POST as $k=>$v) {
     echo "Current value of $k: $v<br/>";
 }
 
-
-header("Location: ../../App_Index.php");
+header("Location: ../../librarian.php");
 exit();
 
 ?>

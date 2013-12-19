@@ -19,6 +19,6 @@ foreach ($_POST as $k=>$v) {
     echo "Current value of $k: $v<br/>";
 }
 
-header("Location: ../../App_Index.php");
+header("Location: ../../librarian.php");
 exit();
 ?>

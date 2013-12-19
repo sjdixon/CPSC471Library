@@ -88,7 +88,7 @@ By: Stephen Dixon
                     width: 630,
                     modal: true,
                     buttons: {
-                        "Delete Permanently" : function() {
+                        "Delete Permanently": function() {
                             $("form#termLibrarians").attr("action", "Processing/Librarian/removeLibrarian.php");
                             $("form#termLibrarians").submit();
                             $(this).dialog("close");
@@ -135,18 +135,20 @@ By: Stephen Dixon
                             <th>id</th>
                             <th>Name</th>
                             <th>Start Date</th>
+                            <th>End Date</th>
                             <th>Username</th>
-                            <th>Delete?</th>
+                            <th>Select</th>
                         </tr>
                     </thead>
                     <tbody>
                         <?php
-                        $query = mysql_query("select id, name, startDate, username from Librarian where endDate is NULL");
+                        $query = mysql_query("select * from Librarian");
                         while ($row = mysql_fetch_array($query)) {
                             echo "<tr>";
                             echo "<td>" . $row['id'] . "</td>";
                             echo "<td>" . $row['name'] . "</td>";
                             echo "<td>" . $row['startDate'] . "</td>";
+                            echo "<td>" . $row['endDate'] . "</td>";
                             echo "<td>" . $row['username'] . "</td>";
                             $checkboxId = "checkbox" . $row[id];
                             echo "<td><input type='checkbox' class='chcktbl' name='$checkboxId' /></td>";
@@ -163,19 +165,23 @@ By: Stephen Dixon
             <table id="users" class="ui-widget ui-widget-content">
                 <thead>
                     <tr class="ui-widget-header ">
-                        <th>Name</th>
+                        <th>id</th>
+                        <th>Name</th> 
                         <th>Start Date</th>
+                        <th>End Date</th>
                         <th>Username</th>
                     </tr>
                 </thead>
                 <tbody>
                     <?php
-                    $query = mysql_query("select * from Librarian where endDate is NULL");
+                    $query = mysql_query("select * from Librarian");
                     while ($row = mysql_fetch_array($query)) {
                         echo "<tr>";
-                        echo "<td>" . $row[name] . "</td>";
-                        echo "<td>" . $row[startDate] . "</td>";
-                        echo "<td>" . $row[username] . "</td>";
+                        echo "<td>" . $row['id'] . "</td>";
+                        echo "<td>" . $row['name'] . "</td>";
+                        echo "<td>" . $row['startDate'] . "</td>";
+                        echo "<td>" . $row['endDate'] . "</td>";
+                        echo "<td>" . $row['username'] . "</td>";
                         echo "</tr>";
                     }
                     ?>
