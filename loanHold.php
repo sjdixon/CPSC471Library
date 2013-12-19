@@ -102,9 +102,11 @@ By: Stephen Dixon
                 <div class="ui-widget">
                     <select id="patronIdType" name="patronIdType">
                         <option value="pAccount">Library Account Number</option>
+                        <!--
                         <option value="name">Patron Name</option>
                         <option value="phone">Phone Number</option>
                         <option value="email">Phone Number</option>
+                        -->
                     </select>
                     <label for="patronId" > : </label>
                     <input type="text" id="patronId" name="patronId">
@@ -112,7 +114,9 @@ By: Stephen Dixon
                 <div class="ui-widget">
                     <select id="itemCodeType" name="itemCodeType">
                         <option value="libraryCode">Library Code</option>
+                        <!--
                         <option value="title">Title</option>
+                        -->
                     </select>
                     <label for="itemCode"> : </label>
                     <input id="itemCode" name="itemCode"> 
@@ -134,7 +138,7 @@ By: Stephen Dixon
                         <option value="2 week">Two Weeks</option>
                         <option value="3 week">Three Weeks</option>
                         <option value="1 day">One Day</option>
-                        <option value="3 day">Three Day</option>
+                        <option value="3 day">Three Days</option>
                     </select>
                 </div>
                 <br/>
