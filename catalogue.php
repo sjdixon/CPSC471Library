@@ -35,7 +35,8 @@
                 return true;
             }
         }
-        $("#dialog-form").dialog({
+        
+        $("#loanholdDialog").dialog({
             autoOpen: false,
             height: 450,
             width: 400,
@@ -67,7 +68,9 @@
                                 bValid = bValid && checkLength(stock, "Stock", 1, 4);
                                 bValid = bValid && checkRegexp(stock, /^([0-9])+$/, "The stock field must be a number");
                                 bValid = bValid && checkLength(dueDate, "Due Date", 10, 10);
-                                bValid = bValid && checkRegexp(dueDate, /^([0-9]|\d|[-])+$/, "The date must be in the form yyyy-mm-dd");
+                                bValid = bValid && checkRegexp(dueDate, /^[0-9]{4}-[0-9]{2}-[0-9]{2}$/, "The date must be in the format yyyy-mm-dd");
+                                //bValid = bValid && checkdate(dueDate, "Incorrect format/date");
+                                
                             }
                     if (bValid) {
                         $("form#operationForm").submit();
@@ -88,7 +91,7 @@
         var itemId=$(this).val();
         $("input[name='itemCode']").val(itemId);
         $('#codeLabel').html("Library Code: "+itemId);
-        $("#dialog-form").dialog("open");
+        $("#loanholdDialog").dialog("open");
         });
             
                  
@@ -149,7 +152,7 @@
     </head>
     
     <body>
-        <div id="dialog-form" title="Add a New Patron">
+        <div id="loanholdDialog" title="Add Loan/Hold">
         <p class="validateTips">All form fields are required.</p> 
         <form id="operationForm" method="post" action="Processing/Loans/process.php">
 
