@@ -23,7 +23,7 @@ else{
 
   
        }
-         header("Location: ../PatronInformation.php");
+         header("Location: ../../PatronInformation.php");
         exit();
         
 ?>

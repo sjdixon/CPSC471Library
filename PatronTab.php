@@ -146,14 +146,14 @@
 
 <body>   
     <div id="dialog-confirm" title="Delete Patrons">
-        <form id='rPatron' action='removePatron.php' method='post'>
+        <form id='rPatron' action='Processing/Patron/removePatron.php' method='post'>
             <p>These Patrons will be permanently deleted</p>
         </form>
     </div>
 
     <div id="dialog-form" title="Add a New Patron">
         <p class="validateTips">All form fields are required.</p> 
-        <form id="nPatron" name='nPatron' action='Patron/NewPatron.php' method='post' >
+        <form id="nPatron" name='nPatron' action='Processing/Patron/NewPatron.php' method='post' >
             <fieldset>
                 <label for=pid">Account Number</label>
                 <input type="number" name="pid" id="pid" class="text ui-widget-content ui-corner-all"><br>

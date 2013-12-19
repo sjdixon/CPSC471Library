@@ -14,7 +14,7 @@
     $uni=mysql_fetch_row($u);
     if($uni!=0)
     {
-    header("Location: PatronTab.php");
+    header("Location: ../../App_Index.php");
     exit();
     }
     else{
@@ -35,7 +35,7 @@ else{
 }
 
     
-   header("Location: ../App_Index.php");
+   header("Location: ../../App_Index.php");
    exit();
     }
     ?>

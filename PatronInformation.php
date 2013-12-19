@@ -252,11 +252,11 @@
                     bValid = bValid && checkLength(name, "name", 1, 50);
                     bValid = bValid && checkLength(email, "email", 1, 50);
                     bValid = bValid && checkLength(address, "address", 1, 45);
-                    bValid = bValid && checkLength(phone, "phone", 7, 15);
+                    bValid = bValid && checkLength(phone, "phone", 7,7); 
                    
 
                     bValid = bValid && checkRegexp(email, /^((([a-z]|\d|[!#\$%&'\*\+\-\/=\?\^_`{\|}~]|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])+(\.([a-z]|\d|[!#\$%&'\*\+\-\/=\?\^_`{\|}~]|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])+)*)|((\x22)((((\x20|\x09)*(\x0d\x0a))?(\x20|\x09)+)?(([\x01-\x08\x0b\x0c\x0e-\x1f\x7f]|\x21|[\x23-\x5b]|[\x5d-\x7e]|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])|(\\([\x01-\x09\x0b\x0c\x0d-\x7f]|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF]))))*(((\x20|\x09)*(\x0d\x0a))?(\x20|\x09)+)?(\x22)))@((([a-z]|\d|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])|(([a-z]|\d|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])([a-z]|\d|-|\.|_|~|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])*([a-z]|\d|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])))\.)+(([a-z]|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])|(([a-z]|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])([a-z]|\d|-|\.|_|~|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])*([a-z]|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])))\.?$/i, "eg. ui@jquery.com");
-                    bValid = bValid && checkRegexp(phone, /^([0-9]|\d|[-])+$/, "Phone number can only be in the form 2242918 or 224-2918 ");
+                    bValid = bValid && checkRegexp(phone, /^([0-9])+$/, "Phone number can only be in the form 2242918 or 224-2918 ");
                     if (bValid) {
                             $("form#EditPatronForm").submit();
                             $(this).dialog("close");
@@ -302,7 +302,7 @@
         <!Edit patron Information dialog format>  
     <div id="dialogEdit" title="Edit Contact Information">
         <p class="validateTips">All form fields are required.</p>
-        <form id="EditPatronForm" action="Patron/updatePatron.php" method="post">
+        <form id="EditPatronForm" action="Processing/Patron/updatePatron.php" method="post">
             <fieldset>
                 <?php
                 $existingDate = mysql_query("select * From Patron Where pAccount='$pId'");
@@ -330,7 +330,7 @@
     <!Dialog box for renewing an item>   
     <div id="dialog-form1" title="Renew Item">
         <fieldset>
-            <form id="RenewItemForm" action="Patron/renewItem.php" method="post">
+            <form id="RenewItemForm" action="Processing/Patron/renewItem.php" method="post">
                 
                 <?php $query2 = mysql_query("Select * From Loan Inner Join Item On Loan.libraryCode=Item.libraryCode Where pAccount='$pId'"); ?>
                  <table id="Fines" class="ui-widget ui-widget-content">
@@ -387,7 +387,7 @@ else{
 
     <div id="dialog-formPay" title="Pay/Wavie Fines">
         
-        <form id="FineConfirm" action='Patron/PWFines.php' method="post">
+        <form id="FineConfirm" action='Processing/Patron/PWFines.php' method="post">
             <fieldset>
                 <table id="Fines" class="ui-widget ui-widget-content">
                     <thead>

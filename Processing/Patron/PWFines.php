@@ -19,14 +19,17 @@
             { $bal=0;}
             
             mysql_query("Update Fine Set balance='$bal' Where fineNo='$fineNo'");
-
-            $lId=$_POST['Handled'];
+            
+            $lUser=$_POST['Handled'];
+            $libraryId=  mysql_query("Select id from Librarian Where username='$lUser'");
+            
             $date=date('Y-m-d');
-            mysql_query("Insert Into Fine_Updated_By Values(fineNo='$fineNo', libId='$lId', dateUpdated=$date");
+            while($lId=mysql_fetch_assoc($libraryId)){
+                $id=$lId['id'];
+                mysql_query("Insert Into Fine_Updated_By Values(fineNo='$fineNo', id='$id', dateUpdated=$date");
+                
+            }
             
         }}
-        
-       
-        
+        header("Location: ../../PatronInformation.php");
 ?> 
-       

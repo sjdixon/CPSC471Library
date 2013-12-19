@@ -23,5 +23,5 @@ else{
     	trigger_error(mysql_error(), E_USER_ERROR);
 }
 
-    header("Location: ../PatronInformation.php");
+    header("Location: ../../PatronInformation.php");
 ?> 

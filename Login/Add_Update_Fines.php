@@ -4,8 +4,9 @@
  */
        $server = mysql_connect("localhost", "ubuntu", "stephen123");
        $db = mysql_select_db("library", $server);
-       $bookList= mysql_query("Select * From Hold Where expiryDate = CURDATE()");
-     
+       $bookList= mysql_query("Select * From Hold Where expiryDate < CURDATE() And pickupDate is NULL");
+      
+       
         while($row=mysql_fetch_assoc($bookList)){
               $accountNo = $row['pAccount'];
               $itemCode = $row['libraryCode'];
@@ -27,8 +28,8 @@
               
         }
         //checks for overdue loans
-        $loanlist = mysql_query("Select * FROM Loan Where dateDue < CURDATE()");
-        
+        $loanlist = mysql_query("Select * FROM Loan Where dateDue < CURDATE() and returned is NULL");
+    
         while ($row = mysql_fetch_array($loanlist)) {
             
              $accountNo = $row['pAccount'];
