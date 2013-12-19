@@ -1,1 +1,1 @@
-ALTER TABLE Librarian ADD password Varchar(45) NOT NULL; 
+ALTER TABLE Librarian add password Varchar(255) NOT NULL; 

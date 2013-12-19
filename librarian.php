@@ -12,7 +12,8 @@ By: Stephen Dixon
             $(function() {
                 var name = $("#name"),
                         username = $("#username"),
-                        allFields = $([]).add(name).add(username),
+                        userpass = $("#password"),
+                        allFields = $([]).add(name).add(username).add(userpass),
                         tips = $(".validateTips");
                 function updateTips(t) {
                     tips
@@ -51,16 +52,19 @@ By: Stephen Dixon
                             var bValid = true;
                             allFields.removeClass("ui-state-error");
                             bValid = bValid && checkLength(name, "name", 3, 20);
-                            bValid = bValid && checkLength(username, "username", 3, 16);
-                            bValid = bValid && checkRegexp(username, /^[a-z]([0-9a-z_])+$/i, "Username may consist of a-z, 0-9, underscores, begin with a letter.");
+                            //bValid = bValid && checkRegexp(name, "^([A-Z][a-z]*((\s)))+[A-Z][a-z]*$", "Name must be of the form FirstName LastName and consist only of letters.");
+                            //bValid = bValid && checkLength(username, "username", 3, 16);
+                            //bValid = bValid && checkRegexp(username, /^[a-z]([0-9a-z_])+$/i, "Username may consist of a-z, 0-9, underscores, begin with a letter.");
                             // From jquery.validate.js (by joern), contributed by Scott Gonzalez: http://projects.scottsplayground.com/email_address_validation/
 
 
                             if (bValid) {
                                 $("form#addLibrarianForm").submit();
 
+
                                 // This would be useful if page didn't redirect
                                 $("#users tbody").append("<tr>" +
+                                        "<td>" + id + "</td>" +
                                         "<td>" + name.val() + "</td>" +
                                         "<td>" + $.datepicker.formatDate('yy-mm-dd', new Date())
                                         + "</td>" +
@@ -105,6 +109,42 @@ By: Stephen Dixon
                 $("#terminate-user").button().click(function() {
                     $("#terminate-user-form").dialog("open");
                 });
+
+
+                var repeat = $("#cp-repeat"),
+                        password = $("#cp-password"),
+                        authPassword = $("#cp-AuthPassword"),
+                        username = $("#cp-Username");
+                var changeFields = $([]).add(repeat).add(password);
+                $("#changePassword").dialog({
+                    autoOpen: false,
+                    height: 600,
+                    width: 630,
+                    modal: true,
+                    buttons: {
+                        "Change Password": function() {
+                            changeFields.removeClass("ui-state-error");
+                            if (password.val() === repeat.val()) {
+                                $("form#changePasswordForm").submit();
+                                $(this).dialog("close");
+                            }
+                            else {
+                                alert("Password=" + password + " and Repeat=" + repeat);
+                                updateTips("Must have matching passwords");
+                                changeFields.addClass("ui-state-error");
+                                setTimeout(function() {
+                                    changeFields.removeClass("ui-state-error", 1500);
+                                }, 500);
+                            }
+                        },
+                        Cancel: function() {
+                            $(this).dialog("close");
+                        }
+                    }
+                });
+                $("#changePasswordBtn").button().click(function() {
+                    $("#changePassword").dialog("open");
+                });
             });
         </script>
     </head>
@@ -124,6 +164,11 @@ By: Stephen Dixon
                     <input type="text" name="name" id="name" class="text ui-widget-content ui-corner-all">
                     <label for="username">Username</label>
                     <input type="text" name="username" id="username" class="text ui-widget-content ui-corner-all">
+                    <label for="password">Password</label>
+                    <input type="password" name="password" id="password" class="text ui-widget-content ui-corner-all">
+                    <label for="repeat">Repeat Password</label>
+                    <input type="password" name="repeat" id="repeat" class="text ui-widget-content ui-corner-all">
+
                 </fieldset>
             </form>
         </div>
@@ -188,7 +233,26 @@ By: Stephen Dixon
                 </tbody>
             </table>
         </div>
+
+        <div id="changePassword" class="ui-widget">
+            <h1> Change Password</h1>
+            <p class="validateTips">All form fields are required.<br/> You may either use your password or admin password to update.</p>
+            <form id="changePasswordForm" action="Processing/Librarian/changePassword.php" method="post">
+                <fieldset>
+                    <label for="cp-Username">Username</label>
+                    <input type="text" name="username" id="cp-Username" class="text ui-widget-content ui-corner-all"> <br/>
+                    <label for="cp-AuthPassword">Old/Admin Password</label>
+                    <input type="password" name="authPass" id="cp-AuthPassword" class="text ui-widget-content ui-corner-all"> <br/>
+                    <label for="cp-password">New Password</label>
+                    <input type="password" name="password" id="cp-password" class="text ui-widget-content ui-corner-all"> <br/>
+                    <label for="cp-repeat">Repeat New Password</label>
+                    <input type="password" name="repeat" id="cp-repeat" class="text ui-widget-content ui-corner-all"> <br/>
+                </fieldset>
+            </form>
+
+        </div>
         <button  id="create-user">Create</button>
         <button id="terminate-user">Remove</button>
+        <button id="changePasswordBtn">Modify Passwords</button>
     </body>
 </html>
