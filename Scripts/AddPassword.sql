@@ -1,0 +1,1 @@
+ALTER TABLE librarian ADD password Varchar(45) NOT NULL; 

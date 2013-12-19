@@ -13,13 +13,10 @@
           if($username===$user && $password===$pass){
           $count=1;}
           
-           $verify=mysql_query("Select * From Librarian Where username='$username'");
+           $verify=mysql_query("Select * From Librarian Where username='$username' And password='$password'");
            while(mysql_fetch_assoc($verify))
            {
-               if($password==='ubuntu')
-               {
-                   $count=1;
-               }
+              $count=1;
            }
 	if ($count == 1) {
             echo "Login Successfull";
