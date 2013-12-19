@@ -1,7 +1,7 @@
 <?php	
-	//addVideo.php - written by Gaby Comeau
-	//PHP script to add a video item to the database
-	header("Location: App_Index.php",TRUE,303);	
+	//addNewspaper.php - written by Gaby Comeau
+	//PHP script to add a newspaper to the database
+	header("Location: ../App_Index.php",TRUE,303);	
 	$host = "localhost";
 	$user = "ubuntu";
 	$pass = "stephen123";				
@@ -15,22 +15,23 @@
 	$id = $current_id[0]+ 1;
 	echo "Current max item: $current_id[0]<br>";
 	
-	$title = $_POST['name2'];
-	$year = $_POST['spinner2'];
-	$location = $_POST['location2'];
-	$type = "Video";
-	$genre = $_POST['genre2'];
-	$audience = $_POST['audience2'];
-	$UPC = $_POST['UPC2'];
-	$director = $_POST['director'];
-	$prodComp = $_POST['producerName2'];
-	$ref = $_POST['isReference2'];
+	$title = mysql_real_escape_string($_POST['name4']);
+	$year = mysql_real_escape_string($_POST['spinner4']);
+	$location = mysql_real_escape_string($_POST['location4']);
+	$type = "Newspaper";
+	$genre = mysql_real_escape_string($_POST['genre4']);
+	$audience = mysql_real_escape_string($_POST['audience4']);
+	$date = $_POST['datepicker'];
+	$datestr = explode("/", $date);
+	$issue = "$datestr[2]-$datestr[0]-$datestr[1]";
+	$pub = mysql_real_escape_string($_POST['pubName3']);
+	$ref = mysql_real_escape_string($_POST['isReference4']);
 	echo "Is Reference: $ref";
 	if ($ref == "on"){
 		$ref = 1;
 	}
 	else $ref = 0;
-	$copies = $_POST['copies2'];
+	$copies = $_POST['copies4'];
 					
 	$results = mysql_query("INSERT INTO Item VALUES ('$id','$type','$location','$title','$year','$ref','$genre','$audience')");
 	if(!$results){
@@ -38,9 +39,9 @@
     	trigger_error(mysql_error(), E_USER_ERROR);
     }
 
-	$results2 = mysql_query("INSERT INTO Video (libraryCode, UPC, directory, productionCompany) VALUES ('$id', '$UPC', '$director', '$prodComp')"); 
+	$results2 = mysql_query("INSERT INTO Newspaper (issue, libraryCode, publisher) VALUES (CONVERT('$issue', DATE), '$id', '$pub')"); 
 	if(!$results2){
-     	echo "could not insert into Audio table <br />";        
+     	echo "could not insert into Magazine table <br />";        
 		trigger_error(mysql_error(), E_USER_ERROR);
      }
      

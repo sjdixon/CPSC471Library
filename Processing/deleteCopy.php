@@ -8,8 +8,8 @@
 	mysql_connect($host, $user, $pass) or die("Could not connect: " . mysql_error());
 	mysql_select_db("library");	
 	
-	$item = $_POST['lCode2'];
-	$copy = $_POST['stockNum2'];
+	$item = mysql_real_escape_string($_POST['lCode2']);
+	$copy = mysql_real_escape_string($_POST['stockNum2']);
 	if ($copy == '') $item = -1; //this will cause the query to fail, so you don't delete every instance of an item if you forget the stock number
 	echo "Item: $item";
 	

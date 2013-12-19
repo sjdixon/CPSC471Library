@@ -1,7 +1,7 @@
 <?php	
 	//addMagazine.php - written by Gaby Comeau
 	//PHP script to add a magazine to the database
-	header("Location: App_Index.php",TRUE,303);	
+	header("Location: ../App_Index.php",TRUE,303);	
 	$host = "localhost";
 	$user = "ubuntu";
 	$pass = "stephen123";				
@@ -15,20 +15,20 @@
 	$id = $current_id[0]+ 1;
 	//echo "Current max item: $current_id[0]<br>";
 	
-	$title = $_POST['name3'];
-	$year = $_POST['spinner3'];
-	$location = $_POST['location3'];
+	$title = mysql_real_escape_string($_POST['name3']);
+	$year = mysql_real_escape_string($_POST['spinner3']);
+	$location = mysql_real_escape_string($_POST['location3']);
 	$type = "Magazine";
-	$genre = $_POST['genre3'];
-	$audience = $_POST['audience3'];
+	$genre = mysql_real_escape_string($_POST['genre3'];
+	$audience = mysql_real_escape_string($_POST['audience3']);
 	$date = $_POST['datepicker1'];
-	$ref = $_POST['isReference3'];
+	$ref = mysql_real_escape_string($_POST['isReference3']);
 	echo "Is Reference: $ref";
 	if ($ref == "on"){
 		$ref = 1;
 	}
 	else $ref = 0;
-	$copies = $_POST['copies3'];
+	$copies = mysql_real_escape_string($_POST['copies3']);
 
 	//echo "Date: $date<br>";
 	$datestr = explode("/", $date);
