@@ -1,9 +1,24 @@
 <?php	
+	session_start();
+        // If the user is not logged then the user will be set to the main page
+        if (isset($_SESSION['loggedIn']) && isset($_SESSION['username'])) {
+          if($_SESSION["loggedIn"] !=1)
+          {
+              header("Location: MainPage.php");
+          }
+        }
+        else{
+            header("Location: MainPage.php");
+        }
+	
 	//getItem.php - written by Gaby Comeau
 	//PHP script to find the information of an item to modify
 	
-	include '../Headers/dbConnect.php';
-	
+	$host = "localhost";
+	$user = "ubuntu";
+	$pass = "stephen123";				
+	mysql_connect($host, $user, $pass) or die("Could not connect: " . mysql_error());
+	mysql_select_db("library");	
 	$id = intval(mysql_real_escape_string($_GET['libID']));
 	$result = mysql_query("SELECT * FROM Item WHERE libraryCode='$id'");
 	$row = mysql_fetch_array($result);
@@ -62,10 +77,10 @@
 	echo "<label for=\"copies5\">Number of copies: </label>";
 	echo "<input id=\"copies5\" name=\"copies5\" value=\"$row1[0]\" /><br><br>";
 	if ($row[5] == 1){
-		echo "<input type=\"checkbox\" id=\"check\" name=\"isReference5\" checked><label for=\"check\">Check for Reference Item</label><br><br>";
+		echo "<input type=\"checkbox\" id=\"check5\" name=\"isReference5\" checked><label for=\"check5\">Check for Reference Item</label><br><br>";
 	}	
 	else{
-		echo "<input type=\"checkbox\" id=\"check\" name=\"isReference5\"><label for=\"check\">Check for Reference Item</label><br><br>";
+		echo "<input type=\"checkbox\" id=\"check5\" name=\"isReference5\"><label for=\"check5\">Check for Reference Item</label><br><br>";
 	}
 		
 	if($type == "Book"){

@@ -1,3 +1,16 @@
+<?php session_start();
+        // If the user is not logged then the user will be set to the main page
+        if (isset($_SESSION['loggedIn']) && isset($_SESSION['username'])) {
+          if($_SESSION["loggedIn"] !=1)
+          {
+              header("Location: MainPage.php");
+          }
+        }
+        else{
+            header("Location: MainPage.php");
+        }
+?>
+
 <script type="text/javascript">
     $(function() {
         var patronId = $("#patronId"),
@@ -201,7 +214,7 @@
     </div>
       
     <div>   
-    <a href="Login/Logout.php">Logout</a>
+    <a href="MainPage.php">Logout</a>
     <p>You can filter through our database by entering the title, genre, audience, year, or type of the item you wish to search for.</p>
     <p>All entered values must be must exactly match what you are looking for or it will not appear.</p>
     <input  type="text" id="searchString" name="searchString" size = "50"/>

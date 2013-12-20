@@ -1,5 +1,17 @@
 <!--<?php //include "App_Index.php"?>-->
 
+<?php session_start();
+        // If the user is not logged then the user will be set to the main page
+        if (isset($_SESSION['loggedIn']) && isset($_SESSION['username'])) {
+          if($_SESSION["loggedIn"] !=1)
+          {
+              header("Location: MainPage.php");
+          }
+        }
+        else{
+            header("Location: MainPage.php");
+        }
+?>
 <!--Script to generate main page and dialog pages to add and modify items in the library
 // Gaby Comeau, Nov. 21, 2013
 // Quick note that this function inherits Javascript and CSS libraries from App_Index.php-->	
@@ -393,9 +405,7 @@
 					xmlhttp.onreadystatechange=function(){
   						if (xmlhttp.readyState==4 && xmlhttp.status==200){
     							document.getElementById("modify").innerHTML=xmlhttp.responseText;
-    							var e = jQuery.Event( "click" );
 								// trigger an artificial click event
-								jQuery( "#modify" ).trigger( e );
     							$("#modify").click(function initNewElements(){
     								$( "#spinner6" ).spinner({
 										min: 1700,
@@ -420,9 +430,10 @@
   		 								event.preventDefault();
 									});
 									$(function() {
-										$( "#isReference5" ).button();
+										$( "#check5" ).button();
 									});
     						});
+    						$("#modify").trigger("click");
     					}
   					}
 					xmlhttp.open("GET","Processing/getItem.php?libID="+id,true);

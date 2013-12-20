@@ -1,4 +1,16 @@
 <?php
+	session_start();
+        // If the user is not logged then the user will be set to the main page
+        if (isset($_SESSION['loggedIn']) && isset($_SESSION['username'])) {
+          if($_SESSION["loggedIn"] !=1)
+          {
+              header("Location: MainPage.php");
+          }
+        }
+        else{
+            header("Location: MainPage.php");
+        }
+	
 	//search.php - written by Gaby Comeau
 	//Function to implement the search results div
 	include '../Headers/dbConnect.php';
