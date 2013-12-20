@@ -11,14 +11,14 @@ By: Stephen Dixon
         <script>
             $(function() {
 
-                $("#dialog-confirm").dialog({
+                $("#dialog-operationConfirm").dialog({
                     autoOpen: false,
                     height: 300,
                     width: 350,
                     modal: true,
                     buttons: {
                         Create: function() {
-                            $("form#operationForm").submit();
+                            $("form#operationForm2").submit();
                             $(this).dialog("close");
                         },
                         Close: function() {
@@ -29,28 +29,12 @@ By: Stephen Dixon
                 $("#submitBtn")
                         .button()
                         .click(function() {
-                            $("#dialog-confirm").dialog("open");
+                            $("#dialog-operationConfirm").dialog("open");
                         });
 
-                $("#dialog-return").dialog({
-                    autoOpen: false,
-                    height: 300,
-                    width: 350,
-                    modal: true,
-                    buttons: {
-                        Create: function() {
-                            $("form#returnForm").submit();
-                            $(this).dialog("close");
-                        },
-                        Cancel: function() {
-                            $(this).dialog("close");
-                        }
-                    }
-                });
-                
-                
+
                 $("#radio").buttonset();
-                $("#dueDate").datepicker({ dateFormat: 'yy-mm-dd' });
+                $("#dueDate").datepicker({dateFormat: 'yy-mm-dd'});
 
                 $(".radioSelect").each(function() {
                     showSpecificFields(this);
@@ -62,19 +46,19 @@ By: Stephen Dixon
                 function showSpecificFields(obj) {
                     if ($(obj).is(":checked")) {
                         var radioVal = $(obj).attr('id');
-                        if(radioVal==="loan"){
-                            $(".loanOnly").each(function(){
+                        if (radioVal === "loan") {
+                            $(".loanOnly").each(function() {
                                 $(this).show();
                             });
-                            $(".holdOnly").each(function(){
+                            $(".holdOnly").each(function() {
                                 $(this).hide();
                             });
                         }
-                        else if(radioVal==="hold"){
-                            $(".loanOnly").each(function(){
+                        else if (radioVal === "hold") {
+                            $(".loanOnly").each(function() {
                                 $(this).hide();
                             });
-                            $(".holdOnly").each(function(){
+                            $(".holdOnly").each(function() {
                                 $(this).show();
                             });
                         }
@@ -92,21 +76,16 @@ By: Stephen Dixon
         <br/>
 
 
-        <div id="operation" name="Dialog" class="ui-widget">
-            <form id="operationForm" method="post" action="Processing/Loans/process.php">
+        <div id="operation2" name="Dialog" class="ui-widget">
+            <form id="operationForm2" method="post" action="Processing/Loans/process.php">
 
-                <div id="radio" class="ui-widget">
+                <div id="loanHoldRadio" class="ui-widget">
                     <input type="radio" id="loan" name="radio" checked="checked" class="radioSelect" value="loan"><label for="loan">Loan </label>
                     <input type="radio" id="hold" name="radio" class="radioSelect" value="hold"><label for="hold">Hold</label>
                 </div><br/>
                 <div class="ui-widget">
                     <select id="patronIdType" name="patronIdType">
                         <option value="pAccount">Library Account Number</option>
-                        <!--
-                        <option value="name">Patron Name</option>
-                        <option value="phone">Phone Number</option>
-                        <option value="email">Phone Number</option>
-                        -->
                     </select>
                     <label for="patronId" > : </label>
                     <input type="text" id="patronId" name="patronId">
@@ -114,17 +93,12 @@ By: Stephen Dixon
                 <div class="ui-widget">
                     <select id="itemCodeType" name="itemCodeType">
                         <option value="libraryCode">Library Code</option>
-                        <!--
-                        <option value="title">Title</option>
-                        -->
                     </select>
                     <label for="itemCode"> : </label>
                     <input id="itemCode" name="itemCode"> 
                     <label for="stock" class="loanOnly"> Stock# </label>
                     <input id="stock" name="stock" class="loanOnly" type="text">
-                </div> 
-                
-                <br/>
+                </div> <br/>
 
                 <div id="date" class="ui-widget loanOnly">
                     <label for="dueDate">Due Date: </label>
@@ -147,7 +121,7 @@ By: Stephen Dixon
         </div>
 
 
-        <div id="dialog-confirm" title="Are you sure?">
+        <div id="dialog-operationConfirm" title="Are you sure?">
             <p class="loanOnly">
                 <span class="ui-icon ui-icon-alert" style="float:left; margin:0 7px 20px 0;"></span>
                 Are you sure you want to make a <strong>loan</strong> with that info?
@@ -158,7 +132,7 @@ By: Stephen Dixon
                 Are you sure you want to make a <strong>hold</strong> with that info?  
             </p>
         </div>
-        
+
 
         <button  id="submitBtn">
             <p class="loanOnly" name="loan">Create Loan</p>
