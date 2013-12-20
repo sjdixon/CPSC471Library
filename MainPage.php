@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+<?php <!DOCTYPE html>
 if (isset($_SESSION['loggedIn'])) {
           session_destroy();
 	}
