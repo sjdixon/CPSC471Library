@@ -15,7 +15,6 @@ if ($uni > 0) {
     print( '<a href="../../App_Index.php">Go back</a>');
 } else {
     //Creates the expire date
-    $expireDate = date('Y-m-d', strtotime("+365 day"));
     $q = "INSERT INTO Patron values ('$id', curdate(), curdate() + interval 1 year ,false, '$name', '$address', '$phone', '$email')";
     $result = mysql_query($q);
     error_log(print_r($_REQUEST, true));

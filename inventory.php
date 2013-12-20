@@ -1,16 +1,8 @@
-<!--<?php //include "App_Index.php"?>-->
-
 <?php session_start();
         // If the user is not logged then the user will be set to the main page
-        if (isset($_SESSION['loggedIn']) && isset($_SESSION['username'])) {
-          if($_SESSION["loggedIn"] !=1)
-          {
-              header("Location: MainPage.php");
-          }
-        }
-        else{
-            header("Location: MainPage.php");
-        }
+        include 'Headers/checkAuth.php';
+        include 'Headers/dbConnect.php';
+        
 ?>
 <!--Script to generate main page and dialog pages to add and modify items in the library
 // Gaby Comeau, Nov. 21, 2013
