@@ -2,6 +2,7 @@
 <?php
 // Created by Rhianne Hadfield
 // Modified by Stephen Dixon
+
 // Create connection
 $host = "localhost";
 $user = "ubuntu";
@@ -33,11 +34,16 @@ if (!empty($_POST['username']) && !empty($_POST['password'])) {
         $_SESSION['username'] = $username;
         $_SESSION['loggedIn'] = 1;
         echo "Success!";
-        header('Location: ../App_Index.php'); //<-- comment it to see debug info
+        header('Location: Add_Update_Fines.php'); //<-- comment it to see debug info
     } else {
         echo "Not successful.";
         header("Location: loginInvalidInput.php");
     }
+else {
+	echo "Not successful.";
+	header("Location: loginInvalidInput.php");
+}
+
 }
 exit();
 ?>
