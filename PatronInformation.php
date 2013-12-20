@@ -303,6 +303,7 @@
     <body>
         <?php
         include './Headers/dbConnect.php';
+        include './Headers/checkAuth.php';
 
         if (isset($_COOKIE["patronAccount"]))
             $pId = $_COOKIE["patronAccount"];
@@ -459,11 +460,13 @@ else{
                 <table id="pInformation" class="ui-widget ui-widget-content">
                     <thead>
                         <tr class="ui-widget-header ">
-<?php $query = mysql_query("Select name, address, email, phone From Patron Where pAccount='$pId'"); ?>
+<?php $query = mysql_query("Select * From Patron Where pAccount='$pId'"); ?>
                             <th>Name</th>
                             <th>Address</th>
                             <th>Email</th>
                             <th>Phone</th>
+                            <th>Member Since</th>
+                            <th>Expires </th>
                         </tr>
                     </thead>
                     <tbody>
@@ -476,6 +479,8 @@ else{
                                 echo "<td>" . $row['address'] . "</td>";
                                 echo "<td>" . $row['email'] . "</td>";
                                 echo "<td>" . $row['phone'] . "</td>";
+                                echo "<td>" . $row['membershipStartDate'] . "</td>";
+                                echo "<td>" . $row['membershipExpiryDate'] . "</td>";
                                 echo '</tr>';
                             }
                             ?>
