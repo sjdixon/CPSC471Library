@@ -2,6 +2,20 @@
 /*
  * Page Created by Rhianne Hadfield
  */
+ // Start up your PHP Session 
+        
+	session_start();
+	// If the user is not logged then the user will be set to 
+	if (isset($_SESSION['loggedIn']) && isset($_SESSION['username'])) {
+          if($_SESSION["loggedIn"] !=1)
+          {
+              header("Location: MainPage.php"); 
+          }
+	}
+        else{
+            header("Location: MainPage.php"); 
+        }
+ 
        include '../../Headers/dbConnect.php';
        $bookList= mysql_query("Select * From Hold Where expiryDate < CURDATE() And pickupDate is NULL");
       
