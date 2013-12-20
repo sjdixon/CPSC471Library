@@ -418,7 +418,7 @@
   		 								event.preventDefault();
 									});
 									$(function() {
-										$( "#isReference5" ).button();
+										$( "#check5" ).button();
 									});
     						});
     						$("#modify").trigger("click");
