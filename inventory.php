@@ -1,4 +1,4 @@
-<?php session_start();
+<?php 
         // If the user is not logged then the user will be set to the main page
         include 'Headers/checkAuth.php';
         include 'Headers/dbConnect.php';
