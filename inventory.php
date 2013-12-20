@@ -393,9 +393,7 @@
 					xmlhttp.onreadystatechange=function(){
   						if (xmlhttp.readyState==4 && xmlhttp.status==200){
     							document.getElementById("modify").innerHTML=xmlhttp.responseText;
-    							var e = jQuery.Event( "click" );
 								// trigger an artificial click event
-								jQuery( "#modify" ).trigger( e );
     							$("#modify").click(function initNewElements(){
     								$( "#spinner6" ).spinner({
 										min: 1700,
@@ -423,6 +421,7 @@
 										$( "#isReference5" ).button();
 									});
     						});
+    						$("#modify").trigger("click");
     					}
   					}
 					xmlhttp.open("GET","Processing/getItem.php?libID="+id,true);
