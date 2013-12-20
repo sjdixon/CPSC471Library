@@ -16,7 +16,7 @@
             header("Location: MainPage.php"); 
         }
  
-       include '../../Headers/dbConnect.php';
+       include '../Headers/dbConnect.php';
        $bookList= mysql_query("Select * From Hold Where expiryDate < CURDATE() And pickupDate is NULL");
       
        
