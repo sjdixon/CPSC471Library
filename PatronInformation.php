@@ -497,7 +497,7 @@ else{
         <div>
             <h1>Loans:</h1>
             <div id="Info_table">
-<?php $query2 = mysql_query("Select * From Loan Inner Join Item On Loan.libraryCode=Item.libraryCode Where pAccount='$pId'"); ?>
+<?php $query2 = mysql_query("Select * From Loan Inner Join Item On Loan.libraryCode=Item.libraryCode Where pAccount='$pId' and returned is NULL"); ?>
                 <table id="loans" class="ui-widget ui-widget-content">
                     <thead>
                         <tr class="ui-widget-header ">
@@ -530,7 +530,7 @@ else{
             <div>
                 <h1>Holds:</h1>
                 <div id="Info_table">
-<?php $query = mysql_query("Select * From Hold Inner Join Item On Hold.libraryCode=Item.libraryCode Where pAccount='$pId'"); ?>
+<?php $query = mysql_query("Select * From Hold Inner Join Item On Hold.libraryCode=Item.libraryCode Where pAccount='$pId' and pickupDate is NULL"); ?>
                     <table id="Holds" class="ui-widget ui-widget-content">
                         <thead>
                             <tr class="ui-widget-header ">

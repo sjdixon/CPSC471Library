@@ -33,6 +33,6 @@ if (mysql_num_rows($minDateResult) != 0) {
     echo "$updateHolds <br/>";
 }
 
-header("Location: ../../inventory.php");
+header("Location: ../../App_Index.php");
 exit();
 ?>
