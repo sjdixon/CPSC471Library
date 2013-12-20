@@ -302,8 +302,7 @@
     </head>
     <body>
         <?php
-        $server = mysql_connect("localhost", "ubuntu", "stephen123");
-        $db = mysql_select_db("library", $server);
+        include '../../Headers/dbConnect.php';
 
         if (isset($_COOKIE["patronAccount"]))
             $pId = $_COOKIE["patronAccount"];

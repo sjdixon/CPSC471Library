@@ -1,4 +1,5 @@
 <!DOCTYPE html>
+<?php
 if (isset($_SESSION['loggedIn'])) {
           session_destroy();
 	}
@@ -86,3 +87,4 @@ if (isset($_SESSION['loggedIn'])) {
         </table>
     </form>	
     </body>
+</html>
