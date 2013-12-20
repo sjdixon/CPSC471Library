@@ -39,11 +39,10 @@ if (!empty($_POST['username']) && !empty($_POST['password'])) {
         echo "Not successful.";
         header("Location: loginInvalidInput.php");
     }
+}
 else {
 	echo "Not successful.";
 	header("Location: loginInvalidInput.php");
-}
-
 }
 exit();
 ?>
