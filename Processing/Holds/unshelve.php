@@ -29,7 +29,7 @@ foreach ($_POST as $k=>$v) {
     echo "Current value of $k: $v<br/>";
 }
 
-header("Location: ../../holdShelf.php");
+header("Location: ../../App_Index.php");
 exit();
 
 ?>
