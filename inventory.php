@@ -41,7 +41,6 @@
 	});
 </script>
 
-	//new book form
 	<div id="dialog" title="Add New Book">
 		<form id="bookForm" action="Processing/addBook.php" method="post">
 			<!--Add new item information in the form below:-->
@@ -75,7 +74,7 @@
 		</form>
 		<script>
 		$( "#spinner" ).spinner({
-			min: 1900,
+			min: 1700,
 			max: 2100,
 			step: 1
 		}).bind("keydown", function (event) {
@@ -130,7 +129,7 @@
 		?>
 		<script>
 		$( "#spinner2" ).spinner({
-			min: 1900,
+			min: 1700,
 			max: 2100,
 			step: 1
 		}).bind("keydown", function (event) {
@@ -186,7 +185,7 @@
 		?>
 		<script>
 		$( "#spinner3" ).spinner({
-			min: 1900,
+			min: 1700,
 			max: 2100,
 			step: 1
 		}).bind("keydown", function (event) {
@@ -241,7 +240,7 @@
 		?>
 		<script>
 		$( "#spinner4" ).spinner({
-			min: 1900,
+			min: 1700,
 			max: 2100,
 			step: 1
 		}).bind("keydown", function (event) {
@@ -251,6 +250,8 @@
 			$( "#datepicker1" ).datepicker({
 				changeMonth: true,
 				changeYear: true
+			}).bind("keydown", function (event) {
+    		event.preventDefault();
 			});
 		});
 		$( "#copies3" ).spinner({
@@ -300,7 +301,7 @@
 		?>
 		<script>
 		$( "#spinner5" ).spinner({
-			min: 1900,
+			min: 1700,
 			max: 2100,
 			step: 1
 		}).bind("keydown", function (event) {
@@ -310,6 +311,8 @@
 			$( "#datepicker" ).datepicker({
 				changeMonth: true,
 				changeYear: true
+			}).bind("keydown", function (event) {
+    		event.preventDefault();
 			});
 		});
 		$( "#copies4" ).spinner({
@@ -369,25 +372,57 @@
 	
 	//modify item
 	echo "<div id=\"dialog10\" title=\"Modify\">";
-		echo "<form id = \"modify\" action=\"Processing/modifyItem.php\" method=\"post\">";
+		echo "<form id = \"modify\" name = \"modify\" action=\"Processing/modifyItem.php\" method=\"post\">";
 			echo "<!--Modify info in the form below:-->";
 			echo "<label for=\"lCode4\">Library Code: </label>";
 			echo "<input type =\"text\" name=\"lCode4\" id=\"lCode4\" class=\"text ui-widget-content ui-corner-all\" /><br><br>";
 			echo "<button type=\"button\" id=\"getItem\" name=\"getItem\">Get Item Info</button>";
+			echo "</form>";
 			//Fun with Ajax goes here!
 			?>
 			<script type="text/javascript">
+			
 			$("#getItem").click(function getItem(){
 				var id = document.getElementById("lCode4").value;
 				if (id =="") {
   					alert("You must enter an id!");
-  					//Set select back to Select Type
+  					
   				}
   				else {
  					xmlhttp=new XMLHttpRequest();
 					xmlhttp.onreadystatechange=function(){
   						if (xmlhttp.readyState==4 && xmlhttp.status==200){
     							document.getElementById("modify").innerHTML=xmlhttp.responseText;
+    							var e = jQuery.Event( "click" );
+								// trigger an artificial click event
+								jQuery( "#modify" ).trigger( e );
+    							$("#modify").click(function initNewElements(){
+    								$( "#spinner6" ).spinner({
+										min: 1700,
+										max: 2100,
+										step: 1
+									}).bind("keydown", function (event) {
+    									event.preventDefault();
+									});
+									$(function() {
+										$( "#datepicker2" ).datepicker({
+											changeMonth: true,
+											changeYear: true
+										}).bind("keydown", function (event) {
+ 			   							event.preventDefault();
+										});
+									});
+									$( "#copies5" ).spinner({
+										min: 1,
+										max: 500,
+										step: 1
+									}).bind("keydown", function (event) {
+  		 								event.preventDefault();
+									});
+									$(function() {
+										$( "#isReference5" ).button();
+									});
+    						});
     					}
   					}
 					xmlhttp.open("GET","Processing/getItem.php?libID="+id,true);
@@ -396,7 +431,7 @@
 			});	
 			</script>
 		<?php 	
-		echo "</form>";
+		
 	echo "</div>";
 	?>
 	<div id="return" title="Return Loaned Item" class="ui-widget">
