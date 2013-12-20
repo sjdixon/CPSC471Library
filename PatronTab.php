@@ -179,8 +179,7 @@
         <?php
         setcookie("patronAccount", "", time() - 3600);
 
-        $server = mysql_connect("localhost", "ubuntu", "stephen123");
-        $db = mysql_select_db("library", $server);
+        include '../../Headers/dbConnect.php';
         
               
         $query1 = mysql_query("select * from Patron");
