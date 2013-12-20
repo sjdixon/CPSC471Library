@@ -2,11 +2,8 @@
 	//getItem.php - written by Gaby Comeau
 	//PHP script to find the information of an item to modify
 	
-	$host = "localhost";
-	$user = "ubuntu";
-	$pass = "stephen123";				
-	mysql_connect($host, $user, $pass) or die("Could not connect: " . mysql_error());
-	mysql_select_db("library");	
+	include '../../Headers/dbConnect.php';
+	
 	$id = intval(mysql_real_escape_string($_GET['libID']));
 	$result = mysql_query("SELECT * FROM Item WHERE libraryCode='$id'");
 	$row = mysql_fetch_array($result);

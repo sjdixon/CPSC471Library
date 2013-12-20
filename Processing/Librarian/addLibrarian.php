@@ -1,7 +1,6 @@
 <?php
 
-mysql_connect("localhost", "ubuntu", "stephen123") or die("Could not connect: " . mysql_error());
-mysql_select_db("library");
+include '../../Headers/dbConnect.php';
 
 $name = mysql_real_escape_string($_POST['name']);
 $username = mysql_real_escape_string($_POST['username']);

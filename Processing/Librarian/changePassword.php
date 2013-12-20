@@ -3,8 +3,7 @@
 /**
  * Created by Stephen Dixon
  */
-mysql_connect("localhost", "ubuntu", "stephen123") or die("Could not connect: " . mysqli_error());
-mysql_select_db("library");
+include '../../Headers/dbConnect.php';
 
 // Info
 $username = mysql_real_escape_string($_POST['username']);

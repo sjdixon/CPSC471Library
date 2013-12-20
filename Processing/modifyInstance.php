@@ -3,11 +3,8 @@
 	//Form handler for the modify instance form
 	
 	header("Location: ../App_Index.php",TRUE,303);	
-	$host = "localhost";
-	$user = "ubuntu";
-	$pass = "stephen123";				
-	mysql_connect($host, $user, $pass) or die("Could not connect: " . mysql_error());
-	mysql_select_db("library");	
+	include '../../Headers/dbConnect.php';
+		
 	
 	$item = mysql_real_escape_string($_POST['lCode1']);
 	$copy = mysql_real_escape_string($_POST['stockNum1']);

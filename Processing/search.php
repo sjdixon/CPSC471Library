@@ -1,11 +1,8 @@
 <?php
 	//search.php - written by Gaby Comeau
 	//Function to implement the search results div
-	$host = "localhost";
-	$user = "ubuntu";
-	$pass = "stephen123";				
-	mysql_connect($host, $user, $pass) or die("Could not connect: " . mysql_error());
-	mysql_select_db("library");	
+	include '../../Headers/dbConnect.php';
+	
 	$type = mysql_real_escape_string($_GET['type']);
 	$string = mysql_real_escape_string($_GET['string']);
 	$sType = mysql_real_escape_string($_GET['sType']);
