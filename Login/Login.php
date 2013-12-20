@@ -21,7 +21,7 @@
                 <button type="submit" id="submit">Login</button>
             </form>
             <br>
-        <button onclick="location.href='../MainPage.php'">Go Back</button>
+            <button onclick="location.href = '../MainPage.php'">Go Back</button>
         </div>
     </body>
 </html>
