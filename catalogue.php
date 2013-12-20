@@ -97,7 +97,7 @@
                  
                     
     $("#radio").buttonset();
-                $("#dueDate").datepicker({ dateFormat: 'yy-mm-dd' });
+               $("#dueDate").datepicker({minDate: 0, maxDate: "+3W", dateFormat: 'yy-mm-dd'});
 
                 $(".radioSelect").each(function() {
                     showSpecificFields(this);
