@@ -3,7 +3,7 @@
 	//PHP script to add a video item to the database
 	header("Location: ../App_Index.php",TRUE,303);	
 	
-        include '../../Headers/dbConnect.php';	
+        include '../Headers/dbConnect.php';
 	
 	//and now the real fun begins
 	$id = 0;

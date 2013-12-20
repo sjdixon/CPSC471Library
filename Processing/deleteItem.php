@@ -1,12 +1,8 @@
 <?php	
 	//deleteItem.php - written by Gaby Comeau
 	//PHP script to delete an item from the database
-	header("Location: ../App_Index.php",TRUE,303);	
-	$host = "localhost";
-	$user = "ubuntu";
-	$pass = "stephen123";				
-	mysql_connect($host, $user, $pass) or die("Could not connect: " . mysql_error());
-	mysql_select_db("library");	
+	header("Location: ../App_Index.php",TRUE,303);
+        include '../Headers/dbConnect.php';
 	
 	$item = mysql_real_escape_string($_POST['lCode3']);
 	//echo "Item code: $item<br>";

@@ -2,7 +2,7 @@
 	//modifyItem.php - lets the library user modify an item in the database
 	//Added by Gaby Comeau
 	header("Location: ../App_Index.php",TRUE,303);	
-	include '../../Headers/dbConnect.php';
+	include '../Headers/dbConnect.php';
 		
 	
 	$id = $_POST['id'];

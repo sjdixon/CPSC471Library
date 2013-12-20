@@ -1,7 +1,7 @@
 <?php
 	//search.php - written by Gaby Comeau
 	//Function to implement the search results div
-	include '../../Headers/dbConnect.php';
+	include '../Headers/dbConnect.php';
 	
 	$type = mysql_real_escape_string($_GET['type']);
 	$string = mysql_real_escape_string($_GET['string']);

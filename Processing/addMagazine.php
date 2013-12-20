@@ -2,8 +2,8 @@
 	//addMagazine.php - written by Gaby Comeau
 	//PHP script to add a magazine to the database
 	header("Location: ../App_Index.php",TRUE,303);	
-        include '../../Headers/dbConnect.php';
-	
+        include '../Headers/dbConnect.php';
+        
 	//and now the real fun begins
 	$id = 0;
 	$dbd = mysql_query("SELECT MAX(i.libraryCode) AS lCode FROM ITEM i");

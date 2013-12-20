@@ -2,7 +2,7 @@
 	//deleteCopy.php - written by Gaby Comeau
 	//PHP script to delete an item instance from the database
 	header("Location: ../App_Index.php",TRUE,303);	
-        include '../../Headers/dbConnect.php';
+        include '../Headers/dbConnect.php';
 	
 	$item = mysql_real_escape_string($_POST['lCode2']);
 	$copy = mysql_real_escape_string($_POST['stockNum2']);

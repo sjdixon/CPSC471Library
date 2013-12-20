@@ -2,7 +2,7 @@
 	//getItem.php - written by Gaby Comeau
 	//PHP script to find the information of an item to modify
 	
-	include '../../Headers/dbConnect.php';
+	include '../Headers/dbConnect.php';
 	
 	$id = intval(mysql_real_escape_string($_GET['libID']));
 	$result = mysql_query("SELECT * FROM Item WHERE libraryCode='$id'");

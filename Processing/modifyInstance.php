@@ -3,7 +3,7 @@
 	//Form handler for the modify instance form
 	
 	header("Location: ../App_Index.php",TRUE,303);	
-	include '../../Headers/dbConnect.php';
+	include '../Headers/dbConnect.php';
 		
 	
 	$item = mysql_real_escape_string($_POST['lCode1']);
