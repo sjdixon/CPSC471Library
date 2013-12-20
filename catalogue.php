@@ -201,13 +201,12 @@
     </div>
       
     <div>   
-    <a href="Login/Login.php">Login</a>
+    <a href="Login/Logout.php">Logout</a>
     <p>You can filter through our database by entering the title, genre, audience, year, or type of the item you wish to search for.</p>
     <p>All entered values must be must exactly match what you are looking for or it will not appear.</p>
     <input  type="text" id="searchString" name="searchString" size = "50"/>
     <?php
-     $server = mysql_connect("localhost", "ubuntu", "stephen123");
-     $db = mysql_select_db("library", $server); 
+     include 'Headers/dbConnect.php';
      $itemList=mysql_query("Select * From Item");
     ?>
         <table id="ItemsTable" class="ui-widget ui-widget-content">

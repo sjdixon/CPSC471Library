@@ -2,8 +2,7 @@
 /*
  * Page Created by Rhianne Hadfield
  */
-       $server = mysql_connect("localhost", "ubuntu", "stephen123");
-       $db = mysql_select_db("library", $server);
+       include '../../Headers/dbConnect.php';
        $bookList= mysql_query("Select * From Hold Where expiryDate < CURDATE() And pickupDate is NULL");
       
        

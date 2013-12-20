@@ -4,8 +4,7 @@
  * Created by Stephen Dixon
  */
 
-mysql_connect("localhost", "ubuntu", "stephen123") or die("Could not connect: " . mysql_error());
-mysql_select_db("library");
+include '../../Headers/dbConnect.php';
 
 // extract the index number
 foreach ($_POST as $k=>$v) {
@@ -30,7 +29,7 @@ foreach ($_POST as $k=>$v) {
     echo "Current value of $k: $v<br/>";
 }
 
-header("Location: ../../holdShelf.php");
+header("Location: ../../App_Index.php");
 exit();
 
 ?>

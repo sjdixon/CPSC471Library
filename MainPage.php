@@ -1,4 +1,8 @@
-<!DOCTYPE html>
+<?php <!DOCTYPE html>
+if (isset($_SESSION['loggedIn'])) {
+          session_destroy();
+	}
+?>
 <html>
     <head>
         <!--Main page of our web application. Contains the tab framework and script files needed for the rest of the app-->
@@ -45,8 +49,7 @@
     <p>All entered values must be must exactly match what you are looking for or it will not appear.</p>
     <input  type="text" id="searchString" name="searchString" size = "50"/>
     <?php
-     $server = mysql_connect("localhost", "ubuntu", "stephen123");
-     $db = mysql_select_db("library", $server); 
+     include '../../Headers/dbConnect.php';
      $itemList=mysql_query("Select * From Item");
     ?>
     <form>

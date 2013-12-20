@@ -2,12 +2,8 @@
 	//addMagazine.php - written by Gaby Comeau
 	//PHP script to add a magazine to the database
 	header("Location: ../App_Index.php",TRUE,303);	
-	$host = "localhost";
-	$user = "ubuntu";
-	$pass = "stephen123";				
-	mysql_connect($host, $user, $pass) or die("Could not connect: " . mysql_error());
-	mysql_select_db("library");	
-	
+        include '../Headers/dbConnect.php';
+        
 	//and now the real fun begins
 	$id = 0;
 	$dbd = mysql_query("SELECT MAX(i.libraryCode) AS lCode FROM ITEM i");
@@ -19,7 +15,7 @@
 	$year = mysql_real_escape_string($_POST['spinner3']);
 	$location = mysql_real_escape_string($_POST['location3']);
 	$type = "Magazine";
-	$genre = mysql_real_escape_string($_POST['genre3'];
+	$genre = mysql_real_escape_string($_POST['genre3']);
 	$audience = mysql_real_escape_string($_POST['audience3']);
 	$date = $_POST['datepicker1'];
 	$ref = mysql_real_escape_string($_POST['isReference3']);

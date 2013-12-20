@@ -1,12 +1,8 @@
 <?php	
 	//addAudio.php - written by Gaby Comeau
 	//PHP script to add an audio item to the database
-	//header("Location: ../App_Index.php",TRUE,303);	
-	$host = "localhost";
-	$user = "ubuntu";
-	$pass = "stephen123";				
-	mysql_connect($host, $user, $pass) or die("Could not connect: " . mysql_error());
-	mysql_select_db("library");	
+	//header("Location: ../App_Index.php",TRUE,303);
+        include '../Headers/dbConnect.php';
 	
 	//and now the real fun begins
 	$id = 0;

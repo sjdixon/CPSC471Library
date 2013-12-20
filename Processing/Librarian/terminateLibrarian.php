@@ -1,6 +1,5 @@
 <?php
-mysql_connect("localhost", "ubuntu", "stephen123") or die("Could not connect: " . mysql_error());
-mysql_select_db("library");
+include '../../Headers/dbConnect.php';
 echo "Connected to library <br/>";
 //$query = mysql_query("select * from Librarian where endDate is NULL") or die("Could not query");
 

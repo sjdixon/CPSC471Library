@@ -4,9 +4,7 @@
  * Created by Stephen Dixon
  */
 
-mysql_connect("localhost", "ubuntu", "stephen123") or die("Could not connect: " . mysql_error());
-mysql_select_db("library");
-echo "Connected to library <br/>";
+include '../../Headers/dbConnect.php';
 
 // extract the index number
 foreach ($_POST as $k=>$v) {

@@ -1,14 +1,15 @@
 <?php
 
-mysql_connect("localhost", "ubuntu", "stephen123") or die("Could not connect: " . mysql_error());
-mysql_select_db("library");
+include '../../Headers/dbConnect.php';
 
-$name = $_POST['name'];
-$username = $_POST['username'];
+$name = mysql_real_escape_string($_POST['name']);
+$username = mysql_real_escape_string($_POST['username']);
 $numIds = mysql_query("SELECT MAX(l.id) from Librarian l");
 $currentId = mysql_fetch_row($numIds);
 $id = $currentId[0] + 1;
-$query = "INSERT INTO Librarian values ($id,'$name', curdate(), NULL, '$username')";
+$password = mysql_real_escape_string($_POST['password']);
+$password = md5($password);
+$query = "INSERT INTO Librarian values ($id,'$name', now(), NULL, '$username', '$password')";
 $result = mysql_query($query);
 error_log(print_r($_REQUEST, true));
 

@@ -12,12 +12,12 @@ By: Stephen Dixon
             $(function() {
                 var name = $("#name"),
                         username = $("#username"),
-                        allFields = $([]).add(name).add(username),
+                        password = $("#password"),
+                        repeat = $("#repeat"),
+                        allFields = $([]).add(name).add(username).add(password).add(repeat),
                         tips = $(".validateTips");
                 function updateTips(t) {
-                    tips
-                            .text(t)
-                            .addClass("ui-state-highlight");
+                    tips.text(t).addClass("ui-state-highlight");
                     setTimeout(function() {
                         tips.removeClass("ui-state-highlight", 1500);
                     }, 500);
@@ -41,6 +41,15 @@ By: Stephen Dixon
                         return true;
                     }
                 }
+                function checkSamePassword(p1, p2, n) {
+                    if (p1.val() === p2.val()) {
+                        return true;
+                    }
+                    p1.addClass("ui-state-error");
+                    p2.addClass("ui-state-error");
+                    updateTips(n);
+                    return false;
+                }
                 $("#dialog-form").dialog({
                     autoOpen: false,
                     height: 300,
@@ -54,13 +63,14 @@ By: Stephen Dixon
                             bValid = bValid && checkLength(username, "username", 3, 16);
                             bValid = bValid && checkRegexp(username, /^[a-z]([0-9a-z_])+$/i, "Username may consist of a-z, 0-9, underscores, begin with a letter.");
                             // From jquery.validate.js (by joern), contributed by Scott Gonzalez: http://projects.scottsplayground.com/email_address_validation/
-
+                            bValid = bValid && checkSamePassword(password, repeat, "The passwords are not the same");
 
                             if (bValid) {
                                 $("form#addLibrarianForm").submit();
 
                                 // This would be useful if page didn't redirect
                                 $("#users tbody").append("<tr>" +
+                                        "<td>" + id + "</td>" +
                                         "<td>" + name.val() + "</td>" +
                                         "<td>" + $.datepicker.formatDate('yy-mm-dd', new Date())
                                         + "</td>" +
@@ -71,17 +81,15 @@ By: Stephen Dixon
                         },
                         Cancel: function() {
                             $(this).dialog("close");
+                        },
+                        Close: function() {
+                            allFields.val("").removeClass("ui-state-error");
                         }
-                    },
-                    close: function() {
-                        allFields.val("").removeClass("ui-state-error");
                     }
                 });
-                $("#create-user")
-                        .button()
-                        .click(function() {
-                            $("#dialog-form").dialog("open");
-                        });
+                $("#create-user").button().click(function() {
+                    $("#dialog-form").dialog("open");
+                });
                 $("#terminate-user-form").dialog({
                     autoOpen: false,
                     height: 600,
@@ -105,6 +113,31 @@ By: Stephen Dixon
                 $("#terminate-user").button().click(function() {
                     $("#terminate-user-form").dialog("open");
                 });
+                var cpRepeat = $("#cp-repeat"),
+                        cpPassword = $("#cp-password");
+                $("#changePassword").dialog({
+                    autoOpen: false,
+                    height: 600,
+                    width: 630,
+                    modal: true,
+                    buttons: {
+                        "Change Password": function() {
+                            cpRepeat.removeClass("ui-state-error");
+                            cpPassword.removeClass("ui-state-error");
+                            var valid = checkSamePassword(cpPassword, cpRepeat, "Must have matching passwords");
+                            if (valid) {
+                                $("form#changePasswordForm").submit();
+                                $(this).dialog("close");
+                            }
+                        },
+                        Cancel: function() {
+                            $(this).dialog("close");
+                        }
+                    }
+                });
+                $("#changePasswordBtn").button().click(function() {
+                    $("#changePassword").dialog("open");
+                });
             });
         </script>
     </head>
@@ -124,9 +157,15 @@ By: Stephen Dixon
                     <input type="text" name="name" id="name" class="text ui-widget-content ui-corner-all">
                     <label for="username">Username</label>
                     <input type="text" name="username" id="username" class="text ui-widget-content ui-corner-all">
+                    <label for="password">Password</label>
+                    <input type="password" name="password" id="password" class="text ui-widget-content ui-corner-all">
+                    <label for="repeat">Repeat Password</label>
+                    <input type="password" name="repeat" id="repeat" class="text ui-widget-content ui-corner-all">
+
                 </fieldset>
             </form>
         </div>
+
         <div id="terminate-user-form" title="Remove User">
             <form id="termLibrarians" action="Processing/Librarian/terminateLibrarian.php" method="post">
                 <table id="termCands" class="ui-widget ui-widget-content">
@@ -188,7 +227,26 @@ By: Stephen Dixon
                 </tbody>
             </table>
         </div>
+
+        <div id="changePassword" class="ui-widget">
+            <h1> Change Password</h1>
+            <p class="validateTips"> All form fields are required.</p>
+            <form id="changePasswordForm" action="Processing/Librarian/changePassword.php" method="post">
+                <fieldset>
+                    <label for="cp-Username">Username</label>
+                    <input type="text" name="username" id="cp-Username" class="text ui-widget-content ui-corner-all"> <br/>
+                    <label for="cp-AuthPassword">Old/Admin Password</label>
+                    <input type="password" name="authPass" id="cp-AuthPassword" class="text ui-widget-content ui-corner-all"> <br/>
+                    <label for="cp-password">New Password</label>
+                    <input type="password" name="password" id="cp-password" class="text ui-widget-content ui-corner-all"> <br/>
+                    <label for="cp-repeat">Repeat New Password</label>
+                    <input type="password" name="repeat" id="cp-repeat" class="text ui-widget-content ui-corner-all"> <br/>
+                </fieldset>
+            </form>
+        </div>
+
         <button  id="create-user">Create</button>
         <button id="terminate-user">Remove</button>
+        <button id="changePasswordBtn">Modify Passwords</button>
     </body>
 </html>
