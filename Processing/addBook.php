@@ -1,4 +1,16 @@
 <?php	
+	session_start();
+        // If the user is not logged then the user will be set to the main page
+        if (isset($_SESSION['loggedIn']) && isset($_SESSION['username'])) {
+          if($_SESSION["loggedIn"] !=1)
+          {
+              header("Location: MainPage.php");
+          }
+        }
+        else{
+            header("Location: MainPage.php");
+        }
+	
 	//addBook.php - written by Gaby Comeau
 	//PHP script to add a book to the database
 	header("Location: ../App_Index.php",TRUE,303);	
