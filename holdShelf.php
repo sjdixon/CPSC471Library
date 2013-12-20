@@ -32,7 +32,7 @@ include './Headers/dbConnect.php';
                             <th>Stock #</th>
                             <th>Avail Date</th>
                             <th>Expiry Date</th>
-                            <th></th>
+                            <th>Select</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -109,6 +109,7 @@ include './Headers/dbConnect.php';
                             <th>Code</th>
                             <th>Stock #</th>
                             <th>Expiry Date</th>
+                            <th>Select</th>
                         </tr>
                     </thead>
                     <tbody>
