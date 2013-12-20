@@ -1,31 +1,16 @@
 <?php
-
-session_start();
-        // If the user is not logged then the user will be set to
-        if (isset($_SESSION['loggedIn']) && isset($_SESSION['username'])) {
-          if($_SESSION["loggedIn"] !=1)
-          {
-              header("Location: MainPage.php");
-          }
-        }
-        else{
-            header("Location: MainPage.php");
-        }
-
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
-
+include '../../Headers/checkAuth.php';
 include '../../Headers/dbConnect.php';
 
 // Collect information from form
-$operationType = $_POST['radio'];
-$patronIdType = $_POST['patronIdType'];
-$patronId = $_POST['patronId'];
-$itemCodeType = $_POST['itemCodeType'];
-$itemCode = $_POST['itemCode'];
+$operationType = mysql_real_escape_string($_POST['radio']);
+echo "$operationType <br/>";
+$patronIdType = mysql_real_escape_string($_POST['patronIdType']);
+echo "$patronIdType <br/>";
+$patronId = mysql_real_escape_string($_POST['patronId']);
+echo "$patronId <br/>";
+$itemCodeType = mysql_real_escape_string($_POST['itemCodeType']);
+$itemCode = mysql_real_escape_string($_POST['itemCode']);
 $query = "";
 
 $libraryCode = "";
@@ -44,6 +29,7 @@ if ($patronIdType != "pAccount") {
 // Check if patron is allowed to place holds or loans
 $legal = TRUE;
 $legalPatronQuery = "SELECT membershipExpiryDate, membershipExpired from Patron where pAccount=$pAccount and membershipExpiryDate < curdate()";
+echo $legalPatronQuery;
 $patronExpired = mysql_query($legalPatronQuery);
 $patronHasFines = "SELECT pAccount, balance from Fine where pAccount=$pAccount and balance > 0";
 $fines = mysql_query($patronHasFines);
@@ -73,7 +59,6 @@ if ($itemCodeType == "libraryCode") {
     echo "Retrieved libraryCode from select statement; title=$itemCode and libraryCode=$libraryCode";
 }
 
-echo "<br/> $operationType <br/>";
 if ($legal == TRUE) {
 
     if ($operationType == "loan") {
@@ -142,8 +127,6 @@ if ($legal == TRUE) {
         header("Location: ../../App_Index.php");
         exit();
     }
-} else {
-    echo "Patron $pAccount expired at time $row[0]";
 }
 ?>
 
