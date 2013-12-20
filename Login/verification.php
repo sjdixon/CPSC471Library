@@ -32,6 +32,7 @@ if(!empty($_POST['username']) && !empty($_POST['password']))
         $name = $row['name'];
         $surname = $row['surname'];
 
+	session_start();
         $_SESSION['username'] = $username;
         $_SESSION['loggedIn'] = 1;
         echo "Success!";

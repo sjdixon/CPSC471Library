@@ -179,7 +179,7 @@
         <?php
         setcookie("patronAccount", "", time() - 3600);
 
-        include '../../Headers/dbConnect.php';
+        include './Headers/dbConnect.php';
         
               
         $query1 = mysql_query("select * from Patron");

@@ -302,7 +302,7 @@
     </head>
     <body>
         <?php
-        include '../../Headers/dbConnect.php';
+        include './Headers/dbConnect.php';
 
         if (isset($_COOKIE["patronAccount"]))
             $pId = $_COOKIE["patronAccount"];
