@@ -5,7 +5,8 @@
 	session_start();
 	// If the user is not logged then the user will be set to 
 	if (isset($_SESSION['loggedIn']) && isset($_SESSION['username'])) {
-          if($_SESSION["loggedIn"] !="1")
+          if($_SESSION["loggedIn"]!=1
+          )
           {
               header("Location: MainPage.php"); 
           }
