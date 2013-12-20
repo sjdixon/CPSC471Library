@@ -3,12 +3,7 @@
 // Created by Rhianne Hadfield
 // Modified by Stephen Dixon
 
-// Create connection
-$host = "localhost";
-$user = "ubuntu";
-$pass = "stephen123";
-mysql_connect($host, $user, $pass) or die("Could not connect: " . mysql_error());
-mysql_select_db("library");
+include '../Headers/dbConnect.php';
 
 
 

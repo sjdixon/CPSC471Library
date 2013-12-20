@@ -1,14 +1,13 @@
-<?php session_start();
-        // If the user is not logged then the user will be set to the main page
-        if (isset($_SESSION['loggedIn']) && isset($_SESSION['username'])) {
-          if($_SESSION["loggedIn"] !=1)
-          {
-              header("Location: MainPage.php");
-          }
-        }
-        else{
-            header("Location: MainPage.php");
-        }
+<?php
+session_start();
+// If the user is not logged then the user will be set to the main page
+if (isset($_SESSION['loggedIn']) && isset($_SESSION['username'])) {
+    if ($_SESSION["loggedIn"] != 1) {
+        header("Location: MainPage.php");
+    }
+} else {
+    header("Location: MainPage.php");
+}
 ?>
 
 <script type="text/javascript">
@@ -91,7 +90,7 @@
     });
 //remove
     $(function() {
-        $("#dialog-confirm").dialog({
+        $("#deletePatronDialog").dialog({
             autoOpen: false,
             height: 150,
             width: 300,
@@ -133,8 +132,20 @@
         $("#removePatron")
                 .button()
                 .click(function() {
-                    $("#dialog-confirm").dialog("open");
+                    $("#deletePatronDialog").dialog("open");
                 });
+        var checkboxes = $("input[type='checkbox']");
+        checkboxes.click(function() {
+            var removePatron = $("#removePatronBtn");
+            //alert("checkboxes " + checkboxes.is(":checked") + " and remove=" + removePatron.attr("disabled"));
+            if (checkboxes.is(":checked") === true) {
+                removePatron.removeAttr("disabled");
+                //alert("checkboxes " + checkboxes.is(":checked") + " and remove=" + removePatron.attr("disabled"));
+            }
+            else {
+                removePatron.attr('disabled', 'disabled');
+            }
+        });
     });
 
 //Filters the table when a value is typed in.
@@ -158,7 +169,7 @@
 </script>
 
 <body>   
-    <div id="dialog-confirm" title="Delete Patrons">
+    <div id="deletePatronDialog" title="Delete Patrons">
         <form id='rPatron' action='Processing/Patron/removePatron.php' method='post'>
             <p>These Patrons will be permanently deleted</p>
         </form>
@@ -193,10 +204,11 @@
         setcookie("patronAccount", "", time() - 3600);
 
         include './Headers/dbConnect.php';
-        
-              
+
+
         $query1 = mysql_query("select * from Patron");
         ?>
+
         <table id="users" class="ui-widget ui-widget-content">
             <thead>
                 <tr id="row" class="ui-widget-header ">
@@ -209,30 +221,31 @@
             </thead>
             <tbody>
 
-<?php
-while ($row = mysql_fetch_array($query1)) {
-    $expireValue = "";
-    if ($row['membershipExpired'] == 0) {
-        $expireValue = "No";
-    } else {
-        $expireValue = "Yes";
-    }
+                <?php
+                while ($row = mysql_fetch_array($query1)) {
+                    $expireValue = "";
+                    if ($row['membershipExpired'] == 0) {
+                        $expireValue = "No";
+                    } else {
+                        $expireValue = "Yes";
+                    }
 
-    echo "<tr>";
-    echo "<td><input type='checkbox' value=" . $row['pAccount'] . " name='check[]'/></td>";
-    echo "<td>" . $row['pAccount'] . "</td>";
-    echo "<td>" . $row['name'] . "</td>";
-    echo "<td>" . $expireValue . "</td>";
-    echo "<td><form action='cacheId.php' method='post'>
+                    echo "<tr>";
+                    echo "<td><input type='checkbox' value=" . $row['pAccount'] . " name='check[]'/></td>";
+                    echo "<td>" . $row['pAccount'] . "</td>";
+                    echo "<td>" . $row['name'] . "</td>";
+                    echo "<td>" . $expireValue . "</td>";
+                    echo "<td><form action='cacheId.php' method='post'>
                             <input type='hidden' id='pAccount' name='pAccount' value=" . $row['pAccount'] . ">
-                            <button type='sumbit'>View</button>
+                            <button type='submit'>View</button>
                             </form></td>";
-    echo "</tr>";
-}
-?>
+                    echo "</tr>";
+                }
+                ?>
             </tbody>
         </table>
         <button id="addPatron">Add new Patron</button>
-        <button id="removePatron">Remove Patron</button>
+        <button id="removePatronBtn" disabled="false">Remove Patron</button>
+
     </div>
 </body>
