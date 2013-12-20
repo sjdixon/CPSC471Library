@@ -372,7 +372,7 @@
 	
 	//modify item
 	echo "<div id=\"dialog10\" title=\"Modify\">";
-		echo "<form id = \"modify\" action=\"Processing/modifyItem.php\" method=\"post\">";
+		echo "<form id = \"modify\" name = \"modify\" action=\"Processing/modifyItem.php\" method=\"post\">";
 			echo "<!--Modify info in the form below:-->";
 			echo "<label for=\"lCode4\">Library Code: </label>";
 			echo "<input type =\"text\" name=\"lCode4\" id=\"lCode4\" class=\"text ui-widget-content ui-corner-all\" /><br><br>";
@@ -393,7 +393,10 @@
 					xmlhttp.onreadystatechange=function(){
   						if (xmlhttp.readyState==4 && xmlhttp.status==200){
     							document.getElementById("modify").innerHTML=xmlhttp.responseText;
-    							function initNewElements(){
+    							var e = jQuery.Event( "click" );
+								// trigger an artificial click event
+								jQuery( "#modify" ).trigger( e );
+    							$("#modify").click(function initNewElements(){
     								$( "#spinner6" ).spinner({
 										min: 1700,
 										max: 2100,
@@ -419,7 +422,7 @@
 									$(function() {
 										$( "#isReference5" ).button();
 									});
-    						}
+    						});
     					}
   					}
 					xmlhttp.open("GET","Processing/getItem.php?libID="+id,true);
