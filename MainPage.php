@@ -1,9 +1,4 @@
 <!DOCTYPE html>
-<?php
-if (isset($_SESSION['loggedIn'])) {
-          session_destroy();
-	}
-?>
 <html>
     <head>
         <!--Main page of our web application. Contains the tab framework and script files needed for the rest of the app-->
