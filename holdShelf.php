@@ -2,6 +2,20 @@
 /**
  * Created by Stephen Dixon
  */
+ 
+ session_start();
+        // If the user is not logged then the user will be set to the main page
+        if (isset($_SESSION['loggedIn']) && isset($_SESSION['username'])) {
+          if($_SESSION["loggedIn"] !=1)
+          {
+              header("Location: MainPage.php");
+          }
+        }
+        else{
+            header("Location: MainPage.php");
+        }
+
+ 
 mysql_connect("localhost", "ubuntu", "stephen123") or die("Could not connect: " . mysql_error());
 mysql_select_db("library") or die("Could not select database library");
 ?>
