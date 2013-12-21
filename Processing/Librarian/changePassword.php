@@ -39,7 +39,7 @@ if ($legitimate == TRUE && $password == $repeat) {
     echo "$query <br/>";
     echo $result;
     if (!mysql_error()) print 'all is fine';
-    header("Location: ../../librarian.php");
+    header("Location: ../../App_Index.php");
 } else {
     header("Location: ../../Error/401.php");
 }
