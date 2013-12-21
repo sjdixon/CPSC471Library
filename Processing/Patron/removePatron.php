@@ -1,23 +1,25 @@
 <?php
 
-    session_start();
-        // If the user is not logged then the user will be set to the main page
-        if (isset($_SESSION['loggedIn']) && isset($_SESSION['username'])) {
-          if($_SESSION["loggedIn"] !=1)
-          {
-              header("Location: MainPage.php");
-          }
-        }
-        else{
-            header("Location: MainPage.php");
-        }
+include '../../Headers/checkAuth.php';
+include '../../Headers/dbConnect.php';
 
-    include '../../Headers/dbConnect.php';
-       
-        foreach ($_POST['pIds'] as $id) {
-          
-        $query="DELETE FROM Patron WHERE pAccount='$id'";
-        mysql_query($query);
+// extract the index number
+foreach ($_POST as $k=>$v) {
+    if (substr($k, 0,8) == "checkbox"){
+        $info = explode('-',$k);
+        $id = $info[1];
+        $queryText = "delete from Patron where pAccount=$id";
+        $query = mysql_query($queryText);
+        if (!$query){
+            echo "Could not submit query. <br/>";
+            echo "$queryText <br/>";
+            echo "$k<br/>";
+            echo "$info[0]<br/>";
+            echo "$info[1]<br/>";
+            die();
         }
-        header("Location: ../../App_Index.php");
+    }
+    echo "Current value of $k: $v<br/>";
+}
+header("Location: ../../App_Index.php");
 ?>

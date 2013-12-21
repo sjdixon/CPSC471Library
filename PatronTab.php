@@ -1,13 +1,5 @@
 <?php
-session_start();
-// If the user is not logged then the user will be set to the main page
-if (isset($_SESSION['loggedIn']) && isset($_SESSION['username'])) {
-    if ($_SESSION["loggedIn"] != 1) {
-        header("Location: MainPage.php");
-    }
-} else {
-    header("Location: MainPage.php");
-}
+include 'Headers/checkAuth.php';
 ?>
 
 <script type="text/javascript">
@@ -102,11 +94,7 @@ if (isset($_SESSION['loggedIn']) && isset($_SESSION['username'])) {
                         return $(this).val();
                     }).get();
                     //Using Ajax function to jump to the remove Patron file, all checked Patrons are removed
-                    $.ajax({
-                        url: 'Processing/Patron/removePatron.php',
-                        method: 'post',
-                        data: {pIds: searchIDs}
-                    });
+                    $("form#removePatronForm").submit();
 //Since the page is not refreshed after using Ajax, this deletes checked rows from the html table  
                     patronTable = document.getElementById('users');
                     selected = document.getElementsByName('check[]');
@@ -134,6 +122,7 @@ if (isset($_SESSION['loggedIn']) && isset($_SESSION['username'])) {
                 .click(function() {
                     $("#deletePatronDialog").dialog("open");
                 });
+
         var checkboxes = $("input[type='checkbox']");
         checkboxes.click(function() {
             var removePatron = $("#removePatronBtn");
@@ -208,7 +197,7 @@ if (isset($_SESSION['loggedIn']) && isset($_SESSION['username'])) {
 
         $query1 = mysql_query("select * from Patron");
         ?>
-
+        <form id="removePatronForm" action="Processing/Patron/removePatron.php" method="post">
         <table id="users" class="ui-widget ui-widget-content">
             <thead>
                 <tr id="row" class="ui-widget-header ">
@@ -231,7 +220,7 @@ if (isset($_SESSION['loggedIn']) && isset($_SESSION['username'])) {
                     }
 
                     echo "<tr>";
-                    echo "<td><input type='checkbox' value=" . $row['pAccount'] . " name='check[]'/></td>";
+                    echo "<td><input type='checkbox' name='checkbox-".$row['pAccount']."' /></td>";
                     echo "<td>" . $row['pAccount'] . "</td>";
                     echo "<td>" . $row['name'] . "</td>";
                     echo "<td>" . $expireValue . "</td>";
@@ -244,6 +233,7 @@ if (isset($_SESSION['loggedIn']) && isset($_SESSION['username'])) {
                 ?>
             </tbody>
         </table>
+        </form>
         <button id="addPatron">Add new Patron</button>
         <button id="removePatronBtn" disabled="false">Remove Patron</button>
 
