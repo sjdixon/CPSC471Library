@@ -122,10 +122,10 @@ create table Audio(
 create table Video(
     libraryCode int,
     UPC int,
-    directory varchar(50),
+    director varchar(50),
     productionCompany varchar(40),
     foreign key(libraryCode) references Item(libraryCode),
     primary key(libraryCode)
 );
 
-INSERT INTO Librarian (id, name, startDate, endDate, username, password) VALUES (0, "Default Librarian", now(), NULL, "ubuntu", "c21f969b5f03d33d43e04f8f136e7682");
+INSERT INTO Librarian (id, name, startDate, endDate, username, password) VALUES (0, "Default Librarian", now(), NULL, "default", "c21f969b5f03d33d43e04f8f136e7682");
