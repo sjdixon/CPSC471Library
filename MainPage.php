@@ -19,67 +19,74 @@
         </style>
         <script>
             //Filters the table when a value is typed in.
-    $(document).ready(function() {
-        var $rows = $("#ItemsTable tbody>tr"), $cells = $rows.children();
-        $("#searchString").keyup(function() {
-            var term = $(this).val()
-            //If the something has been entered into the text box, It will first hide all the rows
-            //Then if the value inside of a cell in one of the rows matches the entered term then those rows are displayed
-            //If nothing has been entered all of the rows in the table are appear
-            if (term != "") {
-                $rows.hide();
-                $cells.filter(function() {
-                    return $(this).text().indexOf(term) > -1;
-                }).parent("tr").show();
-            } else {
-                $rows.show();
-            }
-        });
-    });
+            $(document).ready(function() {
+                var $rows = $("#ItemsTable tbody>tr"), $cells = $rows.children();
+                $("#searchString").keyup(function() {
+                    var term = $(this).val()
+                    //If the something has been entered into the text box, It will first hide all the rows
+                    //Then if the value inside of a cell in one of the rows matches the entered term then those rows are displayed
+                    //If nothing has been entered all of the rows in the table are appear
+                    if (term != "") {
+                        $rows.hide();
+                        $cells.filter(function() {
+                            return $(this).text().indexOf(term) > -1;
+                        }).parent("tr").show();
+                    } else {
+                        $rows.show();
+                    }
+                });
+            });
         </script>
     </head>
-    
+
     <body>
-    <a href="Login/Login.php">Login</a>
-    <p>You can filter through our database by entering the title, genre, audience, year, or type of the item you wish to search for.</p>
-    <p>All entered values must be must exactly match what you are looking for or it will not appear.</p>
-    <input  type="text" id="searchString" name="searchString" size = "50"/>
-    <?php
-     include "./Headers/dbConnect.php";
-     $itemList=mysql_query("Select * From Item");
-    ?>
-    <form>
-        <table id="ItemsTable" class="ui-widget ui-widget-content">
-             <thead>
-                <tr id="row" class="ui-widget-header ">
-                    <th>Title</th>
-                    <th>Type</th>
-                    <th>Year</th>
-                    <th>Shelf Location</th>
-                    <th>Audience</th>
-                    <th>Genre</th>
-                    <th>Reference</th>
-                </tr>
-            </thead>
-            <tbody>
-                <?php
-                while($row=mysql_fetch_assoc($itemList)){
-                    if($row['isReference']==0){$ref='No';}
-                    else{$ref='Yes';}
-                    
-                    echo "<tr>";
-                    echo "<td>" . $row['title'] . "</td>";
-                    echo "<td>" .$row['itemType']. "</td>";
-                    echo "<td>" . $row['year'] . "</td>";
-                    echo "<td>" . $row['shelfLoc'] . "</td>";
-                    echo "<td>" . $row['audience'] . "</td>";
-                    echo "<td>" . $row['genre'] . "</td>";
-                    echo "<td>" . $ref . "</td>";
-                    echo "</tr>";
-                }
-                ?>
-            </tbody>
-        </table>
-    </form>	
+        <a href="Login/Login.php">Login</a>
+        <p>You can filter through our database by entering the title, genre, audience, year, or type of the item you wish to search for.</p>
+        <p>All entered values must be must exactly match what you are looking for or it will not appear.</p>
+        <input  type="text" id="searchString" name="searchString" size = "50"/>
+        <?php
+        include "./Headers/dbConnect.php";
+        session_start();
+        if (isset($_SESSION['loggedIn']))
+            unset($_SESSION['loggedIn']);
+        session_destroy();
+        $itemList = mysql_query("Select * From Item");
+        ?>
+        <form>
+            <table id="ItemsTable" class="ui-widget ui-widget-content">
+                <thead>
+                    <tr id="row" class="ui-widget-header ">
+                        <th>Title</th>
+                        <th>Type</th>
+                        <th>Year</th>
+                        <th>Shelf Location</th>
+                        <th>Audience</th>
+                        <th>Genre</th>
+                        <th>Reference</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <?php
+                    while ($row = mysql_fetch_assoc($itemList)) {
+                        if ($row['isReference'] == 0) {
+                            $ref = 'No';
+                        } else {
+                            $ref = 'Yes';
+                        }
+
+                        echo "<tr>";
+                        echo "<td>" . $row['title'] . "</td>";
+                        echo "<td>" . $row['itemType'] . "</td>";
+                        echo "<td>" . $row['year'] . "</td>";
+                        echo "<td>" . $row['shelfLoc'] . "</td>";
+                        echo "<td>" . $row['audience'] . "</td>";
+                        echo "<td>" . $row['genre'] . "</td>";
+                        echo "<td>" . $ref . "</td>";
+                        echo "</tr>";
+                    }
+                    ?>
+                </tbody>
+            </table>
+        </form>	
     </body>
 </html>
