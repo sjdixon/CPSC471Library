@@ -80,7 +80,7 @@ if ($legal == TRUE) {
         if ($numRows == 0 || ($numRows > 0 && $row[0] == $pAccount)) {
             // Either no hold exists, or the patron who held it is loaning the item.
             $dueDate = $_POST['dueDate']; // if there is one
-            $query = "INSERT INTO Loan values($pAccount,$stock,$libraryCode, now(),'$dueDate', NULL)";
+            $query = "INSERT INTO Loan(pAccount, stocknum, libraryCode, dateLoaned, dateDue, returned) values($pAccount,$stock,$libraryCode, now(),'$dueDate', NULL)";
             // Resolve the hold.
             $updateQuery = "UPDATE Hold set pickupDate=now() where libraryCode=$libraryCode and stocknum=$stock and pAccount=$pAccount and pickupDate is NULL";
             mysql_query($updateQuery);
