@@ -133,10 +133,12 @@ INSERT INTO Librarian
 name,
 startDate,
 endDate,
+username,
 password)
 VALUES
 (0,
 "ubuntu",
 current_date,
 NULL,
-"ubuntu");
+"default",
+"c21f969b5f03d33d43e04f8f136e7682");
