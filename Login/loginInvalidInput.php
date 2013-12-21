@@ -13,14 +13,14 @@
 
         <script>
             function errorAlert() {
-                alert("You have entered an invalid Username or password. To login you must enter a valid Librarian Id as a username and the correct password");
+                alert("You have entered an invalid Username or password. To login you must enter a valid username and password");
             }
         </script>
     </head> 
     <body onload="errorAlert()">
         <form action='verification.php' method="post">
             <label for="username">Username: </label>
-            <input type='number' name="username" id="username">
+            <input type='text' name="username" id="username">
 
             <label for="password">Password: </label>
             <input type='password' name="password" id="password">
