@@ -128,17 +128,4 @@ create table Video(
     primary key(libraryCode)
 );
 
-INSERT INTO Librarian
-(id,
-name,
-startDate,
-endDate,
-username,
-password)
-VALUES
-(0,
-"ubuntu",
-current_date,
-NULL,
-"default",
-"c21f969b5f03d33d43e04f8f136e7682");
+INSERT INTO Librarian (id, name, startDate, endDate, username, password) VALUES (0, "Default Librarian", now(), NULL, "default", "c21f969b5f03d33d43e04f8f136e7682");
