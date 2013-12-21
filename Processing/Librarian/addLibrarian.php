@@ -24,6 +24,6 @@ if ($result) {
     trigger_error(mysql_error(), E_USER_ERROR);
 }
 
-header("Location: ../../librarian.php");
+header("Location: ../../App_Index.php");
 exit();
 ?>
