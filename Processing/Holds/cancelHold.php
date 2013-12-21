@@ -11,6 +11,8 @@ echo "Connected to library <br/>";
 
 // extract the index number
 foreach ($_POST as $k=>$v) {
+    $k = mysql_real_escape_string($k);
+    $v = mysql_real_escape_string($v);
     if (substr($k, 0,8) == "checkbox"){
         $info = explode('-',$k);
         $id = $info[1];
