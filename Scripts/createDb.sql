@@ -14,6 +14,8 @@ create table Librarian(
 	name varchar(40) not null,
 	startDate date NOT NULL,
 	endDate date default NULL,
+	username varchar(255) not null,
+	password varchar(255) not null,
 	primary key(id)
 );
 create table Item(
@@ -23,8 +25,8 @@ create table Item(
 	title varchar(40) not null,
 	year int,
 	isReference bool default 0,
-	genre varchar(10) not null,
-	audience varchar(15) not null,
+	genre varchar(30) not null,
+	audience varchar(30) not null,
 	primary key(libraryCode)
 );
 create table Item_Instance(
@@ -41,7 +43,6 @@ create table Fine(
 	stocknum int,
 	reason varchar(10),
 	dateFined date,
-	amountCharged decimal default 0.20,
 	amountPaid decimal default 0,
 	amountWaived decimal default 0,
 	balance decimal default 0.20,
@@ -57,10 +58,11 @@ create table Loan(
 	dateLoaned date NOT NULL,
 	dateDue date NOT NULL,
 	returned date default NULL,
+	loanNum int not null auto_increment,
 	foreign key(stocknum) references Item_Instance(stocknum),
 	foreign key(libraryCode) references Item_Instance(libraryCode),
 	foreign key(pAccount) references Patron(pAccount),
-	primary key(pAccount,stocknum,libraryCode,dateLoaned)
+	primary key(loanNum)
 );
 create table Hold(
     pAccount int,
@@ -77,6 +79,7 @@ create table Hold(
     foreign key(stocknum) references Item_Instance(stocknum),
     foreign key(libraryCode) references Item(libraryCode),
     primary key(libraryCode, pAccount, dateHeld)
+
 );
 create table Fine_Updated_By(
 	fineNo int,
@@ -124,3 +127,16 @@ create table Video(
     foreign key(libraryCode) references Item(libraryCode),
     primary key(libraryCode)
 );
+
+INSERT INTO Librarian
+(id,
+name,
+startDate,
+endDate,
+password)
+VALUES
+(0,
+"ubuntu",
+current_date,
+NULL,
+"ubuntu");
