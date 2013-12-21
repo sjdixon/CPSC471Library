@@ -201,7 +201,7 @@ By: Stephen Dixon
                             echo "<td>" . $row['startDate'] . "</td>";
                             echo "<td>" . $row['endDate'] . "</td>";
                             echo "<td>" . $row['username'] . "</td>";
-                            $checkboxId = "checkbox" . $row[id];
+                            $checkboxId = "checkbox" . $row['id'];
                             echo "<td><input type='checkbox' class='chcktbl' name='$checkboxId' /></td>";
                             echo "</tr>";
                         }
