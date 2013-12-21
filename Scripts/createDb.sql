@@ -52,9 +52,9 @@ create table Fine(
 	primary key(fineNo) # DOUBLECHECK WHETHER THE OTHER ONES ARE NEEDED
 );
 create table Loan(
-	pAccount int,
-	stocknum int,
-	libraryCode int,
+	pAccount int not null,
+	stocknum int not null,
+	libraryCode int not null,
 	dateLoaned date NOT NULL,
 	dateDue date NOT NULL,
 	returned date default NULL,
