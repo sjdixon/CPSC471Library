@@ -29,14 +29,6 @@
 			<input type="radio" id="update2" name="radio2" /><label for="update2">Modify Item Instance</label>
 		</div>
 	</form><br><br>
-	
-	<p>Use this form to delete an item or item instance</p>
-	<form>
-		<div id="radio3" class="radioset">
-			<input type="radio" id="delete1" name="radio3" /><label for="delete1">Delete Item</label>
-			<input type="radio" id="delete2" name="radio3"/><label for="delete2">Delete Item Instance</label>
-		</div>
-	</form><br><br>
 
 <script>
 	$( "button" ).button();
@@ -347,6 +339,7 @@
 				echo "<option value=\"available\">In Circulation</option>";
 				echo "<option value=\"missing\">Missing</option>"; 
 				echo "<option value=\"damaged\">Damaged</option>"; 
+                                echo "<option value=\"damaged\">Discard</option>";
 			echo "</select><br><br>";
 			echo "<button type=\"submit\" name=\"submit\" value=\"Submit\">OK</button>";
 		echo "</form>";
