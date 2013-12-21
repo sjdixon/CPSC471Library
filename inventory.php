@@ -105,8 +105,8 @@
 			echo "<input type =\"text\" name=\"name1\" id=\"name1\" class=\"text ui-widget-content ui-corner-all\" /><br><br>";
 			echo "<label for=\"artistName\">Creator: </label>";
 			echo "<input type =\"text\" name=\"artistName\" id=\"artistName\" class=\"text ui-widget-content ui-corner-all\" /><br><br>";
-			echo "<label for=\"spinner2\">Release Year: </label>";
-			echo "<input id=\"spinner2\" name=\"spinner1\" value=\"2013\" /><br><br>";
+			echo "<label for=\"spinner1\">Release Year: </label>";
+			echo "<input id=\"spinner1\" name=\"spinner1\" value=\"2013\" /><br><br>";
 			echo "<label for=\"UPC\">UPC: </label>";
 			echo "<input type =\"text\" name=\"UPC\" id=\"UPC\" class=\"text ui-widget-content ui-corner-all\" /><br><br>";
 			echo "<label for=\"producerName\">Production Company: </label>";
@@ -132,7 +132,7 @@
 		echo "</form>";
 		?>
 		<script>
-		$( "#spinner2" ).spinner({
+		$( "#spinner1" ).spinner({
 			min: 1700,
 			max: 2100,
 			step: 1
@@ -165,8 +165,8 @@
 			echo "<input type =\"text\" name=\"director\" id=\"director\" class=\"text ui-widget-content ui-corner-all\" /><br><br>";
 			echo "<label for=\"producerName2\">Production Company: </label>";
 			echo "<input type =\"text\" name=\"producerName2\" id=\"prodName2\" class=\"text ui-widget-content ui-corner-all\" /><br><br>";
-			echo "<label for=\"spinner3\">Release Year: </label>";
-			echo "<input id=\"spinner3\" name=\"spinner2\" value=\"2013\" /><br><br>";
+			echo "<label for=\"spinner2\">Release Year: </label>";
+			echo "<input id=\"spinner2\" name=\"spinner2\" value=\"2013\" /><br><br>";
 			echo "<label for=\"genre2\">Genre: </label>";
 			echo "<input type =\"text\" name=\"genre2\" id=\"genre2\" class=\"text ui-widget-content ui-corner-all\" /><br><br>";
 			echo "<label for=\"audience2\">Audience: </label>";
@@ -188,7 +188,7 @@
 		echo "</form>";
 		?>
 		<script>
-		$( "#spinner3" ).spinner({
+		$( "#spinner2" ).spinner({
 			min: 1700,
 			max: 2100,
 			step: 1
@@ -217,8 +217,8 @@
 			echo "<input type =\"text\" name=\"name3\" id=\"name3\" class=\"text ui-widget-content ui-corner-all\" /><br><br>";
 			echo "<label for=\"subName\">Subtitle: </label>";
 			echo "<input type =\"text\" name=\"subName\" id=\"subName\" class=\"text ui-widget-content ui-corner-all\" /><br><br>";
-			echo "<label for=\"spinner4\">Release Year: </label>";
-			echo "<input id=\"spinner4\" name=\"spinner3\" value=\"2013\" /><br>";
+			echo "<label for=\"spinner3\">Release Year: </label>";
+			echo "<input id=\"spinner3\" name=\"spinner3\" value=\"2013\" /><br>";
 			echo "<p> Issue: <input type=\"text\" id=\"datepicker1\" name =\"datepicker1\" /></p>";
 			echo "<label for=\"pubName2\">Publisher: </label>";
 			echo "<input type =\"text\" name=\"pubName2\" id=\"pubName2\" class=\"text ui-widget-content ui-corner-all\" /><br><br>";
@@ -243,7 +243,7 @@
 		echo "</form>";
 		?>
 		<script>
-		$( "#spinner4" ).spinner({
+		$( "#spinner3" ).spinner({
 			min: 1700,
 			max: 2100,
 			step: 1
@@ -278,8 +278,8 @@
 			echo "<!--Add new item information in the form below:-->";
 			echo "<label for=\"name4\">Title: </label>";
 			echo "<input type =\"text\" name=\"name4\" id=\"name4\" class=\"text ui-widget-content ui-corner-all\" /><br><br>";
-			echo "<label for=\"spinner5\">Release Year: </label>";
-			echo "<input id=\"spinner5\" name=\"spinner4\" value=\"2013\" /><br>";
+			echo "<label for=\"spinner4\">Release Year: </label>";
+			echo "<input id=\"spinner4\" name=\"spinner4\" value=\"2013\" /><br>";
 			echo "<p> Issue: <input type=\"text\" id=\"datepicker\" name =\"datepicker\" /></p>";
 			echo "<label for=\"pubName3\">Publisher: </label>";
 			echo "<input type =\"text\" name=\"pubName3\" id=\"pubName3\" class=\"text ui-widget-content ui-corner-all\" /><br><br>";
@@ -304,7 +304,7 @@
 		echo "</form>";
 		?>
 		<script>
-		$( "#spinner5" ).spinner({
+		$( "#spinner4" ).spinner({
 			min: 1700,
 			max: 2100,
 			step: 1
@@ -399,7 +399,7 @@
     							document.getElementById("modify").innerHTML=xmlhttp.responseText;
 								// trigger an artificial click event
     							$("#modify").click(function initNewElements(){
-    								$( "#spinner6" ).spinner({
+    								$( "#spinner5" ).spinner({
 										min: 1700,
 										max: 2100,
 										step: 1
@@ -427,7 +427,7 @@
     						});
     						$("#modify").trigger("click");
     					}
-  					}
+  					};
 					xmlhttp.open("GET","Processing/getItem.php?libID="+id,true);
 					xmlhttp.send();
 				}

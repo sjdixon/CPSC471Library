@@ -47,7 +47,12 @@ By: Stephen Dixon
 
 
                 $("#radio").buttonset();
-                $("#dueDate").datepicker({dateFormat: 'yy-mm-dd'});
+                $("#dueDate").datepicker({
+				changeMonth: true,
+				changeYear: true
+			}).bind("keydown", function (event) {
+    		event.preventDefault();
+			});
 
                 $(".radioSelect").each(function() {
                     showSpecificFields(this);
