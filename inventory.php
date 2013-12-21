@@ -114,7 +114,7 @@
 			echo "<label for=\"genre1\">Genre: </label>";
 			echo "<input type =\"text\" name=\"genre1\" id=\"genre1\" class=\"text ui-widget-content ui-corner-all\" /><br><br>";
 			echo "<label for=\"audience1\">Audience: </label>";
-			echo "<select id=\"audience1\" name=\"audience\">";
+			echo "<select id=\"audience1\" name=\"audience1\">";
 				echo "<option value=\"\">Select Type</option>";
 				echo "<option value=\"Early Childhood\">Early Childhood</option>";
 				echo "<option value=\"Children\">Children</option>";
@@ -127,7 +127,7 @@
 			echo "<input type =\"text\" name=\"location1\" id=\"location1\" class=\"text ui-widget-content ui-corner-all\" /><br><br>";
 			echo "<label for=\"copies1\">Number of copies: </label>";
 			echo "<input id=\"copies1\" name=\"copies1\" value=\"1\" /><br><br>";	
-			echo "<input type=\"checkbox\" id=\"check1\" name=\"isReference1\"><label for=\"check\">Check for Reference Item</label><br><br>";
+			echo "<input type=\"checkbox\" id=\"check1\" name=\"isReference1\"><label for=\"check1\">Check for Reference Item</label><br><br>";
 			echo "<button type=\"submit\" name=\"submit\" value=\"Submit\">OK</button>";
 		echo "</form>";
 		?>

@@ -40,7 +40,7 @@
 	if ($ref == "on"){
 		$ref = 1;
 	}
-	else $ref = 0;
+        else{ $ref = 0;}
 					
 	$results = mysql_query("INSERT INTO Item VALUES ('$id','$type','$location','$title','$year','$ref','$genre','$audience')");
 	if(!$results){
