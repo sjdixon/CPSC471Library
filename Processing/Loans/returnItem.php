@@ -6,9 +6,9 @@ include '../../Headers/dbConnect.php';
 
 // Get Form Info
 
-$libraryCode = $_POST['libraryCode'];
-$stocknum = $_POST['stocknum'];
-$state = $_POST['state'];
+$libraryCode = mysql_real_escape_string($_POST['libraryCode']);
+$stocknum = mysql_real_escape_string($_POST['stocknum']);
+$state = mysql_real_escape_string($_POST['state']);
 
 
 // End current loan

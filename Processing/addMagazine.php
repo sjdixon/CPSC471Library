@@ -29,7 +29,7 @@
 	$type = "Magazine";
 	$genre = mysql_real_escape_string($_POST['genre3']);
 	$audience = mysql_real_escape_string($_POST['audience3']);
-	$date = $_POST['datepicker1'];
+	$date = mysql_real_escape_string($_POST['datepicker1']);
 	$ref = mysql_real_escape_string($_POST['isReference3']);
 	echo "Is Reference: $ref";
 	if ($ref == "on"){
@@ -43,8 +43,8 @@
 	//echo "Date strings: $datestr[0]-$datestr[1]-$datestr[2]<br>";
 	$issue = "$datestr[2]-$datestr[0]-$datestr[1]";
 	//echo $issue;
-	$sub = $_POST['subName'];
-	$pub = $_POST['pubName2'];
+	$sub = mysql_real_escape_string($_POST['subName']);
+	$pub = mysql_real_escape_string($_POST['pubName2']);
 					
 	$results = mysql_query("INSERT INTO Item VALUES ('$id','$type','$location','$title','$year','$ref','$genre','$audience')");
 	if(!$results){

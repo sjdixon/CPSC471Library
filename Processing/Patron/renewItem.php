@@ -13,10 +13,10 @@
         }
 
    include '../../Headers/dbConnect.php';
-        $date=$_POST['radio'];
+        $date=  mysql_real_escape_string($_POST['radio']);
         //$rDate=  strtotime("y-m-d", $date);
         //$patronId=$_COOKIE['patronAccount'];
-       foreach($_POST['check'] as $num){
+       foreach(mysql_real_escape_string($_POST['check']) as $num){
        $result=mysql_query("Update Loan Set dateDue='$date' where loanNum='$num'");
        error_log(print_r($_REQUEST,true));
 

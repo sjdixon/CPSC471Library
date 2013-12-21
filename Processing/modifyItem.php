@@ -18,21 +18,21 @@
 	include '../Headers/dbConnect.php';
 		
 	
-	$id = $_POST['id'];
-	$type = $_POST['type'];
-	$title = $_POST['name5'];
+	$id = mysql_real_escape_string($_POST['id']);
+	$type = mysql_real_escape_string($_POST['type']);
+	$title = mysql_real_escape_string($_POST['name5']);
 	echo ("Title: $title<br>");
-	$year = $_POST['spinner5'];
+	$year = mysql_real_escape_string($_POST['spinner5']);
 	$location = $_POST['location5'];
 	echo ("Location: $location<br>");
-	$genre = $_POST['genre5'];
-	$audience = $_POST['audience5'];
-	$ref = $_POST['isReference5'];
+	$genre = mysql_real_escape_string($_POST['genre5']);
+	$audience = mysql_real_escape_string($_POST['audience5']);
+	$ref = mysql_real_escape_string($_POST['isReference5']);
 	if ($ref == "on"){
 		$ref = 1;
 	}
 	else $ref = 0;
-	$copies = $_POST['copies5'];
+	$copies = mysql_real_escape_string($_POST['copies5']);
 	
 	$result = mysql_query("UPDATE Item SET shelfLoc='$location', title='$title', year='$year', isReference='$ref', genre='$genre', audience='$audience' WHERE libraryCode='$id'");
 	if(!$result){
@@ -55,8 +55,8 @@
 	
 	
 	if($type == "Book"){
-		$ISBN = $_POST['ISBN1'];
-		$author = $_POST['authorName1'];
+		$ISBN = mysql_real_escape_string($_POST['ISBN1']);
+		$author = mysql_real_escape_string($_POST['authorName1']);
 		$result2 = mysql_query("UPDATE Book SET ISBN='$ISBN', authors='$author' WHERE libraryCode='$id'");
 		if(!$result2){
      		echo "could not insert into Instance table <br />";        
@@ -65,9 +65,9 @@
 		
 	}	
 	else if($type == "Audio"){
-		$UPC = $_POST['UPC3'];
-		$artists = $_POST['artistName1'];
-		$prodComp = $_POST['producerName3'];
+		$UPC = mysql_real_escape_string($_POST['UPC3']);
+		$artists = mysql_real_escape_string($_POST['artistName1']);
+		$prodComp = mysql_real_escape_string($_POST['producerName3']);
 		$result2 = mysql_query("UPDATE Audio SET artists='$artists', productionCompany='$prodComp', UPC='$UPC' WHERE libraryCode='$id'");
 		if(!$result2){
      		echo "could not insert into Instance table <br />";        
@@ -75,9 +75,9 @@
     	}
 	}	
 	else if($type == "Video"){
-		$UPC = $_POST['UPC3'];
-		$director = $_POST['director1'];
-		$prodComp = $_POST['producerName3'];
+		$UPC = mysql_real_escape_string($_POST['UPC3']);
+		$director = mysql_real_escape_string($_POST['director1']);
+		$prodComp = mysql_real_escape_string($_POST['producerName3']);
 		$result2 = mysql_query("UPDATE Video SET UPC='$UPC', directory='$director', productionCompany='$prodComp' WHERE libraryCode='$id'");
 		if(!$result2){
      		echo "could not insert into Instance table <br />";        
@@ -85,11 +85,11 @@
     	}
 	}	
 	else if($type == "Magazine"){
-		$date = $_POST['datepicker2'];
+		$date = mysql_real_escape_string($_POST['datepicker2']);
 		//$datestr = explode("/", $date);
 		//$issue = "$datestr[2]-$datestr[0]-$datestr[1]";
-		$sub = $_POST['subNam1'];
-		$pub = $_POST['pubName4'];
+		$sub = mysql_real_escape_string($_POST['subNam1']);
+		$pub = mysql_real_escape_string($_POST['pubName4']);
 		$result2 = mysql_query("UPDATE Magazine issue='$date', subtitle='$sub', publisher='$pub' WHERE libraryCode='$id'");
 		if(!$result2){
      		echo "could not insert into Instance table <br />";        
@@ -97,10 +97,10 @@
     	}
 	}
 	else if($type == "Newspaper"){
-		$date = $_POST['datepicker'];
+		$date = mysql_real_escape_string($_POST['datepicker']);
 		//$datestr = explode("/", $date);
 		//$issue = "$datestr[2]-$datestr[0]-$datestr[1]";
-		$pub = $_POST['pubName4'];
+		$pub = mysql_real_escape_string($_POST['pubName4']);
 		$result2 = mysql_query("UPDATE Newspaper SET issue='$date', publisher='$pub' WHERE libraryCode='$id'");
 		if(!$result2){
      		echo "could not insert into Instance table <br />";        

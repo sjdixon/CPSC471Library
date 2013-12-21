@@ -7,8 +7,8 @@ foreach (mysql_real_escape_string($_POST['check']) as $fineNo) {
     $fineData = mysql_query("Select * From Fine Where fineNo='$fineNo'");
 
     while ($row = mysql_fetch_assoc($fineData)) {
-        $payment = $_POST['payment'];
-        $waive = $_POST['waive'];
+        $payment = mysql_real_escape_string($_POST['payment']);
+        $waive = mysql_real_escape_string($_POST['waive']);
         $balance = $row['balance'];
         $bal = $balance - $payment - $waive;
 

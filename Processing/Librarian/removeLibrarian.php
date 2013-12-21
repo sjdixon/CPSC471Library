@@ -10,6 +10,8 @@ include '../../Headers/dbConnect.php';
 
 // extract the index number
 foreach ($_POST as $k=>$v) {
+    $k = mysql_real_escape_string($k);
+    $v = mysql_real_escape_string($v);
     if (substr($k, 0,8)==0){
         $id = substr($k,8);
         $queryText = "delete from Librarian where id=$id";

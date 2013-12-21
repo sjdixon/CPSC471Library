@@ -9,8 +9,8 @@ include '../Headers/dbConnect.php';
 
 if (!empty($_POST['username']) && !empty($_POST['password'])) {
     echo "You entered: username={$_POST['username']}, password={$_POST['password']}<br>";
-    $username = mysql_real_escape_string(trim($_POST['username']));
-    $password = md5(mysql_real_escape_string(trim($_POST['password'])));
+    $username = trim(mysql_real_escape_string($_POST['username']));
+    $password = md5(trim(mysql_real_escape_string($_POST['password'])));
 
     echo "Your username after escaping: {$username}<br>";
     echo "Your password after scaping and MD5: {$password}<br>";

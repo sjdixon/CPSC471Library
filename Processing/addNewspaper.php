@@ -29,7 +29,7 @@
 	$type = "Newspaper";
 	$genre = mysql_real_escape_string($_POST['genre4']);
 	$audience = mysql_real_escape_string($_POST['audience4']);
-	$date = $_POST['datepicker'];
+	$date = mysql_real_escape_string($_POST['datepicker']);
 	$datestr = explode("/", $date);
 	$issue = "$datestr[2]-$datestr[0]-$datestr[1]";
 	$pub = mysql_real_escape_string($_POST['pubName3']);
@@ -39,7 +39,7 @@
 		$ref = 1;
 	}
 	else $ref = 0;
-	$copies = $_POST['copies4'];
+	$copies = mysql_real_escape_string($_POST['copies4']);
 					
 	$results = mysql_query("INSERT INTO Item VALUES ('$id','$type','$location','$title','$year','$ref','$genre','$audience')");
 	if(!$results){

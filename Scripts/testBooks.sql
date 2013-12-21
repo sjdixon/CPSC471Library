@@ -1,7 +1,8 @@
 use library;
 
 # Book
-set @v1 = (select max(i.libraryCode) from Item as i) + 1;
+# set @v1 = (select max(i.libraryCode) from Item as i) + 1;
+set @v1 = 1;
 insert into Item values (@v1,'Book','Fantasy Section','Harry Potter and the Philosopher\'s Stone','1997',0,"Fantasy", "Children");
 insert into Book (libraryCode, ISBN, authors) values (@v1, 0563533390, "JK Rowling");
 delete from Item_Instance where libraryCode=@v1;

@@ -13,11 +13,11 @@
         }
 
     include '../../Headers/dbConnect.php';
-    $pId=$_POST['id'];
-    $name=$_POST['name'];
-    $addr=$_POST['addr'];
-    $pNo=$_POST['phone'];
-    $email=$_POST['email'];
+    $pId=  mysql_real_escape_string($_POST['id']);
+    $name=mysql_real_escape_string($_POST['name']);
+    $addr=mysql_real_escape_string($_POST['addr']);
+    $pNo=mysql_real_escape_string($_POST['phone']);
+    $email=mysql_real_escape_string($_POST['email']);
     $query="Update Patron set name='$name', address='$addr', email='$email', phone='$pNo' Where pAccount='$pId'";
     
     $result=mysql_query($query);
