@@ -1,4 +1,3 @@
-
 <?php
     include 'Headers/checkAuth.php';
     include 'Headers/dbConnect.php';

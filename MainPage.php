@@ -1,3 +1,11 @@
+<?php
+include "./Headers/dbConnect.php";
+session_start();
+if (isset($_SESSION['loggedIn']))
+    unset($_SESSION['loggedIn']);
+session_destroy();
+$itemList = mysql_query("Select * From Item");
+?>
 <!DOCTYPE html>
 <html>
     <head>
@@ -38,20 +46,12 @@
             });
         </script>
     </head>
-
     <body>
         <a href="Login/Login.php">Login</a>
         <p>You can filter through our database by entering the title, genre, audience, year, or type of the item you wish to search for.</p>
         <p>All entered values must be must exactly match what you are looking for or it will not appear.</p>
         <input  type="text" id="searchString" name="searchString" size = "50"/>
-        <?php
-        include "./Headers/dbConnect.php";
-        session_start();
-        if (isset($_SESSION['loggedIn']))
-            unset($_SESSION['loggedIn']);
-        session_destroy();
-        $itemList = mysql_query("Select * From Item");
-        ?>
+
         <form>
             <table id="ItemsTable" class="ui-widget ui-widget-content">
                 <thead>
